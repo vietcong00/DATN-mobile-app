@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_menu"
+        android:icon="@drawable/ic_baseline_chat_bubble_24"
+        android:title="menu" />
+    <item
+        android:id="@+id/navigation_selected"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="selected" />
+    <item
+        android:id="@+id/navigation_processing"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="processing" />
+    <item
+        android:id="@+id/navigation_done"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="done" />
+</menu>

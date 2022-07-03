@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "155590345079",
+    "firebase_url": "https://datn-a8b93-default-rtdb.firebaseio.com",
+    "project_id": "datn-a8b93",
+    "storage_bucket": "datn-a8b93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155590345079:android:dcbc18ce79db346a1ae172",
+        "android_client_info": {
+          "package_name": "com.example.android.marsphotos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155590345079-d28uhmimj2v90f4la9isnkq5b6rqf6gd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsGzI2U9OY__jB7UZfMNqNrp5Re0zVRWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155590345079-d28uhmimj2v90f4la9isnkq5b6rqf6gd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155590345079:android:1ef01aa792d2c5bc1ae172",
+        "android_client_info": {
+          "package_name": "com.fredrikbogg.android_chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155590345079-d28uhmimj2v90f4la9isnkq5b6rqf6gd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsGzI2U9OY__jB7UZfMNqNrp5Re0zVRWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155590345079-d28uhmimj2v90f4la9isnkq5b6rqf6gd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155590345079:android:2c598bd7212a27071ae172",
+        "android_client_info": {
+          "package_name": "com.google.firebase.codelab.friendlychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155590345079-d28uhmimj2v90f4la9isnkq5b6rqf6gd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsGzI2U9OY__jB7UZfMNqNrp5Re0zVRWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155590345079-d28uhmimj2v90f4la9isnkq5b6rqf6gd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

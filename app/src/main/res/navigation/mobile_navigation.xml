@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/startFragment">
+
+
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.example.android.marsphotos.ui.menu.MenuFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.example.android.marsphotos.ui.CheckoutFragment"
+        android:label="CheckoutFragment"
+        tools:layout="@layout/fragment_checkout">
+        <action
+            android:id="@+id/action_checkoutFragment_to_mainFragment"
+            app:destination="@id/navigation_menu" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.android.marsphotos.ui.start.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/navigation_menu" />
+        <action
+            android:id="@+id/action_loginFragment_to_notificationsFragment"
+            app:destination="@id/navigation_processing" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.android.marsphotos.ui.start.StartFragment"
+        android:label="StartFragment"
+        tools:layout="@layout/fragment_start">
+        <action
+            android:id="@+id/action_startFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_mainFragment"
+            app:destination="@id/navigation_menu" />
+        <action
+            android:id="@+id/action_startFragment_to_notificationsFragment"
+            app:destination="@id/navigation_processing" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_processing"
+        android:name="com.example.android.marsphotos.ui.dish.processing.DishProcessingFragment"
+        android:label="ProcessingFragment"
+        tools:layout="@layout/fragment_dish_processing"
+        />
+
+</navigation>
