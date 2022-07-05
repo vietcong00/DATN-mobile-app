@@ -10,7 +10,7 @@ data class BillingInfo(
 data class Dish(
     @get:PropertyName("dishRequests") @set:PropertyName("dishRequests") var dishRequests: ArrayList<DishInfo>? = arrayListOf(),
     @get:PropertyName("dishProcessings") @set:PropertyName("dishProcessings") var dishProcessings: ArrayList<DishInfo>? = arrayListOf(),
-    @get:PropertyName("dishDones") @set:PropertyName("dishDones") var dishDones: ArrayList<DishDoneInfo>? = arrayListOf(),
+    @get:PropertyName("dishDones") @set:PropertyName("dishDones") var dishDones: ArrayList<DishInfo>? = arrayListOf(),
     @get:PropertyName("dishCanceleds") @set:PropertyName("dishCanceleds") var dishCanceleds: ArrayList<DishInfo>? = arrayListOf(),
     @get:PropertyName("note") @set:PropertyName("note") var note: String = "",
 )
@@ -18,6 +18,8 @@ data class Dish(
 data class DishInfo(
     @get:PropertyName("dishID") @set:PropertyName("dishID") var dishId: Int = 0,
     @get:PropertyName("quantity") @set:PropertyName("quantity") var quantity: Int = 0,
+    @get:PropertyName("note") @set:PropertyName("note") var note: String? = "",
+    @get:PropertyName("isBring") @set:PropertyName("isBring") var isBring: Boolean? = false,
 )
 
 data class DishDoneInfo(

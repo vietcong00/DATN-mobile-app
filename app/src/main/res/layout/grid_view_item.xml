@@ -33,25 +33,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="agito"
-                    android:layout_gravity="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    app:nameProduct="@{product.foodName}"
-                    />
+            <TextView
+                android:id="@+id/itemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="agito"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:nameProduct="@{product.foodName}" />
 
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="agito"
-                    android:layout_gravity="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    app:priceProduct="@{product.price}"
-                   />
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="agito"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:priceProduct="@{product.price}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 

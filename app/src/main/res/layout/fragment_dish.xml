@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.android.marsphotos.ui.dish.DishViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioGroup
+                android:id="@+id/radioGroupDish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/radio_studio_bg"
+                android:checkedButton="@+id/radio_your_code"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <RadioButton
+                    android:id="@+id/radio_selected"
+                    style="@style/RadioButtonStudio"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Selected" />
+
+                <RadioButton
+                    android:id="@+id/radio_processing"
+                    style="@style/RadioButtonStudio"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Processing" />
+
+                <RadioButton
+                    android:id="@+id/radio_done"
+                    style="@style/RadioButtonStudio"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Done" />
+
+            </RadioGroup>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/layout_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupDish"
+                >
+                <com.liuzhenlin.simrv.SlidingItemMenuRecyclerView
+                    android:id="@+id/recycler_view_qr_code_studio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    app:bind_dish_list="@{viewmodel.dishItemList}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

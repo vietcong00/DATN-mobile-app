@@ -2,6 +2,7 @@ package com.example.android.marsphotos.data.db.remote
 
 import android.util.Log
 import com.example.android.marsphotos.data.Result
+import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.*
 import com.example.android.marsphotos.util.wrapSnapshotToArrayList
 import com.example.android.marsphotos.util.wrapSnapshotToClass
@@ -51,7 +52,7 @@ class FirebaseReferenceValueObserver {
     private var dbRef: DatabaseReference? = null
 
     fun start(valueEventListener: ValueEventListener, reference: DatabaseReference) {
-        reference.child("userID").limitToFirst(1)
+        reference
             .addValueEventListener(valueEventListener)
         this.valueEventListener = valueEventListener
         this.dbRef = reference
@@ -211,6 +212,10 @@ class FirebaseDataSource {
         refToPath("messages/$messagesID").push().setValue(message)
     }
 
+    fun updateDishProcessing(billingId: Int, dishList: MutableList<DishInfo>?) {
+        refToPath("billings/${billingId}/dishs/dishProcessings").setValue(dishList)
+    }
+
     //endregion
 
     //region Remove
@@ -298,7 +303,6 @@ class FirebaseDataSource {
         return src.task
     }
 
-
     //endregion
 
     //region Value Observers
@@ -331,6 +335,46 @@ class FirebaseDataSource {
     ) {
         val listener = attachValueListenerToBlockWithList(resultClassName, b)
         firebaseReferenceValueObserver.start(listener, refToPath("users/$userID/notifications"))
+    }
+
+
+    fun <T> attachDishProcessingsObserver(
+        resultClassName: Class<T>,
+        billingID: Int,
+        firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
+        b: (Result<MutableList<T>>) -> Unit
+    ) {
+        val listener = attachValueListenerToBlockWithList(resultClassName, b)
+        firebaseReferenceValueObserver.start(
+            listener,
+            refToPath("billings/$billingID/dishs/dishProcessings")
+        )
+    }
+
+    fun <T> attachDishsObserver(
+        resultClassName: Class<T>,
+        billingID: Int,
+        typeDishList: TYPE_DISH_LIST,
+        firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
+        b: (Result<MutableList<T>>) -> Unit
+    ) {
+        val listener = attachValueListenerToBlockWithList(resultClassName, b)
+        firebaseReferenceValueObserver.start(
+            listener,
+            refToPath("billings/$billingID/dishs/$typeDishList")
+        )
+    }
+
+    fun <T> attachAllDishObserver(
+        resultClassName: Class<T>,
+        firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
+        b: (Result<MutableList<T>>) -> Unit
+    ) {
+        val listener = attachValueListenerToBlockWithList(resultClassName, b)
+        firebaseReferenceValueObserver.start(
+            listener,
+            refToPath("billings")
+        )
     }
 
     fun <T> attachMessagesObserver(

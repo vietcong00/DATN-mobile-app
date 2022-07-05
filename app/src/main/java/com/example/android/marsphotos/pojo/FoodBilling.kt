@@ -12,7 +12,8 @@ data class FoodBilling(
     val note: String,
 )
 
-data class DishProcessingItem(
+data class DishItem(
     var dish: Food,
+    var note: String?,
     var quantity: Int,
-)
+    )

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.pojo.Food
+import com.example.android.marsphotos.util.convertMoney
 import java.text.NumberFormat
 import java.util.*
 
@@ -44,10 +45,7 @@ fun bindText(textView: TextView, name: String?) {
 
 @BindingAdapter("priceProduct")
 fun bindText(textView: TextView, price: Int?) {
-    val format: NumberFormat = NumberFormat.getCurrencyInstance()
-    format.setMaximumFractionDigits(0)
-    format.setCurrency(Currency.getInstance("VND"))
-    textView.text = format.format(price);
+    textView.text = convertMoney(price)
 }
 
 @BindingAdapter("imgFood")

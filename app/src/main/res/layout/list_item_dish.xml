@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.android.marsphotos.ui.dish.DishViewModel" />
+
+        <variable
+            name="dish"
+            type="com.example.android.marsphotos.pojo.DishItem" />
+
+        <variable
+            name="index"
+            type="Integer" />
+
+        <variable
+            name="itemDishCanceledListener"
+            type="com.example.android.marsphotos.ui.dish.ItemDishCanceledListener" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:dish_img="@{dish.dish.foodImg.url}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_ice_cream" />
+
+                <TextView
+                    android:id="@+id/foodName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    app:dish_name="@{dish.dish.foodName}"
+                    app:layout_constraintStart_toEndOf="@+id/imgIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Display name" />
+
+                <TextView
+                    android:id="@+id/foodQuantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    app:dish_quantity="@{dish.quantity}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Display name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:id="@+id/rightSwipe"
+            android:layout_width="1000dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp">
+
+            <!-- Put your menu items here. The first one will be shown at the horizontal start. -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/favorite_btn"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="7dp"
+                        android:src="@drawable/ic_remove_item"
+                        android:onClick="@{() -> itemDishCanceledListener.canceled(index)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/delete_btn"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="7dp"
+                        android:src="@drawable/ic_archive_item"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+        </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

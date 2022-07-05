@@ -4,6 +4,7 @@ import com.example.android.marsphotos.data.db.remote.FirebaseDataSource
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceChildObserver
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceValueObserver
 import com.example.android.marsphotos.data.Result
+import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.*
 import com.example.android.marsphotos.util.wrapSnapshotToArrayList
 import com.example.android.marsphotos.util.wrapSnapshotToClass
@@ -47,6 +48,10 @@ class DatabaseRepository {
 
     fun updateUserProfileImageUrl(userID: String, url: String) {
         firebaseDatabaseService.updateUserProfileImageUrl(userID, url)
+    }
+
+    fun updateDishProcessing(billingId: Int, dishList: MutableList<DishInfo>?) {
+        firebaseDatabaseService.updateDishProcessing(billingId, dishList)
     }
 
     //endregion
@@ -130,12 +135,54 @@ class DatabaseRepository {
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
     }
 
-    fun loadDishProcessingOfBillings(billingID: Int, b: ((Result<MutableList<DishInfo>>) -> Unit)) {
+    fun loadDishProcessingOfBillings(
+        billingID: Int,
+        b: ((Result<MutableList<DishInfo>>) -> Unit)
+    ) {
         b.invoke(Result.Loading)
         firebaseDatabaseService.loadDishProcessingOfBillingsTask(billingID).addOnSuccessListener {
             val dishList = wrapSnapshotToArrayList(DishInfo::class.java, it)
             b.invoke(Result.Success(dishList))
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
+    }
+
+    fun loadAndObserveDishProcessingOfBillings(
+        billingID: Int,
+        observer: FirebaseReferenceValueObserver,
+        b: ((Result<MutableList<DishInfo>>) -> Unit)
+    ) {
+        firebaseDatabaseService.attachDishProcessingsObserver(
+            DishInfo::class.java,
+            billingID,
+            observer,
+            b
+        )
+    }
+
+    fun loadAndObserveDishsOfBillings(
+        billingID: Int,
+        typeDishList: TYPE_DISH_LIST,
+        observer: FirebaseReferenceValueObserver,
+        b: ((Result<MutableList<DishInfo>>) -> Unit)
+    ) {
+        firebaseDatabaseService.attachDishsObserver(
+            DishInfo::class.java,
+            billingID,
+            typeDishList,
+            observer,
+            b
+        )
+    }
+
+    fun loadAndObserveAllDish(
+        observer: FirebaseReferenceValueObserver,
+        b: ((Result<MutableList<BillingInfo>>) -> Unit)
+    ) {
+        firebaseDatabaseService.attachAllDishObserver(
+            BillingInfo::class.java,
+            observer,
+            b
+        )
     }
 
     //endregion

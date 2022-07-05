@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.text.NumberFormat
+import java.util.*
 
 fun convertFileToByteArray(context: Context, uri: Uri): ByteArray {
     val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
@@ -14,4 +16,15 @@ fun convertFileToByteArray(context: Context, uri: Uri): ByteArray {
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
 
     return byteArrayOutputStream.toByteArray()
+}
+
+fun convertMoney(price: Int?): String {
+    val format: NumberFormat = NumberFormat.getCurrencyInstance()
+    format.maximumFractionDigits = 0
+    format.currency = Currency.getInstance("VND")
+    return if (price != null) {
+        format.format(price)
+    } else {
+        format.format(0)
+    }
 }

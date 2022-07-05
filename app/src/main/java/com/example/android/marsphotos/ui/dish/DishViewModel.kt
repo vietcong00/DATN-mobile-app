@@ -1,54 +1,58 @@
-package com.example.android.marsphotos.ui.dish.processing
+package com.example.android.marsphotos.ui.dish
 
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.android.marsphotos.data.db.entity.UserInfo
 import com.example.android.marsphotos.data.db.entity.UserNotification
 import com.example.android.marsphotos.data.Result
+import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.DishInfo
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceValueObserver
 import com.example.android.marsphotos.data.db.repository.DatabaseRepository
 import com.example.android.marsphotos.network.ProductApi
-import com.example.android.marsphotos.pojo.DishProcessingItem
+import com.example.android.marsphotos.pojo.DishItem
 import com.example.android.marsphotos.pojo.Food
 import com.example.android.marsphotos.ui.DefaultViewModel
 import com.example.android.marsphotos.util.addNewItem
 import com.example.android.marsphotos.util.removeItem
 import kotlinx.coroutines.launch
 
-class DishProcessingViewModelFactory(private val myUserID: String) :
+class DishViewModelFactory(private val myUserID: String) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return DishProcessingViewModel(myUserID) as T
+        return DishViewModel(myUserID) as T
     }
 }
 
-class DishProcessingViewModel(private val myUserID: String) : DefaultViewModel() {
-
+class DishViewModel(private val myUserID: String) : DefaultViewModel() {
+    var dishListType = TYPE_DISH_LIST.dishRequests
     private val dbRepository: DatabaseRepository = DatabaseRepository()
     private val updatedUserInfo = MutableLiveData<UserInfo>()
+
     private val _userNotificationsList = MutableLiveData<MutableList<UserNotification>>()
     var userNotificationsList: LiveData<MutableList<UserNotification>> = _userNotificationsList
 
-    private val _dishProcessingList = MutableLiveData<MutableList<DishInfo>>()
-    var dishProcessingList: LiveData<MutableList<DishInfo>> = _dishProcessingList
+    private val _dishItemList = MutableLiveData<MutableList<DishItem>>()
+    var dishItemList: LiveData<MutableList<DishItem>> = _dishItemList
 
-    private val _dishProcessingItemList = MutableLiveData<MutableList<DishProcessingItem>>()
-    var dishProcessingItemList: LiveData<MutableList<DishProcessingItem>> = _dishProcessingItemList
+    private val _dishList = MutableLiveData<MutableList<DishInfo>>()
+    var dishList: LiveData<MutableList<DishInfo>> = _dishList
 
     private val _foods = MutableLiveData<MutableList<Food>>()
     val foods: LiveData<MutableList<Food>> = _foods
 
-    private val _foodMap = MutableLiveData<MutableMap<Int,Food>>()
-    val foodMap: LiveData<MutableMap<Int,Food>> = _foodMap
+    private val _foodMap = MutableLiveData<MutableMap<Int, Food>>()
+    val foodMap: LiveData<MutableMap<Int, Food>> = _foodMap
 
     private val fbRefNotificationsObserver = FirebaseReferenceValueObserver()
+    private val fbRefDishProcessingObserver = FirebaseReferenceValueObserver()
 
     val usersInfoList = MediatorLiveData<MutableList<UserInfo>>()
 
     init {
         usersInfoList.addSource(updatedUserInfo) { usersInfoList.addNewItem(it) }
         loadNotifications()
+        loadDishs()
         startObservingNotifications()
         getProductList()
     }
@@ -57,18 +61,25 @@ class DishProcessingViewModel(private val myUserID: String) : DefaultViewModel()
         viewModelScope.launch {
             try {
                 _foods.value = ProductApi.retrofitService.getProduct().data.items
-                _foodMap.value = mutableMapOf();
+                _foodMap.value = mutableMapOf()
                 (_foods.value as ArrayList<Food>).forEach { _foodMap.value!![it.id] = it }
             } catch (e: Exception) {
                 _foods.value = mutableListOf()
-                _foodMap.value = mutableMapOf();
+                _foodMap.value = mutableMapOf()
             }
         }
+    }
+
+    fun canceled(index: Int) {
+        _dishList.value?.removeAt(index)
+        dbRepository.updateDishProcessing(1, _dishList.value)
+        loadDishs()
     }
 
     override fun onCleared() {
         super.onCleared()
         fbRefNotificationsObserver.clear()
+        fbRefDishProcessingObserver.clear()
     }
 
     private fun startObservingNotifications() {
@@ -87,18 +98,23 @@ class DishProcessingViewModel(private val myUserID: String) : DefaultViewModel()
             onResult(_userNotificationsList, result)
             if (result is Result.Success) result.data?.forEach { loadUserInfo(it) }
         }
+    }
 
-        dbRepository.loadDishProcessingOfBillings(1) { result: Result<MutableList<DishInfo>> ->
-            onResult(_dishProcessingList, result)
+    fun loadDishs() {
+        dbRepository.loadAndObserveDishsOfBillings(
+            1,
+            dishListType,
+            fbRefDishProcessingObserver
+        ) { result: Result<MutableList<DishInfo>> ->
+            onResult(_dishList, result)
             if (result is Result.Success) {
-                Log.i("tesss","loadDishProcessingOfBillings : "+result.data)
-                _dishProcessingList.value = result.data
+                _dishList.value = result.data
             }
         }
     }
 
-    fun setDishProcessingItems(list: MutableList<DishProcessingItem>){
-        _dishProcessingItemList.value=list;
+    fun setDishItems(list: MutableList<DishItem>) {
+        _dishItemList.value = list
     }
 
     private fun loadUserInfo(userNotification: UserNotification) {
@@ -119,6 +135,11 @@ class DishProcessingViewModel(private val myUserID: String) : DefaultViewModel()
             usersInfoList.removeItem(otherUserInfo)
             _userNotificationsList.removeItem(userNotification)
         }
+    }
+
+    fun switchDishListType(type: TYPE_DISH_LIST) {
+        dishListType = type
+        loadDishs()
     }
 
     fun acceptNotificationPressed(userInfo: UserInfo) {

@@ -1,6 +1,7 @@
 package com.example.android.marsphotos
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-
             when (destination.id) {
                 R.id.startFragment -> navView.visibility = View.GONE
                 R.id.loginFragment -> navView.visibility = View.GONE
@@ -50,15 +50,17 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_menu,
-                R.id.navigation_selected,
                 R.id.navigation_processing,
-                R.id.navigation_done,
+                R.id.navigation_billing,
                 R.id.startFragment
             )
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.getMenu().clear();
+        navView.inflateMenu(R.menu.bottom_nav_menu_employee);
     }
 
     override fun onResume() {
