@@ -1,6 +1,7 @@
 package com.example.android.marsphotos.ui.start.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.EventObserver
+import com.example.android.marsphotos.data.constant.POSITION_TYPE
 import com.example.android.marsphotos.databinding.FragmentLoginBinding
 import com.example.android.marsphotos.util.SharedPreferencesUtil
 import com.example.android.marsphotos.util.forceHideKeyboard
@@ -58,11 +60,22 @@ class LoginFragment : Fragment() {
 
         viewModel.isLoggedInEvent.observe(viewLifecycleOwner, EventObserver {
             SharedPreferencesUtil.saveUserID(requireContext(), it.uid)
-            navigateToChats()
         })
+
+        viewModel.position.observe(requireActivity()) {
+                when (viewModel.position.value) {
+                    POSITION_TYPE.chef -> navigateDirectlyToDishChef()
+                    POSITION_TYPE.waiter -> navigateDirectlyToMenu()
+                    POSITION_TYPE.table -> navigateDirectlyToMenu()
+                }
+        }
     }
 
-    private fun navigateToChats() {
-        findNavController().navigate(R.id.action_loginFragment_to_notificationsFragment)
+    private fun navigateDirectlyToMenu() {
+        findNavController().navigate(R.id.action_loginFragment_to_navigation_menu)
+    }
+
+    private fun navigateDirectlyToDishChef() {
+        findNavController().navigate(R.id.action_loginFragment_to_navigation_dish_chef)
     }
 }

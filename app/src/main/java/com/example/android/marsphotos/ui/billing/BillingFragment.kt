@@ -56,7 +56,7 @@ class BillingFragment : Fragment() {
 
             viewModel.dishList.value?.forEach {
                 val item = dishMap?.get(it.dishId)
-                    ?.let { it1 -> DishItem(it1, it.note.toString(),it.quantity) }
+                    ?.let { it1 -> DishItem(it1, it.note.toString(),it.quantity,it.updatedAt) }
                 item?.let { it1 -> tempList.add(it1) }
             }
             viewModel.setDishItems(tempList)

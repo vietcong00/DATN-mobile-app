@@ -83,7 +83,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_chef_quantity="@{dish.quantity}"
+                    app:dish_chef_quantity="@{dish.dish.category.priority}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

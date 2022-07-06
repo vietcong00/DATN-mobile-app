@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.pojo.DishItem
+import com.example.android.marsphotos.util.convertDateTime
+import com.example.android.marsphotos.util.convertMoney
 
 @BindingAdapter("bind_dish_list")
 fun bindDishList(listView: RecyclerView, items: List<DishItem>?) {
@@ -29,6 +31,11 @@ fun bindDishImage(imgView: ImageView, imgUrl: String?) {
 @BindingAdapter("dish_name")
 fun bindDishName(textView: TextView, name: String?) {
     textView.text = name
+}
+
+@BindingAdapter("dish_updated_at")
+fun bindDishUpdatedAt(textView: TextView, timeStamp: Long?) {
+    textView.text = convertDateTime(timeStamp)
 }
 
 @SuppressLint("SetTextI18n")

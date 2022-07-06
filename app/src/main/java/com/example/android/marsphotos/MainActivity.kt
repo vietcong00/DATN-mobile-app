@@ -73,9 +73,6 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-//        navView.getMenu().clear();
-//        navView.inflateMenu(R.menu.bottom_nav_menu_employee);
     }
 
     override fun onResume() {
@@ -85,11 +82,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModelObservers() {
-        viewModel.userNotificationsList.observe(this) {
-            if (it.size > 0) {
-                notificationsBadge = it.size
-            }
-        }
 
         viewModel.foods.observe(this) {
             viewModel.foods.value?.let { it1 -> SharedPreferencesUtil.saveFoodList(this, it1) }
@@ -116,5 +108,15 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             notifyErrorResponse.visibility = View.GONE
         }, TIME_DISPLAY_NOTIFY)
+    }
+
+    fun changeNavCustomer(){
+        navView.getMenu().clear();
+        navView.inflateMenu(R.menu.bottom_nav_menu_customer);
+    }
+
+    fun changeNavChef(){
+        navView.getMenu().clear();
+        navView.inflateMenu(R.menu.bottom_nav_menu_employee);
     }
 }

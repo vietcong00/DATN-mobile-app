@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.EventObserver
+import com.example.android.marsphotos.data.constant.POSITION_TYPE
 import com.example.android.marsphotos.databinding.FragmentStartBinding
+import com.example.android.marsphotos.pojo.DishItem
 import com.example.android.marsphotos.util.SharedPreferencesUtil
 
 class StartFragment : Fragment() {
@@ -25,28 +28,47 @@ class StartFragment : Fragment() {
             FragmentStartBinding.inflate(inflater, container, false).apply { viewmodel = viewModel }
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setHasOptionsMenu(false)
+
+        if (userIsAlreadyLoggedIn()) {
+            viewModel.setupProfile()
+        }else{
+            viewModel.goToLoginPressed()
+        }
+
         return viewDataBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupObservers()
-
-        if (userIsAlreadyLoggedIn()) {
-            navigateDirectlyToChats()
-        }
+        setupViewModelObservers()
     }
 
     private fun userIsAlreadyLoggedIn(): Boolean {
         return SharedPreferencesUtil.getUserID(requireContext()) != null
     }
 
-    private fun setupObservers() {
+    private fun setupViewModelObservers() {
         viewModel.loginEvent.observe(viewLifecycleOwner, EventObserver { navigateToLogin() })
+
+        viewModel.position.observe(requireActivity()) {
+            if (userIsAlreadyLoggedIn()) {
+                when (viewModel.position.value) {
+                    POSITION_TYPE.chef -> navigateDirectlyToDishChef()
+                    POSITION_TYPE.waiter -> navigateDirectlyToMenu()
+                    POSITION_TYPE.table -> navigateDirectlyToMenu()
+                }
+            }
+        }
     }
 
-    private fun navigateDirectlyToChats() {
-        findNavController().navigate(R.id.action_startFragment_to_notificationsFragment)
+    private fun navigateDirectlyToMenu() {
+        (activity as MainActivity).changeNavCustomer()
+            findNavController().navigate(R.id.action_startFragment_to_navigation_menu)
+    }
+
+    private fun navigateDirectlyToDishChef() {
+        (activity as MainActivity).changeNavChef()
+        findNavController().navigate(R.id.action_startFragment_to_navigation_dish_chef)
     }
 
     private fun navigateToLogin() {

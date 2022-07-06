@@ -1,11 +1,7 @@
 package com.example.android.marsphotos.ui.billing
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.android.marsphotos.data.db.entity.UserInfo
-import com.example.android.marsphotos.data.db.entity.UserNotification
 import com.example.android.marsphotos.data.Result
-import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.BillingInfo
 import com.example.android.marsphotos.data.db.entity.DishInfo
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceValueObserver
@@ -14,7 +10,6 @@ import com.example.android.marsphotos.network.ProductApi
 import com.example.android.marsphotos.pojo.DishItem
 import com.example.android.marsphotos.pojo.Food
 import com.example.android.marsphotos.ui.DefaultViewModel
-import com.example.android.marsphotos.ui.dish.DishViewModel
 import kotlinx.coroutines.launch
 
 class BillingViewModelFactory(private val myUserID: String) :

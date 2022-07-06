@@ -61,7 +61,18 @@
                     app:dish_name="@{dish.dish.foodName}"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Display name" />
+
+                <TextView
+                    android:id="@+id/foodUpdatedAt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    app:dish_updated_at="@{dish.updatedAt}"
+                    app:layout_constraintStart_toEndOf="@+id/imgIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/foodName"
                     tools:text="Display name" />
 
                 <TextView

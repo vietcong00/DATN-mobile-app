@@ -181,35 +181,8 @@ class FirebaseDataSource {
         refToPath("users/$userID/info/status").setValue(status)
     }
 
-    fun updateLastMessage(chatID: String, message: Message) {
-        refToPath("chats/$chatID/lastMessage").setValue(message)
-    }
-
-    fun updateNewFriend(myUser: UserFriend, otherUser: UserFriend) {
-        refToPath("users/${myUser.userID}/friends/${otherUser.userID}").setValue(otherUser)
-        refToPath("users/${otherUser.userID}/friends/${myUser.userID}").setValue(myUser)
-    }
-
-    fun updateNewSentRequest(userID: String, userRequest: UserRequest) {
-        refToPath("users/${userID}/sentRequests/${userRequest.userID}").setValue(userRequest)
-    }
-
-    fun updateNewNotification(otherUserID: String, userNotification: UserNotification) {
-        refToPath("users/${otherUserID}/notifications/${userNotification.userID}").setValue(
-            userNotification
-        )
-    }
-
     fun updateNewUser(user: User) {
         refToPath("users/${user.info.id}").setValue(user)
-    }
-
-    fun updateNewChat(chat: Chat) {
-        refToPath("chats/${chat.info.id}").setValue(chat)
-    }
-
-    fun pushNewMessage(messagesID: String, message: Message) {
-        refToPath("messages/$messagesID").push().setValue(message)
     }
 
     fun updateDishRequestsOfBilling(

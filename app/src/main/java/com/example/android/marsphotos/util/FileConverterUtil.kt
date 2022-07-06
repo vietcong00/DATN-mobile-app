@@ -7,6 +7,7 @@ import android.net.Uri
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun convertFileToByteArray(context: Context, uri: Uri): ByteArray {
@@ -26,5 +27,15 @@ fun convertMoney(price: Int?): String {
         format.format(price)
     } else {
         format.format(0)
+    }
+}
+
+fun convertDateTime(timeStamp: Long?): String? {
+    return try {
+        val sdf = SimpleDateFormat("HH:mm:ss")
+        val netDate = timeStamp?.let { Date(it) }
+        sdf.format(netDate)
+    } catch (e: Exception) {
+        e.toString()
     }
 }

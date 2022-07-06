@@ -1,7 +1,6 @@
 package com.example.android.marsphotos.ui.menu
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,22 +11,12 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
-import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.DishInfo
-import com.example.android.marsphotos.data.db.entity.UserInfo
-import com.example.android.marsphotos.data.db.entity.UserNotification
-import com.example.android.marsphotos.data.db.repository.DatabaseRepository
 import com.example.android.marsphotos.databinding.FragmentDetailBinding
-import com.example.android.marsphotos.network.CreateProductRequest
 import com.example.android.marsphotos.pojo.Food
-import com.example.android.marsphotos.pojo.FoodBilling
-import com.example.android.marsphotos.network.UpdateProductRequest
-import com.example.android.marsphotos.pojo.DishItem
 import com.example.android.marsphotos.util.convertMoney
-import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * This fragment shows the the status of the Mars photos web services transaction.
@@ -68,7 +57,8 @@ class DetailFragment : Fragment() {
                         DishInfo(
                             dishId = 1,
                             quantity = selected.toInt(),
-                            note = note
+                            note = note,
+                            updatedAt = Date().time
                         )
                     )
                 } else {
@@ -81,6 +71,8 @@ class DetailFragment : Fragment() {
     fun setProduct(food: Food) {
         selectedFood = food
         binding.apply {
+            inputSelected.setText("", TextView.BufferType.EDITABLE)
+            inputNote.setText("", TextView.BufferType.EDITABLE)
             food.foodImg.url.let {
                 val imgUri = food.foodImg.url.toUri().buildUpon().scheme("https").build()
                 foodImage.load(imgUri) {

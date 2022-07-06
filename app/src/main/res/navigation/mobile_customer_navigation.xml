@@ -17,16 +17,16 @@
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_mainFragment"
+            android:id="@+id/action_loginFragment_to_navigation_menu"
             app:destination="@id/navigation_menu" />
         <action
-            android:id="@+id/action_loginFragment_to_notificationsFragment"
+            android:id="@+id/action_loginFragment_to_navigation_processing"
             app:destination="@id/navigation_processing" />
         <action
-            android:id="@+id/action_loginFragment_to_billingFragment"
+            android:id="@+id/action_loginFragment_to_navigation_billing"
             app:destination="@id/navigation_billing" />
         <action
-            android:id="@+id/action_loginFragment_to_dishChefFragment2"
+            android:id="@+id/action_loginFragment_to_navigation_dish_chef"
             app:destination="@id/navigation_dish_chef" />
     </fragment>
     <fragment
@@ -38,17 +38,17 @@
             android:id="@+id/action_startFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_startFragment_to_mainFragment"
+            android:id="@+id/action_startFragment_to_navigation_menu"
             app:destination="@id/navigation_menu" />
-        <action
-            android:id="@+id/action_startFragment_to_notificationsFragment"
-            app:destination="@id/navigation_processing" />
         <action
             android:id="@+id/action_startFragment_to_billingFragment"
             app:destination="@id/navigation_billing" />
         <action
-            android:id="@+id/action_startFragment_to_dishChefFragment2"
+            android:id="@+id/action_startFragment_to_navigation_dish_chef"
             app:destination="@id/navigation_dish_chef" />
+        <action
+            android:id="@+id/action_startFragment_to_navigation_processing"
+            app:destination="@id/navigation_processing" />
     </fragment>
     <fragment
         android:id="@+id/navigation_processing"

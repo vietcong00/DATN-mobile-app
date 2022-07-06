@@ -16,4 +16,5 @@ data class DishItem(
     var dish: Food,
     var note: String?,
     var quantity: Int,
-    )
+    var updatedAt: Long,
+)

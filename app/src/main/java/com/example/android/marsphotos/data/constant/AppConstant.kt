@@ -12,4 +12,10 @@ enum class RESPONSE_TYPE {
     nothing,
 }
 
+enum class POSITION_TYPE {
+    chef,
+    waiter,
+    table,
+}
+
 const val TIME_DISPLAY_NOTIFY = 3000L
