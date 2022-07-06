@@ -5,3 +5,11 @@ enum class TYPE_DISH_LIST {
     dishProcessings,
     dishRequests,
 }
+
+enum class RESPONSE_TYPE {
+    success,
+    fail,
+    nothing,
+}
+
+const val TIME_DISPLAY_NOTIFY = 3000L

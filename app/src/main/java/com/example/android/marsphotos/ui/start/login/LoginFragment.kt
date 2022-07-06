@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.EventObserver
 import com.example.android.marsphotos.databinding.FragmentLoginBinding
@@ -46,8 +47,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupObservers() {
-//        viewModel.dataLoading.observe(viewLifecycleOwner,
-//            EventObserver { (activity as MainActivity).showGlobalProgressBar(it) })
+        viewModel.dataLoading.observe(viewLifecycleOwner,
+            EventObserver { (activity as MainActivity).showGlobalProgressBar(it) })
 
         viewModel.snackBarText.observe(viewLifecycleOwner,
             EventObserver { text ->

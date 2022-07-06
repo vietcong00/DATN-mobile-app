@@ -212,8 +212,20 @@ class FirebaseDataSource {
         refToPath("messages/$messagesID").push().setValue(message)
     }
 
-    fun updateDishProcessing(billingId: Int, dishList: MutableList<DishInfo>?) {
-        refToPath("billings/${billingId}/dishs/dishProcessings").setValue(dishList)
+    fun updateDishRequestsOfBilling(
+        billingId: Int,
+        dishList: MutableList<DishInfo>?,
+        b: ((Result<String>) -> Unit)
+    ): Task<DataSnapshot> {
+        val src = TaskCompletionSource<DataSnapshot>()
+        val listener = attachValueListenerToTaskCompletion(src)
+        refToPath("billings/${billingId}/dishs/dishRequests").setValue(dishList)
+            .addOnSuccessListener {
+                b.invoke(Result.Success("Success"))
+            }.addOnFailureListener {
+                b.invoke(Result.Success("Error"))
+            }
+        return src.task
     }
 
     //endregion
@@ -299,6 +311,14 @@ class FirebaseDataSource {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
         refToPath("billings/$billingID/dishs/dishProcessings")
+            .addListenerForSingleValueEvent(listener)
+        return src.task
+    }
+
+    fun loadDishRequestsOfBillingsTask(billingID: Int): Task<DataSnapshot> {
+        val src = TaskCompletionSource<DataSnapshot>()
+        val listener = attachValueListenerToTaskCompletion(src)
+        refToPath("billings/$billingID/dishs/dishRequests")
             .addListenerForSingleValueEvent(listener)
         return src.task
     }

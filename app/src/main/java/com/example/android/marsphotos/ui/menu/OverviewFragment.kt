@@ -9,8 +9,6 @@ import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.databinding.FragmentOverviewBinding
 import com.example.android.marsphotos.pojo.Food
-import com.example.android.marsphotos.pojo.FoodBilling
-import com.example.android.marsphotos.pojo.ReasonCanceled
 
 /**
  * This fragment shows the the status of the Mars photos web services transaction.
@@ -18,19 +16,6 @@ import com.example.android.marsphotos.pojo.ReasonCanceled
 class OverviewFragment : Fragment() {
 
     private val viewModel: OverviewViewModel by viewModels()
-
-    private var foodBillingInit: FoodBilling =
-        FoodBilling(
-            id=0,
-            foodId = 0,
-            billingId = 0,
-            selectedCount = 0,
-            processingCount = 0,
-            doneCount = 0,
-            canceledCount = 0,
-            reasonCanceled= ReasonCanceled.another_reason,
-            note = "",
-        )
 
     /**
      * Inflates the layout with Data Binding, sets its lifecycle owner to the OverviewFragment
@@ -53,17 +38,9 @@ class OverviewFragment : Fragment() {
     }
 
     fun selectProduct(food: Food) {
-        foodBillingInit.foodId = food.id
-        foodBillingInit.billingId = viewModel.billing.value?.id
-
         var detailsFragment =
             fragmentManager?.findFragmentById(R.id.detailFragment) as DetailFragment
-        var foodBilling = viewModel.foodBillings.value?.find { it.foodId == food.id }
-        if (foodBilling != null) {
-            detailsFragment.setProduct(food, foodBilling, false)
-
-        } else {
-            detailsFragment.setProduct(food , foodBillingInit, true)
-        }
+        detailsFragment.setProduct(food)
     }
 }
+

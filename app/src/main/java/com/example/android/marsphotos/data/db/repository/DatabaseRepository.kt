@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.data.db.repository
 
+import android.util.Log
 import com.example.android.marsphotos.data.db.remote.FirebaseDataSource
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceChildObserver
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceValueObserver
@@ -50,8 +51,16 @@ class DatabaseRepository {
         firebaseDatabaseService.updateUserProfileImageUrl(userID, url)
     }
 
-    fun updateDishProcessing(billingId: Int, dishList: MutableList<DishInfo>?) {
-        firebaseDatabaseService.updateDishProcessing(billingId, dishList)
+    fun updateDishRequestsOfBilling(
+        billingId: Int,
+        dishList: MutableList<DishInfo>?,
+        b: ((Result<String>) -> Unit)
+    ) {
+        b.invoke(Result.Loading)
+        firebaseDatabaseService.updateDishRequestsOfBilling(billingId, dishList,b).addOnSuccessListener {
+            b.invoke(Result.Success("Success"))
+        }.addOnFailureListener {
+            b.invoke(Result.Error(it.message)) }
     }
 
     //endregion
@@ -99,6 +108,16 @@ class DatabaseRepository {
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
     }
 
+    fun loadDishRequestsOfBillings(
+        billingID: Int,
+        b: ((Result<MutableList<DishInfo>>) -> Unit)
+    ) {
+        b.invoke(Result.Loading)
+        firebaseDatabaseService.loadDishRequestsOfBillingsTask(billingID).addOnSuccessListener {
+            val dishList = wrapSnapshotToArrayList(DishInfo::class.java, it)
+            b.invoke(Result.Success(dishList))
+        }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
+    }
     //endregion
 
     //region Load List

@@ -10,7 +10,7 @@
         android:id="@+id/navigation_menu"
         android:name="com.example.android.marsphotos.ui.menu.MenuFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_menu"/>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.android.marsphotos.ui.start.login.LoginFragment"

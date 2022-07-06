@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.marsphotos.data.Event
 import com.example.android.marsphotos.data.Result
+import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 
 abstract class DefaultViewModel : ViewModel() {
     protected val mSnackBarText = MutableLiveData<Event<String>>()
@@ -12,6 +13,9 @@ abstract class DefaultViewModel : ViewModel() {
 
     private val mDataLoading = MutableLiveData<Event<Boolean>>()
     val dataLoading: LiveData<Event<Boolean>> = mDataLoading
+
+    protected val _response = MutableLiveData<RESPONSE_TYPE>()
+    val response: LiveData<RESPONSE_TYPE> = _response
 
     protected fun <T> onResult(mutableLiveData: MutableLiveData<T>? = null, result: Result<T>) {
         when (result) {
@@ -28,5 +32,9 @@ abstract class DefaultViewModel : ViewModel() {
                 result.msg?.let { mSnackBarText.value = Event(it) }
             }
         }
+    }
+
+    fun resetResponseType(){
+        _response.value=RESPONSE_TYPE.nothing
     }
 }

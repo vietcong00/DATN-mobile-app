@@ -1,13 +1,16 @@
 package com.example.android.marsphotos.ui.dish
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.App
+import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
+import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.databinding.FragmentDishBinding
 import com.example.android.marsphotos.pojo.DishItem
@@ -58,6 +61,20 @@ class DishFragment : Fragment() {
     }
 
     private fun setupViewModelObservers() {
+        viewModel.response.observe(requireActivity()) {
+            if (viewModel.response.value === RESPONSE_TYPE.success) {
+                (activity as MainActivity).showSuccessNotify(
+                    "Hủy món thành công"
+                )
+                viewModel.resetResponseType()
+            }else if (viewModel.response.value === RESPONSE_TYPE.fail) {
+                (activity as MainActivity).showErrorNotify(
+                    "Hủy món thất bại"
+                )
+                viewModel.resetResponseType()
+            }
+        }
+
         viewModel.dishList.observe(requireActivity()) {
             val dishMap = viewModel.foodMap.value
             var tempList: MutableList<DishItem> = mutableListOf()

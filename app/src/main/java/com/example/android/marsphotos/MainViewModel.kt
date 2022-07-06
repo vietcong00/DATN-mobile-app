@@ -91,4 +91,5 @@ class MainViewModel : ViewModel() {
     private fun stopObservingNotifications() {
         fbRefNotificationsObserver.clear()
     }
+
 }

@@ -22,14 +22,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.android.marsphotos.databinding.FragmentMainBinding
-import com.example.android.marsphotos.util.SharedPreferencesUtil
+import com.example.android.marsphotos.databinding.FragmentMenuBinding
 
 /**
  * [MenuFragment] allows people to click the start button to start an order.
  */
 class MenuFragment : Fragment() {
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentMenuBinding
     private val viewModel by viewModels<OverviewViewModel>()
 
     override fun onCreateView(
@@ -37,7 +36,7 @@ class MenuFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMainBinding.inflate(inflater)
+        binding = FragmentMenuBinding.inflate(inflater)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 

@@ -11,6 +11,8 @@ object SharedPreferencesUtil {
     private const val KEY_USER_ID = "user_info"
     private const val KEY_FOOD_LIST = "food_list"
     private const val KEY_FOOD_MAP = "food_map"
+    private const val KEY_BILLING_ID = "billing_id"
+    private const val KEY_TABLE_ID = "table_map"
 
     private fun getPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE)
@@ -52,5 +54,29 @@ object SharedPreferencesUtil {
         var gson = Gson()
         val foodListString = gson.toJson(foodList)
         getPrefs(context).edit().putString(KEY_FOOD_MAP, foodListString).apply()
+    }
+
+    fun getBillingID(context: Context): String? {
+        return getPrefs(context).getString(KEY_BILLING_ID, null)
+    }
+
+    fun saveBillingID(context: Context, ID: String) {
+        getPrefs(context).edit().putString(KEY_BILLING_ID, ID).apply()
+    }
+
+    fun removeBillingID(context: Context) {
+        getPrefs(context).edit().remove(KEY_BILLING_ID).apply()
+    }
+
+    fun getTableID(context: Context): String? {
+        return getPrefs(context).getString(KEY_TABLE_ID, null)
+    }
+
+    fun saveTableID(context: Context, ID: String) {
+        getPrefs(context).edit().putString(KEY_TABLE_ID, ID).apply()
+    }
+
+    fun removeTableID(context: Context) {
+        getPrefs(context).edit().remove(KEY_TABLE_ID).apply()
     }
 }

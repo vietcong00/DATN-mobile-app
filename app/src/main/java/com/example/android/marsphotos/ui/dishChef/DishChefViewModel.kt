@@ -76,6 +76,7 @@ class DishChefViewModel(private val myUserID: String) : DefaultViewModel() {
         dbRepository.loadAndObserveAllDish(
             fbRefDishProcessingObserver
         ) { result: Result<MutableList<BillingInfo>> ->
+            onResult(null, result)
             if (result is Result.Success) {
                 var dishResult = arrayListOf<DishInfo>()
                 when (dishListType){
