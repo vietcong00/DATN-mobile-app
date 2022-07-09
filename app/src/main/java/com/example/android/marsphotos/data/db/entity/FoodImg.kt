@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.pojo
+package com.example.android.marsphotos.data.db.entity
 
 data class FoodImg (
     val id: Int,

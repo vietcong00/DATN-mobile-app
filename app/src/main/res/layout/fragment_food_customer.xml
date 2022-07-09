@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.android.marsphotos.ui.dish.DishViewModel" />
+            type="com.example.android.marsphotos.ui.foodCustomer.DishViewModel" />
 
     </data>
 

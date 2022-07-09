@@ -2,8 +2,9 @@ package com.example.android.marsphotos.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.android.marsphotos.data.db.entity.Billing
+import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.data.db.entity.User
-import com.example.android.marsphotos.pojo.Food
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -12,7 +13,7 @@ object SharedPreferencesUtil {
     private const val KEY_USER_ID = "user_info"
     private const val KEY_FOOD_LIST = "food_list"
     private const val KEY_FOOD_MAP = "food_map"
-    private const val KEY_BILLING_ID = "billing_id"
+    private const val KEY_BILLING = "billing"
     private const val KEY_TABLE_ID = "table_map"
     private const val KEY_USER = "user"
 
@@ -58,24 +59,25 @@ object SharedPreferencesUtil {
         getPrefs(context).edit().putString(KEY_FOOD_MAP, foodListString).apply()
     }
 
-    fun getBillingID(context: Context): String? {
-        return getPrefs(context).getString(KEY_BILLING_ID, null)
+    fun getBilling(context: Context): Billing? {
+        var gson = Gson()
+        val billingString = getPrefs(context).getString(KEY_BILLING, null)
+        val typeToken = object : TypeToken<Billing>() {}.type
+        return gson.fromJson<Billing>(billingString, typeToken)
     }
 
-    fun saveBillingID(context: Context, ID: String) {
-        getPrefs(context).edit().putString(KEY_BILLING_ID, ID).apply()
+    fun saveBilling(context: Context, billing: Billing) {
+        var gson = Gson()
+        val billingString = gson.toJson(billing)
+        getPrefs(context).edit().putString(KEY_BILLING, billingString).apply()
     }
 
-    fun removeBillingID(context: Context) {
-        getPrefs(context).edit().remove(KEY_BILLING_ID).apply()
+    fun getTableID(context: Context): Int? {
+        return getPrefs(context).getString(KEY_TABLE_ID, null)?.toInt()
     }
 
-    fun getTableID(context: Context): String? {
-        return getPrefs(context).getString(KEY_TABLE_ID, null)
-    }
-
-    fun saveTableID(context: Context, ID: String) {
-        getPrefs(context).edit().putString(KEY_TABLE_ID, ID).apply()
+    fun saveTableID(context: Context, ID: Int?) {
+        getPrefs(context).edit().putString(KEY_TABLE_ID, ID.toString()).apply()
     }
 
     fun removeTableID(context: Context) {

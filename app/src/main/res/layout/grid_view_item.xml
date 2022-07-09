@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="product"
-            type="com.example.android.marsphotos.pojo.Food" />
+            name="food"
+            type="com.example.android.marsphotos.data.db.entity.Food" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -27,7 +27,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                app:imgFood="@{product.foodImg.url}"
+                app:imgFood="@{food.foodImg.url}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:text="agito"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                app:nameProduct="@{product.foodName}" />
+                app:nameProduct="@{food.foodName}" />
 
             <TextView
                 android:id="@+id/price"
@@ -49,7 +49,7 @@
                 android:layout_gravity="center"
                 android:text="agito"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                app:priceProduct="@{product.price}" />
+                app:priceProduct="@{food.price}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 

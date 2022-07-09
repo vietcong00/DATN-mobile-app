@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.marsphotos.data.db.entity.DishItem
 import com.example.android.marsphotos.databinding.ListItemBillingBinding
-import com.example.android.marsphotos.pojo.DishItem
 
 class BillingListAdapter internal constructor(
     private val viewModel: BillingViewModel,
@@ -21,7 +21,7 @@ class BillingListAdapter internal constructor(
             position: Int,
         ) {
             binding.viewmodel = viewModel
-            binding.dish = item
+            binding.dishItem = item
             binding.executePendingBindings()
         }
     }

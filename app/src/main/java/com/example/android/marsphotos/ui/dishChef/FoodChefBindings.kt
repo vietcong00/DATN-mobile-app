@@ -8,7 +8,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.R
-import com.example.android.marsphotos.pojo.DishItem
+import com.example.android.marsphotos.data.db.entity.DishItem
 
 @BindingAdapter("bind_dish_chef_list")
 fun bindDishChefList(listView: RecyclerView, items: List<DishItem>?) {

@@ -1,14 +1,10 @@
 package com.example.android.marsphotos.ui.billing
 
 import android.annotation.SuppressLint
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.example.android.marsphotos.R
-import com.example.android.marsphotos.pojo.DishItem
+import com.example.android.marsphotos.data.db.entity.DishItem
 import com.example.android.marsphotos.util.convertMoney
 
 @BindingAdapter("bind_billing_list")

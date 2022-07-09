@@ -8,11 +8,11 @@
 
         <variable
             name="viewmodel"
-            type="com.example.android.marsphotos.ui.dish.DishViewModel" />
+            type="com.example.android.marsphotos.ui.foodCustomer.DishViewModel" />
 
         <variable
-            name="dish"
-            type="com.example.android.marsphotos.pojo.DishItem" />
+            name="dishItem"
+            type="com.example.android.marsphotos.data.db.entity.DishItem" />
 
         <variable
             name="index"
@@ -20,7 +20,7 @@
 
         <variable
             name="itemDishCanceledListener"
-            type="com.example.android.marsphotos.ui.dish.ItemDishCanceledListener" />
+            type="com.example.android.marsphotos.ui.foodCustomer.ItemDishCanceledListener" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -45,7 +45,7 @@
                     android:id="@+id/imgIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:dish_img="@{dish.dish.foodImg.url}"
+                    app:dish_img="@{dishItem.dish.foodImg.url}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -58,7 +58,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_name="@{dish.dish.foodName}"
+                    app:dish_name="@{dishItem.dish.foodName}"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Display name" />
@@ -70,7 +70,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_updated_at="@{dish.updatedAt}"
+                    app:dish_updated_at="@{dishItem.updatedAt}"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toBottomOf="@+id/foodName"
                     tools:text="Display name" />
@@ -82,7 +82,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_quantity="@{dish.quantity}"
+                    app:dish_quantity="@{dishItem.quantity}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

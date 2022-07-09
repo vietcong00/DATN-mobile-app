@@ -13,8 +13,8 @@ import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.DishInfo
+import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.databinding.FragmentDetailBinding
-import com.example.android.marsphotos.pojo.Food
 import com.example.android.marsphotos.util.convertMoney
 import java.util.*
 
@@ -55,7 +55,8 @@ class DetailFragment : Fragment() {
 
                     viewModel?.createDishRequestsOfBilling(
                         DishInfo(
-                            dishId = 1,
+                            dishId = selectedFood.id,
+                            billingId =1,
                             quantity = selected.toInt(),
                             note = note,
                             updatedAt = Date().time
@@ -73,7 +74,7 @@ class DetailFragment : Fragment() {
         binding.apply {
             inputSelected.setText("", TextView.BufferType.EDITABLE)
             inputNote.setText("", TextView.BufferType.EDITABLE)
-            food.foodImg.url.let {
+            food.foodImg?.url?.let {
                 val imgUri = food.foodImg.url.toUri().buildUpon().scheme("https").build()
                 foodImage.load(imgUri) {
                     placeholder(R.drawable.loading_animation)

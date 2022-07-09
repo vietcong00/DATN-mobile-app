@@ -16,7 +16,6 @@
 package com.example.android.marsphotos.ui.menu
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.databinding.FragmentMenuBinding
 
-/**
- * [MenuFragment] allows people to click the start button to start an order.
- */
 class MenuFragment : Fragment() {
     private lateinit var binding: FragmentMenuBinding
     private val viewModel by viewModels<OverviewViewModel>()
@@ -37,11 +33,7 @@ class MenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMenuBinding.inflate(inflater)
-        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
-
-        // Giving the binding access to the OverviewViewModel
-        // Navigate to entree menu
         return binding.root
     }
 }

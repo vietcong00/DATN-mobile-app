@@ -9,11 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.data.db.remote.FirebaseAuthStateObserver
 import com.example.android.marsphotos.data.db.repository.AuthRepository
 import com.example.android.marsphotos.data.Result
+import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceConnectedObserver
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceValueObserver
 import com.example.android.marsphotos.data.db.repository.DatabaseRepository
 import com.example.android.marsphotos.network.ProductApi
-import com.example.android.marsphotos.pojo.Food
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 

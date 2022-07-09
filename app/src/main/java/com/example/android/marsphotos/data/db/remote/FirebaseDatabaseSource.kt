@@ -1,6 +1,5 @@
 package com.example.android.marsphotos.data.db.remote
 
-import android.util.Log
 import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.*
@@ -192,7 +191,24 @@ class FirebaseDataSource {
     ): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
-        refToPath("billings/${billingId}/dishs/dishRequests").setValue(dishList)
+        refToPath("billings/${billingId}/dishBilling/dishRequests").setValue(dishList)
+            .addOnSuccessListener {
+                b.invoke(Result.Success("Success"))
+            }.addOnFailureListener {
+                b.invoke(Result.Success("Error"))
+            }
+        return src.task
+    }
+
+    fun updateDishsOfBilling(
+        typeDishList: TYPE_DISH_LIST,
+        billingId: Int,
+        dishList: MutableList<DishInfo>?,
+        b: ((Result<String>) -> Unit)
+    ): Task<DataSnapshot> {
+        val src = TaskCompletionSource<DataSnapshot>()
+        val listener = attachValueListenerToTaskCompletion(src)
+        refToPath("billings/${billingId}/dishBilling/${typeDishList}").setValue(dishList)
             .addOnSuccessListener {
                 b.invoke(Result.Success("Success"))
             }.addOnFailureListener {
@@ -283,7 +299,7 @@ class FirebaseDataSource {
     fun loadDishProcessingOfBillingsTask(billingID: Int): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
-        refToPath("billings/$billingID/dishs/dishProcessings")
+        refToPath("billings/$billingID/dishBilling/dishProcessings")
             .addListenerForSingleValueEvent(listener)
         return src.task
     }
@@ -291,7 +307,7 @@ class FirebaseDataSource {
     fun loadDishRequestsOfBillingsTask(billingID: Int): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
-        refToPath("billings/$billingID/dishs/dishRequests")
+        refToPath("billings/$billingID/dishBilling/dishRequests")
             .addListenerForSingleValueEvent(listener)
         return src.task
     }
@@ -340,7 +356,7 @@ class FirebaseDataSource {
         val listener = attachValueListenerToBlockWithList(resultClassName, b)
         firebaseReferenceValueObserver.start(
             listener,
-            refToPath("billings/$billingID/dishs/dishProcessings")
+            refToPath("billings/$billingID/dishBilling/dishProcessings")
         )
     }
 
@@ -354,7 +370,7 @@ class FirebaseDataSource {
         val listener = attachValueListenerToBlockWithList(resultClassName, b)
         firebaseReferenceValueObserver.start(
             listener,
-            refToPath("billings/$billingID/dishs/$typeDishList")
+            refToPath("billings/$billingID/dishBilling/$typeDishList")
         )
     }
 

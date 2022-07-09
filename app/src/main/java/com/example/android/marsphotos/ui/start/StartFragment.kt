@@ -13,7 +13,6 @@ import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.EventObserver
 import com.example.android.marsphotos.data.constant.POSITION_TYPE
 import com.example.android.marsphotos.databinding.FragmentStartBinding
-import com.example.android.marsphotos.pojo.DishItem
 import com.example.android.marsphotos.util.SharedPreferencesUtil
 
 class StartFragment : Fragment() {
@@ -63,7 +62,7 @@ class StartFragment : Fragment() {
 
     private fun navigateDirectlyToMenu() {
         (activity as MainActivity).changeNavCustomer()
-            findNavController().navigate(R.id.action_startFragment_to_navigation_menu)
+            findNavController().navigate(R.id.action_startFragment_to_startSelectDishFragment)
     }
 
     private fun navigateDirectlyToDishChef() {

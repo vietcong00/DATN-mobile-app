@@ -18,10 +18,27 @@ class DatabaseRepository {
         b: ((Result<String>) -> Unit)
     ) {
         b.invoke(Result.Loading)
-        firebaseDatabaseService.updateDishRequestsOfBilling(billingId, dishList,b).addOnSuccessListener {
-            b.invoke(Result.Success("Success"))
-        }.addOnFailureListener {
-            b.invoke(Result.Error(it.message)) }
+        firebaseDatabaseService.updateDishRequestsOfBilling(billingId, dishList, b)
+            .addOnSuccessListener {
+                b.invoke(Result.Success("Success"))
+            }.addOnFailureListener {
+            b.invoke(Result.Error(it.message))
+        }
+    }
+
+    fun updateDishOfBilling(
+        typeDishList: TYPE_DISH_LIST,
+        billingId: Int,
+        dishList: MutableList<DishInfo>?,
+        b: ((Result<String>) -> Unit)
+    ) {
+        b.invoke(Result.Loading)
+        firebaseDatabaseService.updateDishsOfBilling(typeDishList, billingId, dishList, b)
+            .addOnSuccessListener {
+                b.invoke(Result.Success("Success"))
+            }.addOnFailureListener {
+            b.invoke(Result.Error(it.message))
+        }
     }
 
     //endregion

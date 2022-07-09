@@ -31,8 +31,13 @@ class StartViewModel : DefaultViewModel() {
             if (result is Result.Success) {
                 _position.value = result.data?.info?.position
                 result.data?.let {
-                    SharedPreferencesUtil.saveUser(App.application.applicationContext,
+                    SharedPreferencesUtil.saveUser(
+                        App.application.applicationContext,
                         it
+                    )
+                    SharedPreferencesUtil.saveTableID(
+                        App.application.applicationContext,
+                        it.info.tableId
                     )
                 }
             }

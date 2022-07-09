@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.ui.dishChef
+package com.example.android.marsphotos.ui.foodCustomer
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,29 +7,28 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
-import com.example.android.marsphotos.databinding.ListItemDishBinding
-import com.example.android.marsphotos.databinding.ListItemDishChefBinding
-import com.example.android.marsphotos.pojo.DishItem
+import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.databinding.ListItemFoodCustomerBinding
 
-class DishChefListAdapter internal constructor(
-    private val viewModel: DishChefViewModel,
-    private val itemDishActionListener: ItemDishActionListener,
-    ) :
-    ListAdapter<DishItem, DishChefListAdapter.ViewHolder>(UserInfoDiffCallback()) {
+class DishListAdapter internal constructor(
+    private val viewModel: DishViewModel,
+    private val itemDishCanceledListener: ItemDishCanceledListener,
+) :
+    ListAdapter<DishItem, DishListAdapter.ViewHolder>(UserInfoDiffCallback()) {
 
-    class ViewHolder(private val binding: ListItemDishChefBinding) :
+    class ViewHolder(private val binding: ListItemFoodCustomerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            viewModel: DishChefViewModel,
+            viewModel: DishViewModel,
             item: DishItem,
             position: Int,
-            itemActionListener: ItemDishActionListener,
+            itemCanceledListener: ItemDishCanceledListener
         ) {
             binding.viewmodel = viewModel
-            binding.dish = item
+            binding.dishItem = item
             binding.index = position
-            binding.itemDishActionListener = itemActionListener
-            if(viewModel.dishListType == TYPE_DISH_LIST.dishDones) {
+            binding.itemDishCanceledListener = itemCanceledListener
+            if(viewModel.dishListType == TYPE_DISH_LIST.dishRequests) {
                 binding.rightSwipe.visibility = View.VISIBLE
             } else{
                 binding.rightSwipe.visibility = View.GONE
@@ -39,12 +38,12 @@ class DishChefListAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(viewModel, getItem(position), position, itemDishActionListener)
+        holder.bind(viewModel, getItem(position), position, itemDishCanceledListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ListItemDishChefBinding.inflate(layoutInflater, parent, false)
+        val binding = ListItemFoodCustomerBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 }
@@ -65,6 +64,6 @@ class UserInfoDiffCallback : DiffUtil.ItemCallback<DishItem>() {
     }
 }
 
-class ItemDishActionListener(val clickListener: (index : Int) -> Unit) {
-    fun clickAction(index : Int) = clickListener(index)
+class ItemDishCanceledListener(val clickListener: (index : Int) -> Unit) {
+    fun canceled(index : Int) = clickListener(index)
 }

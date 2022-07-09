@@ -1,8 +1,10 @@
-package com.example.android.marsphotos.pojo
+package com.example.android.marsphotos.data.db.entity
 
+import com.google.firebase.database.PropertyName
 import java.util.*
 
 enum class BillingStatus {
+    wait_for_select_food,
     eating,
     wait_for_pay,
     canceled,
@@ -20,6 +22,11 @@ enum class ReasonCanceled {
     change_to_another,
     another_reason,
 }
+
+data class BillingInfo(
+    @get:PropertyName("billingId") @set:PropertyName("billingId") var billingId: Int? = 0,
+    @get:PropertyName("dishBilling") @set:PropertyName("dishBilling") var dishs: DishBilling? = null,
+)
 
 data class Billing(
     val id: Int,

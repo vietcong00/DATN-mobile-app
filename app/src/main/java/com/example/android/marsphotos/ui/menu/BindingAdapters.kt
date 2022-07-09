@@ -8,10 +8,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.R
-import com.example.android.marsphotos.pojo.Food
+import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.util.convertMoney
-import java.text.NumberFormat
-import java.util.*
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView,

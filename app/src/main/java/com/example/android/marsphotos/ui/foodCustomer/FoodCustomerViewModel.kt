@@ -1,17 +1,18 @@
-package com.example.android.marsphotos.ui.dish
+package com.example.android.marsphotos.ui.foodCustomer
 
-import android.util.Log
 import androidx.lifecycle.*
+import com.example.android.marsphotos.App
 import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.DishInfo
+import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceValueObserver
 import com.example.android.marsphotos.data.db.repository.DatabaseRepository
 import com.example.android.marsphotos.network.ProductApi
-import com.example.android.marsphotos.pojo.DishItem
-import com.example.android.marsphotos.pojo.Food
 import com.example.android.marsphotos.ui.DefaultViewModel
+import com.example.android.marsphotos.util.SharedPreferencesUtil
 import kotlinx.coroutines.launch
 
 class DishViewModelFactory(private val myUserID: String) :
@@ -22,6 +23,7 @@ class DishViewModelFactory(private val myUserID: String) :
 }
 
 class DishViewModel(private val myUserID: String) : DefaultViewModel() {
+    var billingId = 0
     var dishListType = TYPE_DISH_LIST.dishRequests
     private val dbRepository: DatabaseRepository = DatabaseRepository()
 
@@ -39,6 +41,10 @@ class DishViewModel(private val myUserID: String) : DefaultViewModel() {
     init {
         loadDishs()
         getProductList()
+        val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
+        if (billing != null) {
+            billingId = billing.id
+        }
     }
 
     private fun getProductList() {
@@ -56,7 +62,7 @@ class DishViewModel(private val myUserID: String) : DefaultViewModel() {
     fun canceled(index: Int) {
         _dishList.value?.removeAt(index)
         dbRepository.updateDishRequestsOfBilling(
-            1,
+            billingId,
             _dishList.value
         ) { result: Result<String> ->
             onResult(null, result)
@@ -76,7 +82,7 @@ class DishViewModel(private val myUserID: String) : DefaultViewModel() {
 
     fun loadDishs() {
         dbRepository.loadAndObserveDishsOfBillings(
-            1,
+            billingId,
             dishListType,
             fbRefDishProcessingObserver
         ) { result: Result<MutableList<DishInfo>> ->

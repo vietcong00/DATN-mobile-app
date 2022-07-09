@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.App
+import com.example.android.marsphotos.data.db.entity.DishItem
 import com.example.android.marsphotos.databinding.FragmentBillingBinding
-import com.example.android.marsphotos.pojo.DishItem
 
 class BillingFragment : Fragment() {
 
@@ -34,7 +34,6 @@ class BillingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupListAdapter()
         setupViewModelObservers()
-        setupViewEvent()
     }
 
     private fun setupListAdapter() {
@@ -56,16 +55,18 @@ class BillingFragment : Fragment() {
 
             viewModel.dishList.value?.forEach {
                 val item = dishMap?.get(it.dishId)
-                    ?.let { it1 -> DishItem(it1, it.note.toString(),it.quantity,it.updatedAt) }
+                    ?.let { it1 ->
+                        DishItem(
+                            it1,
+                            it.billingId,
+                            it.note.toString(),
+                            it.quantity,
+                            it.updatedAt
+                        )
+                    }
                 item?.let { it1 -> tempList.add(it1) }
             }
             viewModel.setDishItems(tempList)
-        }
-    }
-
-    private fun setupViewEvent() {
-        viewDataBinding.apply {
-
         }
     }
 }

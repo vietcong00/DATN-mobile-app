@@ -72,7 +72,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateDirectlyToMenu() {
-        findNavController().navigate(R.id.action_loginFragment_to_navigation_menu)
+        findNavController().navigate(R.id.action_loginFragment_to_startSelectDishFragment)
     }
 
     private fun navigateDirectlyToDishChef() {

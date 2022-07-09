@@ -1,34 +1,34 @@
-package com.example.android.marsphotos.ui.dishChef
+package com.example.android.marsphotos.ui.foodCustomer
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.App
+import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
+import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
-import com.example.android.marsphotos.databinding.FragmentDishBinding
-import com.example.android.marsphotos.databinding.FragmentDishChefBinding
-import com.example.android.marsphotos.pojo.DishItem
+import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.databinding.FragmentFoodCustomerBinding
 
-class DishChefFragment : Fragment() {
+class FoodCustomerFragment : Fragment() {
 
-    private val viewModel: DishChefViewModel by viewModels {
-        DishChefViewModelFactory(
+    private val viewModel: DishViewModel by viewModels {
+        DishViewModelFactory(
             App.myUserID
         )
     }
-    private lateinit var viewDataBinding: FragmentDishChefBinding
-    private lateinit var listAdapter: DishChefListAdapter
+    private lateinit var viewDataBinding: FragmentFoodCustomerBinding
+    private lateinit var listAdapter: DishListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = FragmentDishChefBinding.inflate(inflater, container, false)
+        viewDataBinding = FragmentFoodCustomerBinding.inflate(inflater, container, false)
             .apply { viewmodel = viewModel }
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         return viewDataBinding.root
@@ -49,8 +49,8 @@ class DishChefFragment : Fragment() {
     private fun setupListAdapter() {
         val viewModel = viewDataBinding.viewmodel
         if (viewModel != null) {
-            listAdapter = DishChefListAdapter(viewModel,
-                ItemDishActionListener { item ->
+            listAdapter = DishListAdapter(viewModel,
+                ItemDishCanceledListener { item ->
                     viewModel.canceled(item)
                 })
             viewDataBinding.recyclerViewQrCodeStudio.adapter = listAdapter
@@ -60,13 +60,35 @@ class DishChefFragment : Fragment() {
     }
 
     private fun setupViewModelObservers() {
+        viewModel.response.observe(requireActivity()) {
+            if (viewModel.response.value === RESPONSE_TYPE.success) {
+                (activity as MainActivity).showSuccessNotify(
+                    "Hủy món thành công"
+                )
+                viewModel.resetResponseType()
+            } else if (viewModel.response.value === RESPONSE_TYPE.fail) {
+                (activity as MainActivity).showErrorNotify(
+                    "Hủy món thất bại"
+                )
+                viewModel.resetResponseType()
+            }
+        }
+
         viewModel.dishList.observe(requireActivity()) {
             val dishMap = viewModel.foodMap.value
             var tempList: MutableList<DishItem> = mutableListOf()
 
             viewModel.dishList.value?.forEach {
                 val item = dishMap?.get(it.dishId)
-                    ?.let { it1 -> DishItem(it1, it.note.toString(),it.quantity,it.updatedAt) }
+                    ?.let { it1 ->
+                        DishItem(
+                            it1,
+                            it.billingId,
+                            it.note.toString(),
+                            it.quantity,
+                            it.updatedAt
+                        )
+                    }
                 item?.let { it1 -> tempList.add(it1) }
             }
             viewModel.setDishItems(tempList)

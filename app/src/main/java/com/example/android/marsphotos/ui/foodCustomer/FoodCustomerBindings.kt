@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.ui.dish
+package com.example.android.marsphotos.ui.foodCustomer
 
 import android.annotation.SuppressLint
 import android.widget.ImageView
@@ -8,9 +8,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.R
-import com.example.android.marsphotos.pojo.DishItem
+import com.example.android.marsphotos.data.db.entity.DishItem
 import com.example.android.marsphotos.util.convertDateTime
-import com.example.android.marsphotos.util.convertMoney
 
 @BindingAdapter("bind_dish_list")
 fun bindDishList(listView: RecyclerView, items: List<DishItem>?) {

@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.databinding.GridViewItemBinding
-import com.example.android.marsphotos.pojo.Food
 
 class ProductGridAdapter(
     private val overviewFragment: OverviewFragment
@@ -28,7 +28,7 @@ class ProductGridAdapter(
     class MarsPhotoViewHolder(private var binding: GridViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Food) {
-            binding.product = product
+            binding.food = product
             binding.executePendingBindings()
         }
         val view = binding.itemLayout

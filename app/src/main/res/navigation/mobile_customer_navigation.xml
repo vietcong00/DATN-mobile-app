@@ -17,9 +17,6 @@
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_navigation_menu"
-            app:destination="@id/navigation_menu" />
-        <action
             android:id="@+id/action_loginFragment_to_navigation_processing"
             app:destination="@id/navigation_processing" />
         <action
@@ -28,6 +25,9 @@
         <action
             android:id="@+id/action_loginFragment_to_navigation_dish_chef"
             app:destination="@id/navigation_dish_chef" />
+        <action
+            android:id="@+id/action_loginFragment_to_startSelectDishFragment"
+            app:destination="@id/startSelectDishFragment" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"
@@ -38,9 +38,6 @@
             android:id="@+id/action_startFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_startFragment_to_navigation_menu"
-            app:destination="@id/navigation_menu" />
-        <action
             android:id="@+id/action_startFragment_to_billingFragment"
             app:destination="@id/navigation_billing" />
         <action
@@ -49,12 +46,15 @@
         <action
             android:id="@+id/action_startFragment_to_navigation_processing"
             app:destination="@id/navigation_processing" />
+        <action
+            android:id="@+id/action_startFragment_to_startSelectDishFragment"
+            app:destination="@id/startSelectDishFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_processing"
-        android:name="com.example.android.marsphotos.ui.dish.DishFragment"
+        android:name="com.example.android.marsphotos.ui.foodCustomer.FoodCustomerFragment"
         android:label="ProcessingFragment"
-        tools:layout="@layout/fragment_dish"
+        tools:layout="@layout/fragment_food_customer"
         />
     <fragment
         android:id="@+id/navigation_billing"
@@ -63,8 +63,17 @@
         tools:layout="@layout/fragment_billing"/>
     <fragment
         android:id="@+id/navigation_dish_chef"
-        android:name="com.example.android.marsphotos.ui.dishChef.DishChefFragment"
+        android:name="com.example.android.marsphotos.ui.dishChef.FoodChefFragment"
         android:label="DishChefFragment"
         tools:layout="@layout/list_item_dish_chef"/>
+    <fragment
+        android:id="@+id/startSelectDishFragment"
+        android:name="com.example.android.marsphotos.ui.startSelectDish.StartSelectDishFragment"
+        android:label="StartSelectDishFragment"
+        tools:layout="@layout/fragment_start_select_food">
+        <action
+            android:id="@+id/action_startSelectDishFragment_to_navigation_menu"
+            app:destination="@id/navigation_menu" />
+    </fragment>
 
 </navigation>
