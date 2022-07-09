@@ -17,6 +17,9 @@ abstract class DefaultViewModel : ViewModel() {
     protected val _response = MutableLiveData<RESPONSE_TYPE>()
     val response: LiveData<RESPONSE_TYPE> = _response
 
+    protected val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
     protected fun <T> onResult(mutableLiveData: MutableLiveData<T>? = null, result: Result<T>) {
         when (result) {
             is Result.Loading -> mDataLoading.value = Event(true)

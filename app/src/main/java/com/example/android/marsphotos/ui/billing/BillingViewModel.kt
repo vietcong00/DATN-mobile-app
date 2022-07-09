@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.android.marsphotos.App
 import com.example.android.marsphotos.data.Result
+import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.BillingInfo
 import com.example.android.marsphotos.data.db.entity.FoodInfo
 import com.example.android.marsphotos.data.db.entity.FoodItem
@@ -48,7 +49,7 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
     private fun getProductList() {
         viewModelScope.launch {
             try {
-                _foods.value = ProductApi.retrofitService.getProduct().data.items
+                _foods.value = ProductApi.retrofitService.getAllFoods().data.items
                 _foodMap.value = mutableMapOf()
                 (_foods.value as ArrayList<Food>).forEach { _foodMap.value!![it.id] = it }
             } catch (e: Exception) {
@@ -62,14 +63,19 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
         viewModelScope.launch {
             try {
                 val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
-                val prepareToPayRequest = PrepareToPayRequest(foodList=_foodList.value)
+                val prepareToPayRequest = PrepareToPayRequest(foodList = _foodList.value)
                 var response =
-                    ProductApi.retrofitService.prepareToPay(billing?.id ?: 0,prepareToPayRequest)
+                    ProductApi.retrofitService.prepareToPay(billing?.id ?: 0, prepareToPayRequest)
                 if (response.isSuccess()) {
-
+                    _response.value = RESPONSE_TYPE.success
+                } else {
+                    _message.value = "Error!"
+                    _response.value = RESPONSE_TYPE.fail
                 }
             } catch (e: Exception) {
-                Log.e("error",e.toString())
+                Log.e("error", e.toString())
+                _message.value = e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
     }
@@ -81,29 +87,41 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
     }
 
     private fun loadAllFoodOfBilling() {
-        val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
-        if (billing != null) {
-            dbRepository.loadFoodOfBillings(billing.id) { result: Result<BillingInfo> ->
-                if (result is Result.Success) {
-                    var foodTotal: ArrayList<FoodInfo>? = result.data?.foods?.foodDones
-                    if (foodTotal == null) {
-                        foodTotal = arrayListOf()
-                    }
-                    result.data?.foods?.foodProcessings?.forEach {
-                        var found = false
-                        for (index in foodTotal.indices) {
-                            if (foodTotal[index].foodId === it.foodId) {
-                                foodTotal[index].quantity += it.quantity
-                                found = true
-                                break
+        viewModelScope.launch {
+            try {
+                val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
+                if (billing != null) {
+                    dbRepository.loadFoodOfBillings(billing.id) { result: Result<BillingInfo> ->
+                        if (result is Result.Success) {
+                            var foodTotal: ArrayList<FoodInfo>? = result.data?.foods?.foodDones
+                            if (foodTotal == null) {
+                                foodTotal = arrayListOf()
                             }
-                        }
-                        if (!found) {
-                            foodTotal.add(it)
+                            result.data?.foods?.foodProcessings?.forEach {
+                                var found = false
+                                for (index in foodTotal.indices) {
+                                    if (foodTotal[index].foodId === it.foodId) {
+                                        foodTotal[index].quantity += it.quantity
+                                        found = true
+                                        break
+                                    }
+                                }
+                                if (!found) {
+                                    foodTotal.add(it)
+                                }
+                            }
+                            _foodList.value = foodTotal
+                        } else if(result is Result.Error){
+                            _message.value = "Error when get data!"
+                            _response.value = RESPONSE_TYPE.fail
                         }
                     }
-                    _foodList.value = foodTotal
                 }
+            }
+            catch (e: Exception) {
+                Log.e("error", e.toString())
+                _message.value=e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
     }

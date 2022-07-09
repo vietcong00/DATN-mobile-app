@@ -91,13 +91,11 @@ class DetailFragment : Fragment() {
         viewModel.response.observe(requireActivity()) {
             if (viewModel.response.value === RESPONSE_TYPE.success) {
                 (activity as MainActivity).showSuccessNotify(
-                    "Đặt món thành công"
-                )
+                    viewModel.message.value.toString()                )
                 viewModel.resetResponseType()
             }else if (viewModel.response.value === RESPONSE_TYPE.fail) {
                 (activity as MainActivity).showErrorNotify(
-                    "Đặt món thất bại"
-                )
+                    viewModel.message.value.toString()                )
                 viewModel.resetResponseType()
             }
         }

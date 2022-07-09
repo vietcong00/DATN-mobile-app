@@ -7,12 +7,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-
 private val gson = Gson()
 
 //Add the following constant for the base URL for the web service.
 private const val BASE_URL =
-    "https://50c4-1-55-211-129.ap.ngrok.io/api/v1/common/"
+    "https://e76f-1-55-211-129.ap.ngrok.io/api/v1/common/"
 
 val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create(gson))
@@ -21,12 +20,12 @@ val retrofit = Retrofit.Builder()
 
 interface ProductApiService {
     @GET("food")
-    suspend fun getProduct(): Response<IGetListResponse<Food>>
+    suspend fun getAllFoods(): Response<IGetListResponse<Food>>
 
     @GET("billing/table/{id}")
-    suspend fun getBilling(@Path("id") id: Int): Response<Billing>
+    suspend fun getBillingRelativeTable(@Path("id") id: Int): Response<Billing>
 
-    @PATCH("billing/{id}")
+    @POST("billing/{id}/food")
     suspend fun prepareToPay(
         @Path("id") id: Int,
         @Body prepareToPayRequest: PrepareToPayRequest

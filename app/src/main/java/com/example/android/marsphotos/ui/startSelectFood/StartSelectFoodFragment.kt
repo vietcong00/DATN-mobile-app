@@ -12,9 +12,6 @@ import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.databinding.FragmentStartSelectFoodBinding
 
-/**
- * This fragment shows the the status of the Mars photos web services transaction.
- */
 class StartSelectFoodFragment : Fragment() {
     private lateinit var binding: FragmentStartSelectFoodBinding
     private val viewModel: StartSelectFoodViewModel by viewModels()
@@ -45,7 +42,7 @@ class StartSelectFoodFragment : Fragment() {
                 viewModel.resetResponseType()
             }else if (viewModel.response.value === RESPONSE_TYPE.fail) {
                 (activity as MainActivity).showErrorNotify(
-                    "Đặt món thất bại"
+                    viewModel.message.value.toString()
                 )
                 viewModel.resetResponseType()
             }

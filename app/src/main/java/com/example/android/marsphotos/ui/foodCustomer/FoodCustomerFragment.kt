@@ -63,13 +63,11 @@ class FoodCustomerFragment : Fragment() {
         viewModel.response.observe(requireActivity()) {
             if (viewModel.response.value === RESPONSE_TYPE.success) {
                 (activity as MainActivity).showSuccessNotify(
-                    "Hủy món thành công"
-                )
+                    viewModel.message.value.toString()                )
                 viewModel.resetResponseType()
             } else if (viewModel.response.value === RESPONSE_TYPE.fail) {
                 (activity as MainActivity).showErrorNotify(
-                    "Hủy món thất bại"
-                )
+                    viewModel.message.value.toString()                )
                 viewModel.resetResponseType()
             }
         }

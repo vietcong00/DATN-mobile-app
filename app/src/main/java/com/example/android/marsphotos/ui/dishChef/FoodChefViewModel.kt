@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.ui.foodChef
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.android.marsphotos.App
 import com.example.android.marsphotos.data.Result
@@ -50,67 +51,89 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
     private fun getProductList() {
         viewModelScope.launch {
             try {
-                _foods.value = ProductApi.retrofitService.getProduct().data.items
+                _foods.value = ProductApi.retrofitService.getAllFoods().data.items
                 _foodMap.value = mutableMapOf()
                 (_foods.value as ArrayList<Food>).forEach { _foodMap.value!![it.id] = it }
             } catch (e: Exception) {
                 _foods.value = mutableListOf()
                 _foodMap.value = mutableMapOf()
+                Log.e("error", e.toString())
+                _message.value=e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
     }
 
     fun changeStatusFood(food: FoodItem) {
-        val bodyFoodListRemove = _foodList.value?.filter {
-            it.billingId === food.billingId && it.foodId !== food.food.id && it.updatedAt !== food.updatedAt
-        }
-        val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
-        if (billing != null) {
-            dbRepository.loadAndObserveFoodsOfBillings(
-                billing.id,
-                foodListType,
-                fbRefFoodProcessingObserver
-            ) { resultGetData: Result<MutableList<FoodInfo>> ->
-                onResult(_foodList, resultGetData)
-                if (resultGetData is Result.Success) {
-                    var bodyFoodListAdd = mutableListOf<FoodInfo>()
-                    if(!resultGetData.data.isNullOrEmpty()){
-                        bodyFoodListAdd = resultGetData.data
-                    }
-                    bodyFoodListAdd.add( FoodInfo(
-                        foodId = food.food.id,
-                        billing.id,
-                        quantity = food.quantity,
-                        note = food.note,
-                        updatedAt = Date().time
-                    ))
-                    var foodTypeAdd= TYPE_DISH_LIST.foodRequests
-                    when (foodListType){
-                        TYPE_DISH_LIST.foodRequests->foodTypeAdd=TYPE_DISH_LIST.foodProcessings
-                        TYPE_DISH_LIST.foodProcessings->foodTypeAdd=TYPE_DISH_LIST.foodDones
-                    }
-                    dbRepository.updateFoodOfBilling(
-                        foodTypeAdd,
-                        billing.id,
-                        bodyFoodListAdd
-                    ) {
+        viewModelScope.launch {
+            try {
+                val bodyFoodListRemove = _foodList.value?.filter {
+                    it.billingId === food.billingId && it.foodId !== food.food.id && it.updatedAt !== food.updatedAt
+                }
+                dbRepository.loadAndObserveFoodsOfBillings(
+                    food.billingId,
+                    foodListType,
+                    fbRefFoodProcessingObserver
+                ) { resultGetData: Result<MutableList<FoodInfo>> ->
+                    onResult(_foodList, resultGetData)
+                    if (resultGetData is Result.Success) {
+                        var bodyFoodListAdd = mutableListOf<FoodInfo>()
+                        if (!resultGetData.data.isNullOrEmpty()) {
+                            bodyFoodListAdd = resultGetData.data
+                        }
+                        bodyFoodListAdd.add(
+                            FoodInfo(
+                                foodId = food.food.id,
+                                food.billingId,
+                                quantity = food.quantity,
+                                note = food.note,
+                                updatedAt = Date().time
+                            )
+                        )
+                        var foodTypeAdd = TYPE_DISH_LIST.foodRequests
+                        when (foodListType) {
+                            TYPE_DISH_LIST.foodRequests -> foodTypeAdd =
+                                TYPE_DISH_LIST.foodProcessings
+                            TYPE_DISH_LIST.foodProcessings -> foodTypeAdd =
+                                TYPE_DISH_LIST.foodDones
+                        }
                         dbRepository.updateFoodOfBilling(
-                            foodListType,
-                            billing.id,
-                            bodyFoodListRemove as MutableList<FoodInfo>
-                        ) { resultRemove: Result<String> ->
-                            onResult(null, resultRemove)
-                            if (resultRemove is Result.Success) {
-                                _response.value = RESPONSE_TYPE.success
-                            } else if (resultRemove is Result.Error){
+                            foodTypeAdd,
+                            food.billingId,
+                            bodyFoodListAdd
+                        ) { resultAdd: Result<String> ->
+                            if (resultAdd is Result.Success) {
+                                dbRepository.updateFoodOfBilling(
+                                    foodListType,
+                                    food.billingId,
+                                    bodyFoodListRemove as MutableList<FoodInfo>
+                                ) { resultRemove: Result<String> ->
+                                    onResult(null, resultRemove)
+                                    if (resultRemove is Result.Success) {
+                                        _message.value = "Success!"
+                                        _response.value = RESPONSE_TYPE.success
+                                    } else if (resultRemove is Result.Error) {
+                                        _message.value = "Error when remove data!"
+                                        _response.value = RESPONSE_TYPE.fail
+                                    }
+                                }
+                            } else if (resultAdd is Result.Error) {
+                                _message.value = "Error when add data!"
                                 _response.value = RESPONSE_TYPE.fail
                             }
                         }
+                    } else if (resultGetData is Result.Error) {
+                        _message.value = "Error when get data!"
+                        _response.value = RESPONSE_TYPE.fail
                     }
                 }
+                loadFoods()
+            } catch (e: Exception) {
+                Log.e("error", e.toString())
+                _message.value = e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
-        loadFoods()
     }
 
     override fun onCleared() {
@@ -119,30 +142,41 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
     }
 
     fun loadFoods() {
-        dbRepository.loadAndObserveAllFood(
-            fbRefFoodProcessingObserver
-        ) { result: Result<MutableList<BillingInfo>> ->
-            onResult(null, result)
-            if (result is Result.Success) {
-                var foodResult = arrayListOf<FoodInfo>()
-                when (foodListType) {
-                    TYPE_DISH_LIST.foodRequests -> {
-                        result.data?.forEach {
-                            it.foods?.foodRequests?.let { it1 -> foodResult.addAll(it1) }
+        viewModelScope.launch {
+            try {
+                dbRepository.loadAndObserveAllFood(
+                    fbRefFoodProcessingObserver
+                ) { result: Result<MutableList<BillingInfo>> ->
+                    onResult(null, result)
+                    if (result is Result.Success) {
+                        var foodResult = arrayListOf<FoodInfo>()
+                        when (foodListType) {
+                            TYPE_DISH_LIST.foodRequests -> {
+                                result.data?.forEach {
+                                    it.foods?.foodRequests?.let { it1 -> foodResult.addAll(it1) }
+                                }
+                            }
+                            TYPE_DISH_LIST.foodProcessings -> {
+                                result.data?.forEach {
+                                    it.foods?.foodProcessings?.let { it1 -> foodResult.addAll(it1) }
+                                }
+                            }
+                            TYPE_DISH_LIST.foodDones -> {
+                                result.data?.forEach {
+                                    it.foods?.foodDones?.let { it1 -> foodResult.addAll(it1) }
+                                }
+                            }
                         }
-                    }
-                    TYPE_DISH_LIST.foodProcessings -> {
-                        result.data?.forEach {
-                            it.foods?.foodProcessings?.let { it1 -> foodResult.addAll(it1) }
-                        }
-                    }
-                    TYPE_DISH_LIST.foodDones -> {
-                        result.data?.forEach {
-                            it.foods?.foodDones?.let { it1 -> foodResult.addAll(it1) }
-                        }
+                        _foodList.value = foodResult
+                    } else if(result is Result.Error){
+                        _message.value = "Error when get data!"
+                        _response.value = RESPONSE_TYPE.fail
                     }
                 }
-                _foodList.value = foodResult
+            } catch (e: Exception) {
+                Log.e("error", e.toString())
+                _message.value = e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
     }

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.App
-import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.Billing
@@ -43,43 +42,58 @@ class OverviewViewModel : DefaultViewModel() {
     private fun getProductList() {
         viewModelScope.launch {
             try {
-                _products.value = ProductApi.retrofitService.getProduct().data.items
+                _products.value = ProductApi.retrofitService.getAllFoods().data.items
             } catch (e: Exception) {
                 _products.value = listOf()
+                _message.value = "Error when get data!"
+                _response.value = RESPONSE_TYPE.fail
             }
         }
     }
 
-    fun createFoodRequestsOfBilling(foodInfo: FoodInfo): Boolean {
-        var isSuccess = false
-        val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
-        if (billing != null) {
-            dbRepository.loadFoodRequestsOfBillings(billingID = billing.id) { result: Result<MutableList<FoodInfo>> ->
-                onResult(null, result)
-                if (result is Result.Success) {
-                    var body = mutableListOf<FoodInfo>()
-                    if (result.data !== null) {
-                        body = result.data
-                    }
-                    body.add(foodInfo)
-                    dbRepository.updateFoodRequestsOfBilling(
-                        billing.id,
-                        body
-                    ) { resultUpdate: Result<String> ->
-                        onResult(null, resultUpdate)
-                        if (resultUpdate is Result.Success) {
-                            _response.value = RESPONSE_TYPE.success
-                        } else if (resultUpdate is Result.Error) {
+    fun createFoodRequestsOfBilling(foodInfo: FoodInfo) {
+        viewModelScope.launch {
+            try {
+                var isSuccess = false
+                val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
+                if (billing != null) {
+                    dbRepository.loadFoodRequestsOfBillings(billingID = billing.id) { result: Result<MutableList<FoodInfo>> ->
+                        onResult(null, result)
+                        if (result is Result.Success) {
+                            var body = mutableListOf<FoodInfo>()
+                            if (result.data !== null) {
+                                body = result.data
+                            }
+                            body.add(foodInfo)
+                            dbRepository.updateFoodRequestsOfBilling(
+                                billing.id,
+                                body
+                            ) { resultUpdate: Result<String> ->
+                                onResult(null, resultUpdate)
+                                if (resultUpdate is Result.Success) {
+                                    _message.value = "Success!"
+                                    _response.value = RESPONSE_TYPE.success
+                                } else if (resultUpdate is Result.Error) {
+                                    _message.value = "Error when choosing food!"
+                                    _response.value = RESPONSE_TYPE.fail
+                                }
+                            }
+
+                        } else if (result is Result.Error) {
+                            _message.value = "Error when get data!"
                             _response.value = RESPONSE_TYPE.fail
                         }
-                    }
 
-                } else if (result is Result.Error) {
+                    }
+                } else {
+                    _message.value = "Billing does not exist!"
                     _response.value = RESPONSE_TYPE.fail
                 }
-
+            } catch (e: Exception) {
+                Log.e("error", e.toString())
+                _message.value = e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
-        return isSuccess
     }
 }

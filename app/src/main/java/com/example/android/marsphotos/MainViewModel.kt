@@ -1,7 +1,5 @@
 package com.example.android.marsphotos
 
-import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +39,7 @@ class MainViewModel : ViewModel() {
     private fun getProductList() {
         viewModelScope.launch {
             try {
-                _foods.value = ProductApi.retrofitService.getProduct().data.items
+                _foods.value = ProductApi.retrofitService.getAllFoods().data.items
                 _foodMap.value = mutableMapOf();
                 (_foods.value as ArrayList<Food>).forEach { _foodMap.value!![it.id] = it }
             } catch (e: Exception) {

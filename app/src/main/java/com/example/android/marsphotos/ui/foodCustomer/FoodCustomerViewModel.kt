@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.ui.foodCustomer
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.android.marsphotos.App
 import com.example.android.marsphotos.data.Result
@@ -50,29 +51,42 @@ class FoodViewModel(private val myUserID: String) : DefaultViewModel() {
     private fun getProductList() {
         viewModelScope.launch {
             try {
-                var response = ProductApi.retrofitService.getProduct().data.items
+                var response = ProductApi.retrofitService.getAllFoods().data.items
                 _foodMap.value = mutableMapOf()
                 response.forEach { _foodMap.value!![it.id] = it }
             } catch (e: Exception) {
                 _foodMap.value = mutableMapOf()
+                Log.e("error", e.toString())
+                _message.value = e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
     }
 
     fun canceled(index: Int) {
-        _foodList.value?.removeAt(index)
-        dbRepository.updateFoodRequestsOfBilling(
-            billingId,
-            _foodList.value
-        ) { result: Result<String> ->
-            onResult(null, result)
-            if (result is Result.Success) {
-                _response.value = RESPONSE_TYPE.success
-            } else if (result is Result.Error){
+        viewModelScope.launch {
+            try {
+                _foodList.value?.removeAt(index)
+                dbRepository.updateFoodRequestsOfBilling(
+                    billingId,
+                    _foodList.value
+                ) { result: Result<String> ->
+                    onResult(null, result)
+                    if (result is Result.Success) {
+                        _message.value = "Success!"
+                        _response.value = RESPONSE_TYPE.success
+                    } else if (result is Result.Error) {
+                        _message.value = "Error when cancel!"
+                        _response.value = RESPONSE_TYPE.fail
+                    }
+                }
+                loadFoods()
+            } catch (e: Exception) {
+                Log.e("error", e.toString())
+                _message.value = e.toString()
                 _response.value = RESPONSE_TYPE.fail
             }
         }
-        loadFoods()
     }
 
     override fun onCleared() {
@@ -81,14 +95,25 @@ class FoodViewModel(private val myUserID: String) : DefaultViewModel() {
     }
 
     fun loadFoods() {
-        dbRepository.loadAndObserveFoodsOfBillings(
-            billingId,
-            foodListType,
-            fbRefFoodProcessingObserver
-        ) { result: Result<MutableList<FoodInfo>> ->
-            onResult(_foodList, result)
-            if (result is Result.Success) {
-                _foodList.value = result.data
+        viewModelScope.launch {
+            try {
+                dbRepository.loadAndObserveFoodsOfBillings(
+                    billingId,
+                    foodListType,
+                    fbRefFoodProcessingObserver
+                ) { result: Result<MutableList<FoodInfo>> ->
+                    onResult(_foodList, result)
+                    if (result is Result.Success) {
+                        _foodList.value = result.data
+                    } else if(result is Result.Error){
+                        _message.value = "Error when get data!"
+                        _response.value = RESPONSE_TYPE.fail
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("error", e.toString())
+                _message.value = e.toString()
+                _response.value = RESPONSE_TYPE.fail
             }
         }
     }
