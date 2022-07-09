@@ -72,6 +72,10 @@ object SharedPreferencesUtil {
         getPrefs(context).edit().putString(KEY_BILLING, billingString).apply()
     }
 
+    fun removeBilling(context: Context) {
+        getPrefs(context).edit().remove(KEY_BILLING).apply()
+    }
+
     fun getTableID(context: Context): Int? {
         return getPrefs(context).getString(KEY_TABLE_ID, null)?.toInt()
     }

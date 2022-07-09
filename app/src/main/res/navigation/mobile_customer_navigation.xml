@@ -60,7 +60,11 @@
         android:id="@+id/navigation_billing"
         android:name="com.example.android.marsphotos.ui.billing.BillingFragment"
         android:label="BillingFragment"
-        tools:layout="@layout/fragment_billing"/>
+        tools:layout="@layout/fragment_billing">
+        <action
+            android:id="@+id/action_navigation_billing_to_startSelectFoodFragment"
+            app:destination="@id/startSelectFoodFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_food_chef"
         android:name="com.example.android.marsphotos.ui.foodChef.FoodChefFragment"

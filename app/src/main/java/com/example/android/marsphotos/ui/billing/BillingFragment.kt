@@ -7,8 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.App
+import com.example.android.marsphotos.R
+import androidx.navigation.fragment.findNavController
+import com.example.android.marsphotos.MainActivity
+import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.databinding.FragmentBillingBinding
+import com.example.android.marsphotos.util.SharedPreferencesUtil
 
 class BillingFragment : Fragment() {
 
@@ -34,6 +39,11 @@ class BillingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupListAdapter()
         setupViewModelObservers()
+        viewDataBinding.apply {
+            prepareToPayBtn.setOnClickListener {
+                viewmodel!!.confirmPrepareToPay(requireContext())
+            }
+        }
     }
 
     private fun setupListAdapter() {
@@ -68,5 +78,21 @@ class BillingFragment : Fragment() {
             }
             viewModel.setFoodItems(tempList)
         }
+        viewModel.response.observe(requireActivity()) {
+            if (viewModel.response.value === RESPONSE_TYPE.success) {
+                SharedPreferencesUtil.removeBilling(requireContext())
+                navigateDirectlyToStartSelectFood()
+                viewModel.resetResponseType()
+            } else if (viewModel.response.value === RESPONSE_TYPE.fail) {
+                (activity as MainActivity).showErrorNotify(
+                    viewModel.message.value.toString()
+                )
+                viewModel.resetResponseType()
+            }
+        }
+    }
+
+    private fun navigateDirectlyToStartSelectFood() {
+        findNavController().navigate(R.id.action_navigation_billing_to_startSelectFoodFragment)
     }
 }

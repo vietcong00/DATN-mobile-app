@@ -39,7 +39,6 @@
                 android:layout_marginBottom="36dp"
                 android:backgroundTint="#5D80FC"
                 android:src="@drawable/ic_coin_dollar"
-                android:onClick="@{() -> viewmodel.prepareToPay()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:tint="@android:color/white" />

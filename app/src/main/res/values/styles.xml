@@ -126,4 +126,20 @@
         <item name="iconGravity">start</item>
         <item name="android:textColor">#3E4252</item>
     </style>
+
+    <style name="dialog_button">
+        <item name="android:textStyle">bold</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="dialog_button.negative">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textColor">@color/button_positive_color</item>
+    </style>
+
+    <style name="dialog_button.positive">
+        <item name="android:textColor">@color/button_negative_color</item>
+    </style>
 </resources>

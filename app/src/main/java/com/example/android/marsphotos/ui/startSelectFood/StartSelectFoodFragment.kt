@@ -11,6 +11,7 @@ import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.databinding.FragmentStartSelectFoodBinding
+import com.example.android.marsphotos.util.SharedPreferencesUtil
 
 class StartSelectFoodFragment : Fragment() {
     private lateinit var binding: FragmentStartSelectFoodBinding
@@ -32,20 +33,28 @@ class StartSelectFoodFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val billing = SharedPreferencesUtil.getBilling(requireContext())
+        if (billing !== null) {
+            navigateDirectlyToMenu()
+        }
         setupViewModelObservers()
     }
 
     private fun setupViewModelObservers() {
         viewModel.response.observe(requireActivity()) {
             if (viewModel.response.value === RESPONSE_TYPE.success) {
-                findNavController().navigate(R.id.action_startSelectFoodFragment_to_navigation_menu)
+                navigateDirectlyToMenu()
                 viewModel.resetResponseType()
-            }else if (viewModel.response.value === RESPONSE_TYPE.fail) {
+            } else if (viewModel.response.value === RESPONSE_TYPE.fail) {
                 (activity as MainActivity).showErrorNotify(
                     viewModel.message.value.toString()
                 )
                 viewModel.resetResponseType()
             }
         }
+    }
+
+    private fun navigateDirectlyToMenu() {
+        findNavController().navigate(R.id.action_startSelectFoodFragment_to_navigation_menu)
     }
 }

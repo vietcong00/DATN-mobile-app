@@ -1,8 +1,11 @@
 package com.example.android.marsphotos.ui.billing
 
+import android.content.Context
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.*
 import com.example.android.marsphotos.App
+import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.BillingInfo
@@ -59,7 +62,21 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
         }
     }
 
-    fun prepareToPay() {
+    fun confirmPrepareToPay(context: Context) {
+        AlertDialog.Builder(context, R.style.AlertDialogTheme)
+            .setTitle("Notification")
+            .setMessage("Do you want instant payment?")
+            .setPositiveButton(
+                "Confirm"
+            ) { dialog, which ->
+                prepareToPay()
+            }
+            .setNegativeButton("Cancel", null)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show()
+    }
+
+    private fun prepareToPay() {
         viewModelScope.launch {
             try {
                 val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
@@ -111,16 +128,15 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
                                 }
                             }
                             _foodList.value = foodTotal
-                        } else if(result is Result.Error){
+                        } else if (result is Result.Error) {
                             _message.value = "Error when get data!"
                             _response.value = RESPONSE_TYPE.fail
                         }
                     }
                 }
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 Log.e("error", e.toString())
-                _message.value=e.toString()
+                _message.value = e.toString()
                 _response.value = RESPONSE_TYPE.fail
             }
         }
