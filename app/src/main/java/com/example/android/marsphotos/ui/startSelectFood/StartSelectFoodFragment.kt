@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.ui.startSelectDish
+package com.example.android.marsphotos.ui.startSelectFood
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,9 +15,9 @@ import com.example.android.marsphotos.databinding.FragmentStartSelectFoodBinding
 /**
  * This fragment shows the the status of the Mars photos web services transaction.
  */
-class StartSelectDishFragment : Fragment() {
+class StartSelectFoodFragment : Fragment() {
     private lateinit var binding: FragmentStartSelectFoodBinding
-    private val viewModel: StartSelectDishViewModel by viewModels()
+    private val viewModel: StartSelectFoodViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +41,7 @@ class StartSelectDishFragment : Fragment() {
     private fun setupViewModelObservers() {
         viewModel.response.observe(requireActivity()) {
             if (viewModel.response.value === RESPONSE_TYPE.success) {
-                findNavController().navigate(R.id.action_startSelectDishFragment_to_navigation_menu)
+                findNavController().navigate(R.id.action_startSelectFoodFragment_to_navigation_menu)
                 viewModel.resetResponseType()
             }else if (viewModel.response.value === RESPONSE_TYPE.fail) {
                 (activity as MainActivity).showErrorNotify(

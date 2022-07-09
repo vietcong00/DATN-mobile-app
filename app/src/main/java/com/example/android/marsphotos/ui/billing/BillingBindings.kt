@@ -4,36 +4,36 @@ import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.util.convertMoney
 
 @BindingAdapter("bind_billing_list")
-fun bindBillingList(listView: RecyclerView, items: List<DishItem>?) {
+fun bindBillingList(listView: RecyclerView, items: List<FoodItem>?) {
     items?.let { (listView.adapter as BillingListAdapter).submitList(items) }
 }
 
-@BindingAdapter("dish_billing_name")
-fun bindDishBillingName(textView: TextView, name: String?) {
+@BindingAdapter("food_billing_name")
+fun bindFoodBillingName(textView: TextView, name: String?) {
     textView.text = name
 }
 
-@BindingAdapter("dish_single_price")
-fun bindDishBillingSinglePrice(textView: TextView, price: Int?) {
+@BindingAdapter("food_single_price")
+fun bindFoodBillingSinglePrice(textView: TextView, price: Int?) {
     textView.text = convertMoney(price)
 }
 
 @SuppressLint("SetTextI18n")
-@BindingAdapter("dish_quantity")
-fun bindDishQuantity(textView: TextView, quantity: Int?) {
+@BindingAdapter("food_quantity")
+fun bindFoodQuantity(textView: TextView, quantity: Int?) {
     textView.text = "x$quantity"
 }
 
 @SuppressLint("SetTextI18n")
-@BindingAdapter("dish_total_price")
-fun bindDishTotalPrice(textView: TextView, dishItem: DishItem) {
+@BindingAdapter("food_total_price")
+fun bindFoodTotalPrice(textView: TextView, foodItem: FoodItem) {
     var totalPrice = 0;
-    if (dishItem.quantity != null && dishItem.dish.price !=null) {
-        totalPrice = dishItem.quantity * dishItem.dish.price
+    if (foodItem.quantity != null && foodItem.food.price !=null) {
+        totalPrice = foodItem.quantity * foodItem.food.price
     }
     textView.text = convertMoney(totalPrice)
 }

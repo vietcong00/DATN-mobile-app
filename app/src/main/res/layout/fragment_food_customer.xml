@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.android.marsphotos.ui.foodCustomer.DishViewModel" />
+            type="com.example.android.marsphotos.ui.foodCustomer.FoodViewModel" />
 
     </data>
 
@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <RadioGroup
-                android:id="@+id/radioGroupDish"
+                android:id="@+id/radioGroupFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
@@ -65,14 +65,14 @@
                 android:layout_marginVertical="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroupDish"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupFood"
                 >
                 <com.liuzhenlin.simrv.SlidingItemMenuRecyclerView
                     android:id="@+id/recycler_view_qr_code_studio"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    app:bind_dish_list="@{viewmodel.dishItemList}"
+                    app:bind_food_list="@{viewmodel.foodItemList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

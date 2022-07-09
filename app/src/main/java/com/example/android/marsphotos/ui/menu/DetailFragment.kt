@@ -12,7 +12,7 @@ import coil.load
 import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
-import com.example.android.marsphotos.data.db.entity.DishInfo
+import com.example.android.marsphotos.data.db.entity.FoodInfo
 import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.databinding.FragmentDetailBinding
 import com.example.android.marsphotos.util.convertMoney
@@ -53,9 +53,9 @@ class DetailFragment : Fragment() {
                     outlinedSelected.error = null
                     var note = inputNote.text.toString()
 
-                    viewModel?.createDishRequestsOfBilling(
-                        DishInfo(
-                            dishId = selectedFood.id,
+                    viewModel?.createFoodRequestsOfBilling(
+                        FoodInfo(
+                            foodId = selectedFood.id,
                             billingId =1,
                             quantity = selected.toInt(),
                             note = note,

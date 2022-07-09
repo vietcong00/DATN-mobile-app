@@ -7,28 +7,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
-import com.example.android.marsphotos.data.db.entity.DishItem
-import com.example.android.marsphotos.databinding.ListItemDishChefBinding
+import com.example.android.marsphotos.data.db.entity.FoodItem
+import com.example.android.marsphotos.databinding.ListItemFoodChefBinding
+import com.example.android.marsphotos.ui.foodChef.FoodChefViewModel
 
-class DishChefListAdapter internal constructor(
-    private val viewModel: DishChefViewModel,
-    private val itemDishActionListener: ItemDishActionListener,
+class FoodChefListAdapter internal constructor(
+    private val viewModel: FoodChefViewModel,
+    private val itemFoodActionListener: ItemFoodActionListener,
     ) :
-    ListAdapter<DishItem, DishChefListAdapter.ViewHolder>(UserInfoDiffCallback()) {
+    ListAdapter<FoodItem, FoodChefListAdapter.ViewHolder>(UserInfoDiffCallback()) {
 
-    class ViewHolder(private val binding: ListItemDishChefBinding) :
+    class ViewHolder(private val binding: ListItemFoodChefBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            viewModel: DishChefViewModel,
-            item: DishItem,
+            viewModel: FoodChefViewModel,
+            item: FoodItem,
             position: Int,
-            itemActionListener: ItemDishActionListener,
+            itemActionListener: ItemFoodActionListener,
         ) {
             binding.viewmodel = viewModel
-            binding.dishItem = item
+            binding.foodItem = item
             binding.index = position
-            binding.itemDishActionListener = itemActionListener
-            if(viewModel.dishListType !== TYPE_DISH_LIST.dishDones) {
+            binding.itemFoodActionListener = itemActionListener
+            if(viewModel.foodListType !== TYPE_DISH_LIST.foodDones) {
                 binding.rightSwipe.visibility = View.VISIBLE
             } else{
                 binding.rightSwipe.visibility = View.GONE
@@ -38,32 +39,32 @@ class DishChefListAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(viewModel, getItem(position), position, itemDishActionListener)
+        holder.bind(viewModel, getItem(position), position, itemFoodActionListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ListItemDishChefBinding.inflate(layoutInflater, parent, false)
+        val binding = ListItemFoodChefBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 }
 
-class UserInfoDiffCallback : DiffUtil.ItemCallback<DishItem>() {
+class UserInfoDiffCallback : DiffUtil.ItemCallback<FoodItem>() {
     override fun areItemsTheSame(
-        oldItem: DishItem,
-        newItem: DishItem
+        oldItem: FoodItem,
+        newItem: FoodItem
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: DishItem,
-        newItem: DishItem
+        oldItem: FoodItem,
+        newItem: FoodItem
     ): Boolean {
-        return oldItem.dish == newItem.dish && oldItem.quantity == newItem.quantity
+        return oldItem.food == newItem.food && oldItem.quantity == newItem.quantity
     }
 }
 
-class ItemDishActionListener(val clickListener: (dish : DishItem) -> Unit) {
-    fun clickAction(dish : DishItem) = clickListener(dish)
+class ItemFoodActionListener(val clickListener: (food : FoodItem) -> Unit) {
+    fun clickAction(food : FoodItem) = clickListener(food)
 }

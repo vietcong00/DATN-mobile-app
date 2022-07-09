@@ -5,23 +5,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.databinding.ListItemBillingBinding
 
 class BillingListAdapter internal constructor(
     private val viewModel: BillingViewModel,
 ) :
-    ListAdapter<DishItem, BillingListAdapter.ViewHolder>(UserInfoDiffCallback()) {
+    ListAdapter<FoodItem, BillingListAdapter.ViewHolder>(UserInfoDiffCallback()) {
 
     class ViewHolder(private val binding: ListItemBillingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             viewModel: BillingViewModel,
-            item: DishItem,
+            item: FoodItem,
             position: Int,
         ) {
             binding.viewmodel = viewModel
-            binding.dishItem = item
+            binding.foodItem = item
             binding.executePendingBindings()
         }
     }
@@ -37,18 +37,18 @@ class BillingListAdapter internal constructor(
     }
 }
 
-class UserInfoDiffCallback : DiffUtil.ItemCallback<DishItem>() {
+class UserInfoDiffCallback : DiffUtil.ItemCallback<FoodItem>() {
     override fun areItemsTheSame(
-        oldItem: DishItem,
-        newItem: DishItem
+        oldItem: FoodItem,
+        newItem: FoodItem
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: DishItem,
-        newItem: DishItem
+        oldItem: FoodItem,
+        newItem: FoodItem
     ): Boolean {
-        return oldItem.dish == newItem.dish && oldItem.quantity == newItem.quantity
+        return oldItem.food == newItem.food && oldItem.quantity == newItem.quantity
     }
 }

@@ -11,8 +11,8 @@
             type="com.example.android.marsphotos.ui.billing.BillingViewModel" />
 
         <variable
-            name="dishItem"
-            type="com.example.android.marsphotos.data.db.entity.DishItem" />
+            name="foodItem"
+            type="com.example.android.marsphotos.data.db.entity.FoodItem" />
 
       </data>
 
@@ -41,7 +41,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_billing_name="@{dishItem.dish.foodName}"
+                    app:food_billing_name="@{foodItem.food.foodName}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Food name" />
@@ -54,35 +54,35 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
-                        android:id="@+id/dishBillingSinglePrice"
+                        android:id="@+id/foodBillingSinglePrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:singleLine="true"
                         android:textSize="18sp"
-                        app:dish_single_price="@{dishItem.dish.price}"
+                        app:food_single_price="@{foodItem.food.price}"
                         tools:text="Single price" />
 
                     <TextView
-                        android:id="@+id/dishBillingQuantity"
+                        android:id="@+id/foodBillingQuantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:singleLine="true"
                         android:textSize="18sp"
-                        app:dish_quantity="@{dishItem.quantity}"
+                        app:food_quantity="@{foodItem.quantity}"
                         tools:text="Quantity" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <TextView
-                    android:id="@+id/dishBillingTotalPrice"
+                    android:id="@+id/foodBillingTotalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_total_price="@{dishItem}"
+                    app:food_total_price="@{foodItem}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Total price" />

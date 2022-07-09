@@ -52,7 +52,7 @@ class StartFragment : Fragment() {
         viewModel.position.observe(requireActivity()) {
             if (userIsAlreadyLoggedIn()) {
                 when (viewModel.position.value) {
-                    POSITION_TYPE.chef -> navigateDirectlyToDishChef()
+                    POSITION_TYPE.chef -> navigateDirectlyToFoodChef()
                     POSITION_TYPE.waiter -> navigateDirectlyToMenu()
                     POSITION_TYPE.table -> navigateDirectlyToMenu()
                 }
@@ -62,12 +62,12 @@ class StartFragment : Fragment() {
 
     private fun navigateDirectlyToMenu() {
         (activity as MainActivity).changeNavCustomer()
-            findNavController().navigate(R.id.action_startFragment_to_startSelectDishFragment)
+            findNavController().navigate(R.id.action_startFragment_to_startSelectFoodFragment)
     }
 
-    private fun navigateDirectlyToDishChef() {
+    private fun navigateDirectlyToFoodChef() {
         (activity as MainActivity).changeNavChef()
-        findNavController().navigate(R.id.action_startFragment_to_navigation_dish_chef)
+        findNavController().navigate(R.id.action_startFragment_to_navigation_food_chef)
     }
 
     private fun navigateToLogin() {

@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.ui.dishChef
+package com.example.android.marsphotos.ui.foodChef
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,20 @@ import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.App
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
-import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.databinding.FragmentFoodChefBinding
+import com.example.android.marsphotos.ui.dishChef.FoodChefListAdapter
+import com.example.android.marsphotos.ui.dishChef.ItemFoodActionListener
 
 class FoodChefFragment : Fragment() {
 
-    private val viewModel: DishChefViewModel by viewModels {
-        DishChefViewModelFactory(
+    private val viewModel: FoodChefViewModel by viewModels {
+        FoodChefViewModelFactory(
             App.myUserID
         )
     }
     private lateinit var viewDataBinding: FragmentFoodChefBinding
-    private lateinit var listAdapter: DishChefListAdapter
+    private lateinit var listAdapter: FoodChefListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,15 +43,15 @@ class FoodChefFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadDishs()
+        viewModel.loadFoods()
     }
 
     private fun setupListAdapter() {
         val viewModel = viewDataBinding.viewmodel
         if (viewModel != null) {
-            listAdapter = DishChefListAdapter(viewModel,
-                ItemDishActionListener { item ->
-                    viewModel.changeStatusDish(item)
+            listAdapter = FoodChefListAdapter(viewModel,
+                ItemFoodActionListener { item ->
+                    viewModel.changeStatusFood(item)
                 })
             viewDataBinding.recyclerViewQrCodeStudio.adapter = listAdapter
         } else {
@@ -58,32 +60,32 @@ class FoodChefFragment : Fragment() {
     }
 
     private fun setupViewModelObservers() {
-        viewModel.dishList.observe(requireActivity()) {
-            val dishMap = viewModel.foodMap.value
-            var tempList: MutableList<DishItem> = mutableListOf()
+        viewModel.foodList.observe(requireActivity()) {
+            val foodMap = viewModel.foodMap.value
+            var tempList: MutableList<FoodItem> = mutableListOf()
 
-            viewModel.dishList.value?.forEach {
-                val item = dishMap?.get(it.dishId)
-                    ?.let { it1 -> DishItem(it1, it.billingId, it.note.toString(),it.quantity,it.updatedAt) }
+            viewModel.foodList.value?.forEach {
+                val item = foodMap?.get(it.foodId)
+                    ?.let { it1 -> FoodItem(it1, it.billingId, it.note.toString(),it.quantity,it.updatedAt) }
                 item?.let { it1 -> tempList.add(it1) }
             }
-            viewModel.setDishItems(tempList)
+            viewModel.setFoodItems(tempList)
         }
     }
 
     private fun setupViewEvent() {
         viewDataBinding.apply {
-            radioGroupDish.check(R.id.radio_selected)
-            radioGroupDish.setOnCheckedChangeListener { _, checkedId ->
+            radioGroupFood.check(R.id.radio_selected)
+            radioGroupFood.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     R.id.radio_selected -> {
-                        viewModel.switchDishListType(TYPE_DISH_LIST.dishRequests)
+                        viewModel.switchFoodListType(TYPE_DISH_LIST.foodRequests)
                     }
                     R.id.radio_processing -> {
-                        viewModel.switchDishListType(TYPE_DISH_LIST.dishProcessings)
+                        viewModel.switchFoodListType(TYPE_DISH_LIST.foodProcessings)
                     }
                     R.id.radio_done -> {
-                        viewModel.switchDishListType(TYPE_DISH_LIST.dishDones)
+                        viewModel.switchFoodListType(TYPE_DISH_LIST.foodDones)
                     }
                 }
             }

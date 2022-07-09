@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.ui.dishChef
+package com.example.android.marsphotos.ui.foodChef
 
 import android.annotation.SuppressLint
 import android.widget.ImageView
@@ -8,15 +8,16 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.R
-import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.FoodItem
+import com.example.android.marsphotos.ui.dishChef.FoodChefListAdapter
 
-@BindingAdapter("bind_dish_chef_list")
-fun bindDishChefList(listView: RecyclerView, items: List<DishItem>?) {
-    items?.let { (listView.adapter as DishChefListAdapter).submitList(items) }
+@BindingAdapter("bind_food_chef_list")
+fun bindFoodChefList(listView: RecyclerView, items: List<FoodItem>?) {
+    items?.let { (listView.adapter as FoodChefListAdapter).submitList(items) }
 }
 
-@BindingAdapter("dish_chef_img")
-fun bindDishChefImage(imgView: ImageView, imgUrl: String?) {
+@BindingAdapter("food_chef_img")
+fun bindFoodChefImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         imgView.load(imgUri) {
@@ -26,19 +27,19 @@ fun bindDishChefImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("dish_chef_name")
-fun bindDishChefName(textView: TextView, name: String?) {
+@BindingAdapter("food_chef_name")
+fun bindFoodChefName(textView: TextView, name: String?) {
     textView.text = name
 }
 
-@BindingAdapter("dish_chef_note")
-fun bindDishChefNote(textView: TextView, name: String?) {
+@BindingAdapter("food_chef_note")
+fun bindFoodChefNote(textView: TextView, name: String?) {
     textView.text = name
 }
 
 @SuppressLint("SetTextI18n")
-@BindingAdapter("dish_chef_quantity")
-fun bindDishChefQuantity(textView: TextView, quantity: Int?) {
+@BindingAdapter("food_chef_quantity")
+fun bindFoodChefQuantity(textView: TextView, quantity: Int?) {
     textView.text = "x$quantity"
 }
 

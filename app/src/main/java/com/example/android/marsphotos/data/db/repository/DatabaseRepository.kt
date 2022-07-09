@@ -12,13 +12,13 @@ import com.example.android.marsphotos.util.wrapSnapshotToClass
 class DatabaseRepository {
     private val firebaseDatabaseService = FirebaseDataSource()
 
-    fun updateDishRequestsOfBilling(
+    fun updateFoodRequestsOfBilling(
         billingId: Int,
-        dishList: MutableList<DishInfo>?,
+        foodList: MutableList<FoodInfo>?,
         b: ((Result<String>) -> Unit)
     ) {
         b.invoke(Result.Loading)
-        firebaseDatabaseService.updateDishRequestsOfBilling(billingId, dishList, b)
+        firebaseDatabaseService.updateFoodRequestsOfBilling(billingId, foodList, b)
             .addOnSuccessListener {
                 b.invoke(Result.Success("Success"))
             }.addOnFailureListener {
@@ -26,14 +26,14 @@ class DatabaseRepository {
         }
     }
 
-    fun updateDishOfBilling(
-        typeDishList: TYPE_DISH_LIST,
+    fun updateFoodOfBilling(
+        typeFoodList: TYPE_DISH_LIST,
         billingId: Int,
-        dishList: MutableList<DishInfo>?,
+        foodList: MutableList<FoodInfo>?,
         b: ((Result<String>) -> Unit)
     ) {
         b.invoke(Result.Loading)
-        firebaseDatabaseService.updateDishsOfBilling(typeDishList, billingId, dishList, b)
+        firebaseDatabaseService.updateFoodsOfBilling(typeFoodList, billingId, foodList, b)
             .addOnSuccessListener {
                 b.invoke(Result.Success("Success"))
             }.addOnFailureListener {
@@ -61,72 +61,72 @@ class DatabaseRepository {
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
     }
 
-    fun loadDishRequestsOfBillings(
+    fun loadFoodRequestsOfBillings(
         billingID: Int,
-        b: ((Result<MutableList<DishInfo>>) -> Unit)
+        b: ((Result<MutableList<FoodInfo>>) -> Unit)
     ) {
         b.invoke(Result.Loading)
-        firebaseDatabaseService.loadDishRequestsOfBillingsTask(billingID).addOnSuccessListener {
-            val dishList = wrapSnapshotToArrayList(DishInfo::class.java, it)
-            b.invoke(Result.Success(dishList))
+        firebaseDatabaseService.loadFoodRequestsOfBillingsTask(billingID).addOnSuccessListener {
+            val foodList = wrapSnapshotToArrayList(FoodInfo::class.java, it)
+            b.invoke(Result.Success(foodList))
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
     }
     //endregion
 
     //region Load List
 
-    fun loadDishOfBillings(billingID: Int, b: ((Result<BillingInfo>) -> Unit)) {
+    fun loadFoodOfBillings(billingID: Int, b: ((Result<BillingInfo>) -> Unit)) {
         b.invoke(Result.Loading)
-        firebaseDatabaseService.loadDishOfBillingsTask(billingID).addOnSuccessListener {
-            val dishList = wrapSnapshotToClass(BillingInfo::class.java, it)
-            b.invoke(Result.Success(dishList))
+        firebaseDatabaseService.loadFoodOfBillingsTask(billingID).addOnSuccessListener {
+            val foodList = wrapSnapshotToClass(BillingInfo::class.java, it)
+            b.invoke(Result.Success(foodList))
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
     }
 
-    fun loadDishProcessingOfBillings(
+    fun loadFoodProcessingOfBillings(
         billingID: Int,
-        b: ((Result<MutableList<DishInfo>>) -> Unit)
+        b: ((Result<MutableList<FoodInfo>>) -> Unit)
     ) {
         b.invoke(Result.Loading)
-        firebaseDatabaseService.loadDishProcessingOfBillingsTask(billingID).addOnSuccessListener {
-            val dishList = wrapSnapshotToArrayList(DishInfo::class.java, it)
-            b.invoke(Result.Success(dishList))
+        firebaseDatabaseService.loadFoodProcessingOfBillingsTask(billingID).addOnSuccessListener {
+            val foodList = wrapSnapshotToArrayList(FoodInfo::class.java, it)
+            b.invoke(Result.Success(foodList))
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
     }
 
-    fun loadAndObserveDishProcessingOfBillings(
+    fun loadAndObserveFoodProcessingOfBillings(
         billingID: Int,
         observer: FirebaseReferenceValueObserver,
-        b: ((Result<MutableList<DishInfo>>) -> Unit)
+        b: ((Result<MutableList<FoodInfo>>) -> Unit)
     ) {
-        firebaseDatabaseService.attachDishProcessingsObserver(
-            DishInfo::class.java,
+        firebaseDatabaseService.attachFoodProcessingsObserver(
+            FoodInfo::class.java,
             billingID,
             observer,
             b
         )
     }
 
-    fun loadAndObserveDishsOfBillings(
+    fun loadAndObserveFoodsOfBillings(
         billingID: Int,
-        typeDishList: TYPE_DISH_LIST,
+        typeFoodList: TYPE_DISH_LIST,
         observer: FirebaseReferenceValueObserver,
-        b: ((Result<MutableList<DishInfo>>) -> Unit)
+        b: ((Result<MutableList<FoodInfo>>) -> Unit)
     ) {
-        firebaseDatabaseService.attachDishsObserver(
-            DishInfo::class.java,
+        firebaseDatabaseService.attachFoodsObserver(
+            FoodInfo::class.java,
             billingID,
-            typeDishList,
+            typeFoodList,
             observer,
             b
         )
     }
 
-    fun loadAndObserveAllDish(
+    fun loadAndObserveAllFood(
         observer: FirebaseReferenceValueObserver,
         b: ((Result<MutableList<BillingInfo>>) -> Unit)
     ) {
-        firebaseDatabaseService.attachAllDishObserver(
+        firebaseDatabaseService.attachAllFoodObserver(
             BillingInfo::class.java,
             observer,
             b

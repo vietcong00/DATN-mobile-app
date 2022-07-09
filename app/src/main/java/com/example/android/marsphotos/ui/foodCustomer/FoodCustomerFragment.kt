@@ -11,18 +11,18 @@ import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
-import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.databinding.FragmentFoodCustomerBinding
 
 class FoodCustomerFragment : Fragment() {
 
-    private val viewModel: DishViewModel by viewModels {
-        DishViewModelFactory(
+    private val viewModel: FoodViewModel by viewModels {
+        FoodViewModelFactory(
             App.myUserID
         )
     }
     private lateinit var viewDataBinding: FragmentFoodCustomerBinding
-    private lateinit var listAdapter: DishListAdapter
+    private lateinit var listAdapter: FoodListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,14 +43,14 @@ class FoodCustomerFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadDishs()
+        viewModel.loadFoods()
     }
 
     private fun setupListAdapter() {
         val viewModel = viewDataBinding.viewmodel
         if (viewModel != null) {
-            listAdapter = DishListAdapter(viewModel,
-                ItemDishCanceledListener { item ->
+            listAdapter = FoodListAdapter(viewModel,
+                ItemFoodCanceledListener { item ->
                     viewModel.canceled(item)
                 })
             viewDataBinding.recyclerViewQrCodeStudio.adapter = listAdapter
@@ -74,14 +74,14 @@ class FoodCustomerFragment : Fragment() {
             }
         }
 
-        viewModel.dishList.observe(requireActivity()) {
-            val dishMap = viewModel.foodMap.value
-            var tempList: MutableList<DishItem> = mutableListOf()
+        viewModel.foodList.observe(requireActivity()) {
+            val foodMap = viewModel.foodMap.value
+            var tempList: MutableList<FoodItem> = mutableListOf()
 
-            viewModel.dishList.value?.forEach {
-                val item = dishMap?.get(it.dishId)
+            viewModel.foodList.value?.forEach {
+                val item = foodMap?.get(it.foodId)
                     ?.let { it1 ->
-                        DishItem(
+                        FoodItem(
                             it1,
                             it.billingId,
                             it.note.toString(),
@@ -91,23 +91,23 @@ class FoodCustomerFragment : Fragment() {
                     }
                 item?.let { it1 -> tempList.add(it1) }
             }
-            viewModel.setDishItems(tempList)
+            viewModel.setFoodItems(tempList)
         }
     }
 
     private fun setupViewEvent() {
         viewDataBinding.apply {
-            radioGroupDish.check(R.id.radio_selected)
-            radioGroupDish.setOnCheckedChangeListener { _, checkedId ->
+            radioGroupFood.check(R.id.radio_selected)
+            radioGroupFood.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     R.id.radio_selected -> {
-                        viewModel.switchDishListType(TYPE_DISH_LIST.dishRequests)
+                        viewModel.switchFoodListType(TYPE_DISH_LIST.foodRequests)
                     }
                     R.id.radio_processing -> {
-                        viewModel.switchDishListType(TYPE_DISH_LIST.dishProcessings)
+                        viewModel.switchFoodListType(TYPE_DISH_LIST.foodProcessings)
                     }
                     R.id.radio_done -> {
-                        viewModel.switchDishListType(TYPE_DISH_LIST.dishDones)
+                        viewModel.switchFoodListType(TYPE_DISH_LIST.foodDones)
                     }
                 }
             }

@@ -8,19 +8,19 @@
 
         <variable
             name="viewmodel"
-            type="com.example.android.marsphotos.ui.dishChef.DishChefViewModel" />
+            type="com.example.android.marsphotos.ui.foodChef.FoodChefViewModel" />
 
         <variable
-            name="dishItem"
-            type="com.example.android.marsphotos.data.db.entity.DishItem" />
+            name="foodItem"
+            type="com.example.android.marsphotos.data.db.entity.FoodItem" />
 
         <variable
             name="index"
             type="Integer" />
 
         <variable
-            name="itemDishActionListener"
-            type="com.example.android.marsphotos.ui.dishChef.ItemDishActionListener" />
+            name="itemFoodActionListener"
+            type="com.example.android.marsphotos.ui.dishChef.ItemFoodActionListener" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -45,7 +45,7 @@
                     android:id="@+id/imgIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:dish_chef_img="@{dishItem.dish.foodImg.url}"
+                    app:food_chef_img="@{foodItem.food.foodImg.url}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -58,7 +58,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_chef_name="@{dishItem.dish.foodName}"
+                    app:food_chef_name="@{foodItem.food.foodName}"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Display name" />
@@ -70,7 +70,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_chef_note="@{dishItem.note}"
+                    app:food_chef_note="@{foodItem.note}"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toBottomOf="@+id/foodName"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +83,7 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:dish_chef_quantity="@{dishItem.dish.category.priority}"
+                    app:food_chef_quantity="@{foodItem.food.category.priority}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -115,7 +115,7 @@
                         android:layout_height="45dp"
                         android:padding="7dp"
                         android:src="@drawable/ic_remove_item"
-                        android:onClick="@{() -> itemDishActionListener.clickAction(dishItem)}"
+                        android:onClick="@{() -> itemFoodActionListener.clickAction(foodItem)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

@@ -1,16 +1,15 @@
-package com.example.android.marsphotos.ui.startSelectDish
+package com.example.android.marsphotos.ui.startSelectFood
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.App
-import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.network.ProductApi
 import com.example.android.marsphotos.ui.DefaultViewModel
 import com.example.android.marsphotos.util.SharedPreferencesUtil
 import kotlinx.coroutines.launch
 
-class StartSelectDishViewModel : DefaultViewModel() {
+class StartSelectFoodViewModel : DefaultViewModel() {
 
     fun getBillingRelativeTable() {
         viewModelScope.launch {

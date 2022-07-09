@@ -184,14 +184,14 @@ class FirebaseDataSource {
         refToPath("users/${user.info.id}").setValue(user)
     }
 
-    fun updateDishRequestsOfBilling(
+    fun updateFoodRequestsOfBilling(
         billingId: Int,
-        dishList: MutableList<DishInfo>?,
+        foodList: MutableList<FoodInfo>?,
         b: ((Result<String>) -> Unit)
     ): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
-        refToPath("billings/${billingId}/dishBilling/dishRequests").setValue(dishList)
+        refToPath("billings/${billingId}/foodBilling/foodRequests").setValue(foodList)
             .addOnSuccessListener {
                 b.invoke(Result.Success("Success"))
             }.addOnFailureListener {
@@ -200,15 +200,15 @@ class FirebaseDataSource {
         return src.task
     }
 
-    fun updateDishsOfBilling(
-        typeDishList: TYPE_DISH_LIST,
+    fun updateFoodsOfBilling(
+        typeFoodList: TYPE_DISH_LIST,
         billingId: Int,
-        dishList: MutableList<DishInfo>?,
+        foodList: MutableList<FoodInfo>?,
         b: ((Result<String>) -> Unit)
     ): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
-        refToPath("billings/${billingId}/dishBilling/${typeDishList}").setValue(dishList)
+        refToPath("billings/${billingId}/foodBilling/${typeFoodList}").setValue(foodList)
             .addOnSuccessListener {
                 b.invoke(Result.Success("Success"))
             }.addOnFailureListener {
@@ -288,7 +288,7 @@ class FirebaseDataSource {
         return src.task
     }
 
-    fun loadDishOfBillingsTask(billingID: Int): Task<DataSnapshot> {
+    fun loadFoodOfBillingsTask(billingID: Int): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
         refToPath("billings/$billingID")
@@ -296,18 +296,18 @@ class FirebaseDataSource {
         return src.task
     }
 
-    fun loadDishProcessingOfBillingsTask(billingID: Int): Task<DataSnapshot> {
+    fun loadFoodProcessingOfBillingsTask(billingID: Int): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
-        refToPath("billings/$billingID/dishBilling/dishProcessings")
+        refToPath("billings/$billingID/foodBilling/foodProcessings")
             .addListenerForSingleValueEvent(listener)
         return src.task
     }
 
-    fun loadDishRequestsOfBillingsTask(billingID: Int): Task<DataSnapshot> {
+    fun loadFoodRequestsOfBillingsTask(billingID: Int): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
-        refToPath("billings/$billingID/dishBilling/dishRequests")
+        refToPath("billings/$billingID/foodBilling/foodRequests")
             .addListenerForSingleValueEvent(listener)
         return src.task
     }
@@ -347,7 +347,7 @@ class FirebaseDataSource {
     }
 
 
-    fun <T> attachDishProcessingsObserver(
+    fun <T> attachFoodProcessingsObserver(
         resultClassName: Class<T>,
         billingID: Int,
         firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
@@ -356,25 +356,25 @@ class FirebaseDataSource {
         val listener = attachValueListenerToBlockWithList(resultClassName, b)
         firebaseReferenceValueObserver.start(
             listener,
-            refToPath("billings/$billingID/dishBilling/dishProcessings")
+            refToPath("billings/$billingID/foodBilling/foodProcessings")
         )
     }
 
-    fun <T> attachDishsObserver(
+    fun <T> attachFoodsObserver(
         resultClassName: Class<T>,
         billingID: Int,
-        typeDishList: TYPE_DISH_LIST,
+        typeFoodList: TYPE_DISH_LIST,
         firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
         b: (Result<MutableList<T>>) -> Unit
     ) {
         val listener = attachValueListenerToBlockWithList(resultClassName, b)
         firebaseReferenceValueObserver.start(
             listener,
-            refToPath("billings/$billingID/dishBilling/$typeDishList")
+            refToPath("billings/$billingID/foodBilling/$typeFoodList")
         )
     }
 
-    fun <T> attachAllDishObserver(
+    fun <T> attachAllFoodObserver(
         resultClassName: Class<T>,
         firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
         b: (Result<MutableList<T>>) -> Unit

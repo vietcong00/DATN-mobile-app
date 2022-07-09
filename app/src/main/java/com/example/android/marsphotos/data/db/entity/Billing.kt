@@ -25,7 +25,7 @@ enum class ReasonCanceled {
 
 data class BillingInfo(
     @get:PropertyName("billingId") @set:PropertyName("billingId") var billingId: Int? = 0,
-    @get:PropertyName("dishBilling") @set:PropertyName("dishBilling") var dishs: DishBilling? = null,
+    @get:PropertyName("foodBilling") @set:PropertyName("foodBilling") var foods: FoodBilling? = null,
 )
 
 data class Billing(

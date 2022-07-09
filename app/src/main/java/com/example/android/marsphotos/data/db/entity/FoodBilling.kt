@@ -13,16 +13,16 @@ data class Food(
     val category: Category,
 )
 
-data class DishBilling(
-    @get:PropertyName("dishRequests") @set:PropertyName("dishRequests") var dishRequests: ArrayList<DishInfo>? = arrayListOf(),
-    @get:PropertyName("dishProcessings") @set:PropertyName("dishProcessings") var dishProcessings: ArrayList<DishInfo>? = arrayListOf(),
-    @get:PropertyName("dishDones") @set:PropertyName("dishDones") var dishDones: ArrayList<DishInfo>? = arrayListOf(),
-    @get:PropertyName("dishCanceleds") @set:PropertyName("dishCanceleds") var dishCanceleds: ArrayList<DishInfo>? = arrayListOf(),
+data class FoodBilling(
+    @get:PropertyName("foodRequests") @set:PropertyName("foodRequests") var foodRequests: ArrayList<FoodInfo>? = arrayListOf(),
+    @get:PropertyName("foodProcessings") @set:PropertyName("foodProcessings") var foodProcessings: ArrayList<FoodInfo>? = arrayListOf(),
+    @get:PropertyName("foodDones") @set:PropertyName("foodDones") var foodDones: ArrayList<FoodInfo>? = arrayListOf(),
+    @get:PropertyName("foodCanceleds") @set:PropertyName("foodCanceleds") var foodCanceleds: ArrayList<FoodInfo>? = arrayListOf(),
     @get:PropertyName("note") @set:PropertyName("note") var note: String = "",
 )
 
-data class DishInfo(
-    @get:PropertyName("dishID") @set:PropertyName("dishID") var dishId: Int = 0,
+data class FoodInfo(
+    @get:PropertyName("foodID") @set:PropertyName("foodID") var foodId: Int = 0,
     @get:PropertyName("billingId") @set:PropertyName("billingId") var billingId: Int = 0,
     @get:PropertyName("quantity") @set:PropertyName("quantity") var quantity: Int = 0,
     @get:PropertyName("note") @set:PropertyName("note") var note: String? = "",
@@ -30,8 +30,8 @@ data class DishInfo(
     @get:PropertyName("isBring") @set:PropertyName("isBring") var isBring: Boolean? = false,
 )
 
-data class DishItem(
-    var dish: Food,
+data class FoodItem(
+    var food: Food,
     var billingId: Int,
     var note: String?,
     var quantity: Int,

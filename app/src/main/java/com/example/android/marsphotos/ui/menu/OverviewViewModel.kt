@@ -10,7 +10,7 @@ import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.Billing
-import com.example.android.marsphotos.data.db.entity.DishInfo
+import com.example.android.marsphotos.data.db.entity.FoodInfo
 import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.data.db.repository.DatabaseRepository
 import com.example.android.marsphotos.network.*
@@ -50,19 +50,19 @@ class OverviewViewModel : DefaultViewModel() {
         }
     }
 
-    fun createDishRequestsOfBilling(dishInfo: DishInfo): Boolean {
+    fun createFoodRequestsOfBilling(foodInfo: FoodInfo): Boolean {
         var isSuccess = false
         val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
         if (billing != null) {
-            dbRepository.loadDishRequestsOfBillings(billingID = billing.id) { result: Result<MutableList<DishInfo>> ->
+            dbRepository.loadFoodRequestsOfBillings(billingID = billing.id) { result: Result<MutableList<FoodInfo>> ->
                 onResult(null, result)
                 if (result is Result.Success) {
-                    var body = mutableListOf<DishInfo>()
+                    var body = mutableListOf<FoodInfo>()
                     if (result.data !== null) {
                         body = result.data
                     }
-                    body.add(dishInfo)
-                    dbRepository.updateDishRequestsOfBilling(
+                    body.add(foodInfo)
+                    dbRepository.updateFoodRequestsOfBilling(
                         billing.id,
                         body
                     ) { resultUpdate: Result<String> ->

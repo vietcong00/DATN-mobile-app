@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.App
-import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.databinding.FragmentBillingBinding
 
 class BillingFragment : Fragment() {
@@ -49,14 +49,14 @@ class BillingFragment : Fragment() {
     }
 
     private fun setupViewModelObservers() {
-        viewModel.dishList.observe(requireActivity()) {
-            val dishMap = viewModel.foodMap.value
-            var tempList: MutableList<DishItem> = mutableListOf()
+        viewModel.foodList.observe(requireActivity()) {
+            val foodMap = viewModel.foodMap.value
+            var tempList: MutableList<FoodItem> = mutableListOf()
 
-            viewModel.dishList.value?.forEach {
-                val item = dishMap?.get(it.dishId)
+            viewModel.foodList.value?.forEach {
+                val item = foodMap?.get(it.foodId)
                     ?.let { it1 ->
-                        DishItem(
+                        FoodItem(
                             it1,
                             it.billingId,
                             it.note.toString(),
@@ -66,7 +66,7 @@ class BillingFragment : Fragment() {
                     }
                 item?.let { it1 -> tempList.add(it1) }
             }
-            viewModel.setDishItems(tempList)
+            viewModel.setFoodItems(tempList)
         }
     }
 }

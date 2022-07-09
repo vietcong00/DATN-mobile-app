@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.startFragment -> navView.visibility = View.GONE
                 R.id.loginFragment -> navView.visibility = View.GONE
-                R.id.startSelectDishFragment -> navView.visibility = View.GONE
+                R.id.startSelectFoodFragment -> navView.visibility = View.GONE
                 else -> navView.visibility = View.VISIBLE
             }
             showGlobalProgressBar(false)

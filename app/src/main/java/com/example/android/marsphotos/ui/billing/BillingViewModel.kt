@@ -5,8 +5,8 @@ import androidx.lifecycle.*
 import com.example.android.marsphotos.App
 import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.db.entity.BillingInfo
-import com.example.android.marsphotos.data.db.entity.DishInfo
-import com.example.android.marsphotos.data.db.entity.DishItem
+import com.example.android.marsphotos.data.db.entity.FoodInfo
+import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.data.db.remote.FirebaseReferenceValueObserver
 import com.example.android.marsphotos.data.db.repository.DatabaseRepository
@@ -26,11 +26,11 @@ class BillingViewModelFactory(private val myUserID: String) :
 class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
     private val dbRepository: DatabaseRepository = DatabaseRepository()
 
-    private val _dishItemList = MutableLiveData<MutableList<DishItem>>()
-    var dishItemList: LiveData<MutableList<DishItem>> = _dishItemList
+    private val _foodItemList = MutableLiveData<MutableList<FoodItem>>()
+    var foodItemList: LiveData<MutableList<FoodItem>> = _foodItemList
 
-    private val _dishList = MutableLiveData<MutableList<DishInfo>>()
-    var dishList: LiveData<MutableList<DishInfo>> = _dishList
+    private val _foodList = MutableLiveData<MutableList<FoodInfo>>()
+    var foodList: LiveData<MutableList<FoodInfo>> = _foodList
 
     private val _foods = MutableLiveData<MutableList<Food>>()
 
@@ -38,10 +38,10 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
     val foodMap: LiveData<MutableMap<Int, Food>> = _foodMap
 
     private val fbRefNotificationsObserver = FirebaseReferenceValueObserver()
-    private val fbRefDishProcessingObserver = FirebaseReferenceValueObserver()
+    private val fbRefFoodProcessingObserver = FirebaseReferenceValueObserver()
 
     init {
-        loadAllDishOfBilling()
+        loadAllFoodOfBilling()
         getProductList()
     }
 
@@ -62,7 +62,7 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
         viewModelScope.launch {
             try {
                 val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
-                val prepareToPayRequest = PrepareToPayRequest(dishList=_dishList.value)
+                val prepareToPayRequest = PrepareToPayRequest(foodList=_foodList.value)
                 var response =
                     ProductApi.retrofitService.prepareToPay(billing?.id ?: 0,prepareToPayRequest)
                 if (response.isSuccess()) {
@@ -77,38 +77,38 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
     override fun onCleared() {
         super.onCleared()
         fbRefNotificationsObserver.clear()
-        fbRefDishProcessingObserver.clear()
+        fbRefFoodProcessingObserver.clear()
     }
 
-    private fun loadAllDishOfBilling() {
+    private fun loadAllFoodOfBilling() {
         val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
         if (billing != null) {
-            dbRepository.loadDishOfBillings(billing.id) { result: Result<BillingInfo> ->
+            dbRepository.loadFoodOfBillings(billing.id) { result: Result<BillingInfo> ->
                 if (result is Result.Success) {
-                    var dishTotal: ArrayList<DishInfo>? = result.data?.dishs?.dishDones
-                    if (dishTotal == null) {
-                        dishTotal = arrayListOf()
+                    var foodTotal: ArrayList<FoodInfo>? = result.data?.foods?.foodDones
+                    if (foodTotal == null) {
+                        foodTotal = arrayListOf()
                     }
-                    result.data?.dishs?.dishProcessings?.forEach {
+                    result.data?.foods?.foodProcessings?.forEach {
                         var found = false
-                        for (index in dishTotal.indices) {
-                            if (dishTotal[index].dishId === it.dishId) {
-                                dishTotal[index].quantity += it.quantity
+                        for (index in foodTotal.indices) {
+                            if (foodTotal[index].foodId === it.foodId) {
+                                foodTotal[index].quantity += it.quantity
                                 found = true
                                 break
                             }
                         }
                         if (!found) {
-                            dishTotal.add(it)
+                            foodTotal.add(it)
                         }
                     }
-                    _dishList.value = dishTotal
+                    _foodList.value = foodTotal
                 }
             }
         }
     }
 
-    fun setDishItems(list: MutableList<DishItem>) {
-        _dishItemList.value = list
+    fun setFoodItems(list: MutableList<FoodItem>) {
+        _foodItemList.value = list
     }
 }

@@ -23,11 +23,11 @@
             android:id="@+id/action_loginFragment_to_navigation_billing"
             app:destination="@id/navigation_billing" />
         <action
-            android:id="@+id/action_loginFragment_to_navigation_dish_chef"
-            app:destination="@id/navigation_dish_chef" />
+            android:id="@+id/action_loginFragment_to_navigation_food_chef"
+            app:destination="@id/navigation_food_chef" />
         <action
-            android:id="@+id/action_loginFragment_to_startSelectDishFragment"
-            app:destination="@id/startSelectDishFragment" />
+            android:id="@+id/action_loginFragment_to_startSelectFoodFragment"
+            app:destination="@id/startSelectFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"
@@ -41,14 +41,14 @@
             android:id="@+id/action_startFragment_to_billingFragment"
             app:destination="@id/navigation_billing" />
         <action
-            android:id="@+id/action_startFragment_to_navigation_dish_chef"
-            app:destination="@id/navigation_dish_chef" />
+            android:id="@+id/action_startFragment_to_navigation_food_chef"
+            app:destination="@id/navigation_food_chef" />
         <action
             android:id="@+id/action_startFragment_to_navigation_processing"
             app:destination="@id/navigation_processing" />
         <action
-            android:id="@+id/action_startFragment_to_startSelectDishFragment"
-            app:destination="@id/startSelectDishFragment" />
+            android:id="@+id/action_startFragment_to_startSelectFoodFragment"
+            app:destination="@id/startSelectFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_processing"
@@ -62,17 +62,17 @@
         android:label="BillingFragment"
         tools:layout="@layout/fragment_billing"/>
     <fragment
-        android:id="@+id/navigation_dish_chef"
-        android:name="com.example.android.marsphotos.ui.dishChef.FoodChefFragment"
-        android:label="DishChefFragment"
-        tools:layout="@layout/list_item_dish_chef"/>
+        android:id="@+id/navigation_food_chef"
+        android:name="com.example.android.marsphotos.ui.foodChef.FoodChefFragment"
+        android:label="FoodChefFragment"
+        tools:layout="@layout/list_item_food_chef"/>
     <fragment
-        android:id="@+id/startSelectDishFragment"
-        android:name="com.example.android.marsphotos.ui.startSelectDish.StartSelectDishFragment"
-        android:label="StartSelectDishFragment"
+        android:id="@+id/startSelectFoodFragment"
+        android:name="com.example.android.marsphotos.ui.startSelectFood.StartSelectFoodFragment"
+        android:label="StartSelectFoodFragment"
         tools:layout="@layout/fragment_start_select_food">
         <action
-            android:id="@+id/action_startSelectDishFragment_to_navigation_menu"
+            android:id="@+id/action_startSelectFoodFragment_to_navigation_menu"
             app:destination="@id/navigation_menu" />
     </fragment>
 

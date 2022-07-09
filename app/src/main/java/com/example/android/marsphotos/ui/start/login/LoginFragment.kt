@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
 
         viewModel.position.observe(requireActivity()) {
                 when (viewModel.position.value) {
-                    POSITION_TYPE.chef -> navigateDirectlyToDishChef()
+                    POSITION_TYPE.chef -> navigateDirectlyToFoodChef()
                     POSITION_TYPE.waiter -> navigateDirectlyToMenu()
                     POSITION_TYPE.table -> navigateDirectlyToMenu()
                 }
@@ -72,10 +72,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateDirectlyToMenu() {
-        findNavController().navigate(R.id.action_loginFragment_to_startSelectDishFragment)
+        findNavController().navigate(R.id.action_loginFragment_to_startSelectFoodFragment)
     }
 
-    private fun navigateDirectlyToDishChef() {
-        findNavController().navigate(R.id.action_loginFragment_to_navigation_dish_chef)
+    private fun navigateDirectlyToFoodChef() {
+        findNavController().navigate(R.id.action_loginFragment_to_navigation_food_chef)
     }
 }
