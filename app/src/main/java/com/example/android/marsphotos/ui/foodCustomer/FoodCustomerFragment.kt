@@ -83,6 +83,7 @@ class FoodCustomerFragment : Fragment() {
                             it1,
                             it.billingId,
                             it.note.toString(),
+                            it.tableName,
                             it.quantity,
                             it.updatedAt
                         )

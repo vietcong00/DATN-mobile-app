@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.ui.dishChef
+package com.example.android.marsphotos.ui.foodWaiter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,27 +8,26 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.FoodItem
-import com.example.android.marsphotos.databinding.ListItemFoodChefBinding
-import com.example.android.marsphotos.ui.foodChef.FoodChefViewModel
+import com.example.android.marsphotos.databinding.ListItemFoodWaiterBinding
 
-class FoodChefListAdapter internal constructor(
-    private val viewModel: FoodChefViewModel,
-    private val itemFoodActionListener: ItemFoodActionListener,
+class FoodWaiterListAdapter internal constructor(
+    private val viewModel: FoodWaiterViewModel,
+    private val itemFoodBringListener: ItemFoodBringListener,
     ) :
-    ListAdapter<FoodItem, FoodChefListAdapter.ViewHolder>(UserInfoDiffCallback()) {
+    ListAdapter<FoodItem, FoodWaiterListAdapter.ViewHolder>(UserInfoDiffCallback()) {
 
-    class ViewHolder(private val binding: ListItemFoodChefBinding) :
+    class ViewHolder(private val binding: ListItemFoodWaiterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            viewModel: FoodChefViewModel,
+            viewModel: FoodWaiterViewModel,
             item: FoodItem,
             position: Int,
-            itemActionListener: ItemFoodActionListener,
+            itemBringListener: ItemFoodBringListener,
         ) {
             binding.viewmodel = viewModel
             binding.foodItem = item
             binding.index = position
-            binding.itemFoodActionListener = itemActionListener
+            binding.itemFoodBringListener = itemBringListener
             if(viewModel.foodListType !== TYPE_DISH_LIST.foodDones) {
                 binding.rightSwipe.visibility = View.VISIBLE
             } else{
@@ -39,12 +38,12 @@ class FoodChefListAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(viewModel, getItem(position), position, itemFoodActionListener)
+        holder.bind(viewModel, getItem(position), position, itemFoodBringListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ListItemFoodChefBinding.inflate(layoutInflater, parent, false)
+        val binding = ListItemFoodWaiterBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 }
@@ -65,6 +64,6 @@ class UserInfoDiffCallback : DiffUtil.ItemCallback<FoodItem>() {
     }
 }
 
-class ItemFoodActionListener(val clickListener: (food : FoodItem) -> Unit) {
-    fun clickAction(food : FoodItem) = clickListener(food)
+class ItemFoodBringListener(val clickListener: (food : FoodItem) -> Unit) {
+    fun clickBring(food : FoodItem) = clickListener(food)
 }

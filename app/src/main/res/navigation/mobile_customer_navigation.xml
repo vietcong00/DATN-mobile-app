@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_loginFragment_to_startSelectFoodFragment"
             app:destination="@id/startSelectFoodFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_navigation_food_waiter"
+            app:destination="@id/navigation_food_waiter" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"
@@ -49,6 +52,9 @@
         <action
             android:id="@+id/action_startFragment_to_startSelectFoodFragment"
             app:destination="@id/startSelectFoodFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_navigation_food_waiter"
+            app:destination="@id/navigation_food_waiter" />
     </fragment>
     <fragment
         android:id="@+id/navigation_processing"
@@ -79,5 +85,10 @@
             android:id="@+id/action_startSelectFoodFragment_to_navigation_menu"
             app:destination="@id/navigation_menu" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_food_waiter"
+        android:name="com.example.android.marsphotos.ui.foodWaiter.FoodWaiterFragment"
+        android:label="FoodWaiterFragment"
+        tools:layout="@layout/fragment_food_waiter"/>
 
 </navigation>

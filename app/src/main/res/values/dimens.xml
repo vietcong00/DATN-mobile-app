@@ -59,4 +59,7 @@
     <dimen name="spacing_large_x2">48dp</dimen>
     <dimen name="spacing_extra_large_x2">64dp</dimen>
     <dimen name="spacing_huge">72dp</dimen>
+    <dimen name="spacing_radio_food_type">70dp</dimen>
+    <dimen name="spacing_margin_bottom_food_list">10dp</dimen>
+
 </resources>

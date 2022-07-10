@@ -15,6 +15,7 @@ import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.FoodInfo
 import com.example.android.marsphotos.data.db.entity.Food
 import com.example.android.marsphotos.databinding.FragmentDetailBinding
+import com.example.android.marsphotos.util.SharedPreferencesUtil
 import com.example.android.marsphotos.util.convertMoney
 import java.util.*
 
@@ -57,6 +58,7 @@ class DetailFragment : Fragment() {
                         FoodInfo(
                             foodId = selectedFood.id,
                             billingId =1,
+                            tableName= SharedPreferencesUtil.getTable(requireContext())?.name ?: "",
                             quantity = selected.toInt(),
                             note = note,
                             updatedAt = Date().time

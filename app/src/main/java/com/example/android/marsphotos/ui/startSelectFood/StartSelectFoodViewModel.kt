@@ -23,6 +23,10 @@ class StartSelectFoodViewModel : DefaultViewModel() {
                         App.application.applicationContext,
                         response.data
                     )
+                    SharedPreferencesUtil.saveTable(
+                        App.application.applicationContext,
+                        response.data.table
+                    )
                     _response.value = RESPONSE_TYPE.success
                 } else {
                     _message.value = "Error!"

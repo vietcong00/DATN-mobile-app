@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.android.marsphotos.ui.foodChef.FoodChefViewModel" />
+            type="com.example.android.marsphotos.ui.foodWaiter.FoodWaiterViewModel" />
 
         <variable
             name="foodItem"
@@ -19,8 +19,8 @@
             type="Integer" />
 
         <variable
-            name="itemFoodActionListener"
-            type="com.example.android.marsphotos.ui.foodChef.ItemFoodActionListener" />
+            name="itemFoodBringListener"
+            type="com.example.android.marsphotos.ui.foodWaiter.ItemFoodBringListener" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -45,7 +45,7 @@
                     android:id="@+id/imgIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:food_chef_img="@{foodItem.food.foodImg.url}"
+                    app:food_waiter_img="@{foodItem.food.foodImg.url}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -58,58 +58,36 @@
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:food_chef_name="@{foodItem.food.foodName}"
+                    app:food_waiter_name="@{foodItem.food.foodName}"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Display name" />
 
                 <TextView
-                    android:id="@+id/foodPriorityLabel"
+                    android:id="@+id/foodTableLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
-                    android:text="Priority: "
+                    android:text="Table: "
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
-                    app:layout_constraintTop_toBottomOf="@+id/foodName" />
-
-                <TextView
-                    android:id="@+id/foodPriority"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:singleLine="true"
-                    android:textSize="18sp"
-                    app:food_chef_priority="@{foodItem.food.category.priority}"
-                    app:layout_constraintStart_toEndOf="@+id/foodPriorityLabel"
                     app:layout_constraintTop_toBottomOf="@+id/foodName"
-                    tools:text="Priority" />
-
-                <TextView
-                    android:id="@+id/foodNoteLabel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:singleLine="true"
-                    android:text="Note:"
-                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imgIcon"
-                    app:layout_constraintTop_toBottomOf="@+id/foodPriority" />
+                    />
 
                 <TextView
-                    android:id="@+id/foodNote"
+                    android:id="@+id/foodTable"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    app:food_chef_note="@{foodItem.note}"
+                    app:food_waiter_table="@{foodItem.tableName}"
+                    app:layout_constraintStart_toEndOf="@+id/foodTableLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/foodName"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/foodNoteLabel"
-                    app:layout_constraintTop_toBottomOf="@+id/foodPriority"
-                    tools:text="Note" />
+                    tools:text="table name" />
 
                 <TextView
                     android:id="@+id/foodQuantity"
@@ -148,7 +126,7 @@
                         android:id="@+id/favorite_btn"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:onClick="@{() -> itemFoodActionListener.clickAction(foodItem)}"
+                        android:onClick="@{() -> itemFoodBringListener.clickBring(foodItem)}"
                         android:padding="7dp"
                         android:src="@drawable/ic_remove_item"
                         app:layout_constraintBottom_toBottomOf="parent"

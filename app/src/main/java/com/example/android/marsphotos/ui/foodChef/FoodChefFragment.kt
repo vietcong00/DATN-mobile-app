@@ -11,8 +11,7 @@ import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.FoodItem
 import com.example.android.marsphotos.databinding.FragmentFoodChefBinding
-import com.example.android.marsphotos.ui.dishChef.FoodChefListAdapter
-import com.example.android.marsphotos.ui.dishChef.ItemFoodActionListener
+import com.example.android.marsphotos.util.SharedPreferencesUtil
 
 class FoodChefFragment : Fragment() {
 
@@ -66,7 +65,16 @@ class FoodChefFragment : Fragment() {
 
             viewModel.foodList.value?.forEach {
                 val item = foodMap?.get(it.foodId)
-                    ?.let { it1 -> FoodItem(it1, it.billingId, it.note.toString(),it.quantity,it.updatedAt) }
+                    ?.let { it1 ->
+                        FoodItem(
+                            it1,
+                            it.billingId,
+                            it.note.toString(),
+                            (SharedPreferencesUtil.getTable(requireContext())?.name ?: ""),
+                            it.quantity,
+                            it.updatedAt
+                        )
+                    }
                 item?.let { it1 -> tempList.add(it1) }
             }
             viewModel.setFoodItems(tempList)

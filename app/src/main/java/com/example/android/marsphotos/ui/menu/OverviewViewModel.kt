@@ -37,6 +37,7 @@ class OverviewViewModel : DefaultViewModel() {
 
     init {
         getProductList()
+
     }
 
     private fun getProductList() {
@@ -54,8 +55,11 @@ class OverviewViewModel : DefaultViewModel() {
     fun createFoodRequestsOfBilling(foodInfo: FoodInfo) {
         viewModelScope.launch {
             try {
-                var isSuccess = false
                 val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
+                Log.i(
+                    "tesss",
+                    "table name : " + SharedPreferencesUtil.getTable(App.application.applicationContext)?.name
+                )
                 if (billing != null) {
                     dbRepository.loadFoodRequestsOfBillings(billingID = billing.id) { result: Result<MutableList<FoodInfo>> ->
                         onResult(null, result)
@@ -83,7 +87,6 @@ class OverviewViewModel : DefaultViewModel() {
                             _message.value = "Error when get data!"
                             _response.value = RESPONSE_TYPE.fail
                         }
-
                     }
                 } else {
                     _message.value = "Billing does not exist!"

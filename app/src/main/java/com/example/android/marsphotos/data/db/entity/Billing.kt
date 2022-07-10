@@ -41,4 +41,5 @@ data class Billing(
     val billingStatus: BillingStatus,
     val reasonCanceled: ReasonCanceled,
     val note: String,
+    val table: Table,
 )

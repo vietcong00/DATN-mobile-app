@@ -1,4 +1,4 @@
-package com.example.android.marsphotos.ui.billing
+package com.example.android.marsphotos.ui.foodWaiter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,29 +7,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.marsphotos.App
-import com.example.android.marsphotos.R
-import androidx.navigation.fragment.findNavController
-import com.example.android.marsphotos.MainActivity
-import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.db.entity.FoodItem
-import com.example.android.marsphotos.databinding.FragmentBillingBinding
+import com.example.android.marsphotos.databinding.FragmentFoodWaiterBinding
 import com.example.android.marsphotos.util.SharedPreferencesUtil
 
-class BillingFragment : Fragment() {
+class FoodWaiterFragment : Fragment() {
 
-    private val viewModel: BillingViewModel by viewModels {
-        BillingViewModelFactory(
+    private val viewModel: FoodWaiterViewModel by viewModels {
+        FoodWaiterViewModelFactory(
             App.myUserID
         )
     }
-    private lateinit var viewDataBinding: FragmentBillingBinding
-    private lateinit var listAdapter: BillingListAdapter
+    private lateinit var viewDataBinding: FragmentFoodWaiterBinding
+    private lateinit var listAdapter: FoodWaiterListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = FragmentBillingBinding.inflate(inflater, container, false)
+        viewDataBinding = FragmentFoodWaiterBinding.inflate(inflater, container, false)
             .apply { viewmodel = viewModel }
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         return viewDataBinding.root
@@ -39,20 +35,21 @@ class BillingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupListAdapter()
         setupViewModelObservers()
-        viewDataBinding.apply {
-            prepareToPayBtn.setOnClickListener {
-                viewmodel!!.confirmPrepareToPay(requireContext())
-            }
-        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadFoods()
     }
 
     private fun setupListAdapter() {
         val viewModel = viewDataBinding.viewmodel
         if (viewModel != null) {
-            listAdapter = BillingListAdapter(
-                viewModel,
-            )
-            viewDataBinding.billingsRecyclerView.adapter = listAdapter
+            listAdapter = FoodWaiterListAdapter(viewModel,
+                ItemFoodBringListener { item ->
+                    viewModel.changeStatusFood(item)
+                })
+            viewDataBinding.recyclerViewQrCodeStudio.adapter = listAdapter
         } else {
             throw Exception("The viewmodel is not initialized")
         }
@@ -68,7 +65,7 @@ class BillingFragment : Fragment() {
                     ?.let { it1 ->
                         FoodItem(
                             it1,
-                            it.billingId ,
+                            it.billingId,
                             it.note.toString(),
                             (SharedPreferencesUtil.getTable(requireContext())?.name ?: ""),
                             it.quantity,
@@ -79,21 +76,5 @@ class BillingFragment : Fragment() {
             }
             viewModel.setFoodItems(tempList)
         }
-        viewModel.response.observe(requireActivity()) {
-            if (viewModel.response.value === RESPONSE_TYPE.success) {
-                SharedPreferencesUtil.removeBilling(requireContext())
-                navigateDirectlyToStartSelectFood()
-                viewModel.resetResponseType()
-            } else if (viewModel.response.value === RESPONSE_TYPE.fail) {
-                (activity as MainActivity).showErrorNotify(
-                    viewModel.message.value.toString()
-                )
-                viewModel.resetResponseType()
-            }
-        }
-    }
-
-    private fun navigateDirectlyToStartSelectFood() {
-        findNavController().navigate(R.id.action_navigation_billing_to_startSelectFoodFragment)
     }
 }

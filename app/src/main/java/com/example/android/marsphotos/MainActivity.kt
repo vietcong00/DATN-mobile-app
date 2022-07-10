@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.data.constant.TIME_DISPLAY_NOTIFY
 import com.example.android.marsphotos.data.db.remote.FirebaseDataSource
 import com.example.android.marsphotos.databinding.ActivityMainBinding
@@ -118,6 +117,11 @@ class MainActivity : AppCompatActivity() {
 
     fun changeNavChef(){
         navView.getMenu().clear();
-        navView.inflateMenu(R.menu.bottom_nav_menu_employee);
+        navView.inflateMenu(R.menu.bottom_nav_menu_chef);
+    }
+
+    fun changeNavWaiter(){
+        navView.getMenu().clear();
+        navView.inflateMenu(R.menu.bottom_nav_menu_waiter);
     }
 }

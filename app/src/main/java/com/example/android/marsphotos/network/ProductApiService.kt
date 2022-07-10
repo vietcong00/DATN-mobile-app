@@ -11,7 +11,7 @@ private val gson = Gson()
 
 //Add the following constant for the base URL for the web service.
 private const val BASE_URL =
-    "https://e76f-1-55-211-129.ap.ngrok.io/api/v1/common/"
+    "https://24f2-1-55-211-129.ap.ngrok.io/api/v1/common/"
 
 val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create(gson))

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.data.db.entity.FoodItem
-import com.example.android.marsphotos.ui.dishChef.FoodChefListAdapter
 
 @BindingAdapter("bind_food_chef_list")
 fun bindFoodChefList(listView: RecyclerView, items: List<FoodItem>?) {
@@ -30,6 +29,11 @@ fun bindFoodChefImage(imgView: ImageView, imgUrl: String?) {
 @BindingAdapter("food_chef_name")
 fun bindFoodChefName(textView: TextView, name: String?) {
     textView.text = name
+}
+
+@BindingAdapter("food_chef_priority")
+fun bindFoodChefPriority(textView: TextView, priority: Int?) {
+    textView.text = priority.toString()
 }
 
 @BindingAdapter("food_chef_note")

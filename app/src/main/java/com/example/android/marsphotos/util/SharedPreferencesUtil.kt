@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.android.marsphotos.data.db.entity.Billing
 import com.example.android.marsphotos.data.db.entity.Food
+import com.example.android.marsphotos.data.db.entity.Table
 import com.example.android.marsphotos.data.db.entity.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -15,6 +16,7 @@ object SharedPreferencesUtil {
     private const val KEY_FOOD_MAP = "food_map"
     private const val KEY_BILLING = "billing"
     private const val KEY_TABLE_ID = "table_map"
+    private const val KEY_TABLE = "table"
     private const val KEY_USER = "user"
 
     private fun getPrefs(context: Context): SharedPreferences {
@@ -86,6 +88,19 @@ object SharedPreferencesUtil {
 
     fun removeTableID(context: Context) {
         getPrefs(context).edit().remove(KEY_TABLE_ID).apply()
+    }
+
+    fun getTable(context: Context): Table? {
+        var gson = Gson()
+        val tableString = getPrefs(context).getString(KEY_TABLE, null)
+        val typeToken = object : TypeToken<Table>() {}.type
+        return gson.fromJson<Table>(tableString, typeToken)
+    }
+
+    fun saveTable(context: Context, table: Table) {
+        var gson = Gson()
+        val tableString = gson.toJson(table)
+        getPrefs(context).edit().putString(KEY_TABLE, tableString).apply()
     }
 
     fun getUser(context: Context): User? {
