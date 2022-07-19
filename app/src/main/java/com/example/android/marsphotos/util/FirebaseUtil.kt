@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.util
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 
 fun <T> wrapSnapshotToClass(className: Class<T>, snap: DataSnapshot): T? {
@@ -9,7 +10,9 @@ fun <T> wrapSnapshotToClass(className: Class<T>, snap: DataSnapshot): T? {
 fun <T> wrapSnapshotToArrayList(className: Class<T>, snap: DataSnapshot): MutableList<T> {
     val arrayList: MutableList<T> = arrayListOf()
     for (child in snap.children) {
-        child.getValue(className)?.let { arrayList.add(it) }
+        child.getValue(className)?.let {
+            arrayList.add(it)
+        }
     }
     return arrayList
 }

@@ -19,3 +19,4 @@ enum class POSITION_TYPE {
 }
 
 const val TIME_DISPLAY_NOTIFY = 3000L
+const val FOOD_SELECT_MAX = 10

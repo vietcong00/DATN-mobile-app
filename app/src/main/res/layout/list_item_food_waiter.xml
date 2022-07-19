@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
-                    android:text="Table: "
+                    android:text="@string/item_food_waiter_table"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toBottomOf="@+id/foodName"

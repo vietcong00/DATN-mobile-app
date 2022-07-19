@@ -1,6 +1,8 @@
 package com.example.android.marsphotos.ui.start
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +37,15 @@ class StartFragment : Fragment() {
         }
 
         return viewDataBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Handler(Looper.getMainLooper()).postDelayed({
+            if(userIsAlreadyLoggedIn()) {
+                viewModel.goToLoginPressed()
+            }
+        }, 2000)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         mainProgressBar = findViewById(R.id.main_progressBar)
 
+        navView.setupWithNavController(navController)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.startFragment -> navView.visibility = View.GONE
@@ -70,9 +72,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.startFragment
             )
         )
-
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
     }
 
     override fun onResume() {
@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModelObservers() {
-
         viewModel.foods.observe(this) {
             viewModel.foods.value?.let { it1 -> SharedPreferencesUtil.saveFoodList(this, it1) }
             viewModel.foodMap.value?.let { it1 -> SharedPreferencesUtil.saveFoodMap(this, it1) }
@@ -111,17 +110,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeNavCustomer(){
-        navView.getMenu().clear();
+        navView.menu.clear();
         navView.inflateMenu(R.menu.bottom_nav_menu_customer);
     }
 
     fun changeNavChef(){
-        navView.getMenu().clear();
+        navView.menu.clear();
         navView.inflateMenu(R.menu.bottom_nav_menu_chef);
     }
 
     fun changeNavWaiter(){
-        navView.getMenu().clear();
+        navView.menu.clear();
         navView.inflateMenu(R.menu.bottom_nav_menu_waiter);
     }
 }

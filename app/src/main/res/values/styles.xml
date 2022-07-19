@@ -142,4 +142,15 @@
     <style name="dialog_button.positive">
         <item name="android:textColor">@color/button_negative_color</item>
     </style>
+
+    <style name="Title">
+        <item name="android:textSize">@dimen/font_size_h4</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Subtitle">
+        <item name="android:textSize">@dimen/font_size_h5</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

@@ -34,21 +34,21 @@
                 style="@style/RadioButtonStudio"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Selected" />
+                android:text="@string/ordered_list_ordered" />
 
             <RadioButton
                 android:id="@+id/radio_processing"
                 style="@style/RadioButtonStudio"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Processing" />
+                android:text="@string/ordered_list_processing" />
 
             <RadioButton
                 android:id="@+id/radio_done"
                 style="@style/RadioButtonStudio"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Done" />
+                android:text="@string/ordered_list_done" />
 
         </RadioGroup>
 

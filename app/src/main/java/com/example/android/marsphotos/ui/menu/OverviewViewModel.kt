@@ -19,9 +19,6 @@ import kotlinx.coroutines.launch
 
 enum class MarsApiStatus { LOADING, ERROR, DONE }
 
-/**
- * The [ViewModel] that is attached to the [OverviewFragment].
- */
 class OverviewViewModel : DefaultViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<MarsApiStatus>()

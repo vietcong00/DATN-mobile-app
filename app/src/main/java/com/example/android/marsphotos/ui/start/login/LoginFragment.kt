@@ -63,19 +63,26 @@ class LoginFragment : Fragment() {
         })
 
         viewModel.position.observe(requireActivity()) {
-                when (viewModel.position.value) {
-                    POSITION_TYPE.chef -> navigateDirectlyToFoodChef()
-                    POSITION_TYPE.waiter -> navigateDirectlyToMenu()
-                    POSITION_TYPE.table -> navigateDirectlyToMenu()
-                }
+            when (viewModel.position.value) {
+                POSITION_TYPE.chef -> navigateDirectlyToFoodChef()
+                POSITION_TYPE.waiter -> navigateDirectlyToFoodWaiter()
+                POSITION_TYPE.table -> navigateDirectlyToMenu()
+            }
         }
     }
 
     private fun navigateDirectlyToMenu() {
+        (activity as MainActivity).changeNavCustomer()
         findNavController().navigate(R.id.action_loginFragment_to_startSelectFoodFragment)
     }
 
     private fun navigateDirectlyToFoodChef() {
+        (activity as MainActivity).changeNavChef()
         findNavController().navigate(R.id.action_loginFragment_to_navigation_food_chef)
+    }
+
+    private fun navigateDirectlyToFoodWaiter() {
+        (activity as MainActivity).changeNavWaiter()
+        findNavController().navigate(R.id.action_loginFragment_to_navigation_food_waiter)
     }
 }

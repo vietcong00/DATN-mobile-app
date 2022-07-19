@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.data.db.remote
 
+import android.util.Log
 import com.example.android.marsphotos.data.Result
 import com.example.android.marsphotos.data.constant.TYPE_DISH_LIST
 import com.example.android.marsphotos.data.db.entity.*
@@ -378,7 +379,7 @@ class FirebaseDataSource {
         resultClassName: Class<T>,
         firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
         b: (Result<MutableList<T>>) -> Unit
-    ) {
+    ){
         val listener = attachValueListenerToBlockWithList(resultClassName, b)
         firebaseReferenceValueObserver.start(
             listener,
