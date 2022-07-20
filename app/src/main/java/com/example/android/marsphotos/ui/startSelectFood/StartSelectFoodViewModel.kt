@@ -29,7 +29,7 @@ class StartSelectFoodViewModel : DefaultViewModel() {
                     )
                     _response.value = RESPONSE_TYPE.success
                 } else {
-                    _message.value = "Error!"
+                    _message.value = "Error when get Billing!"
                     _response.value = RESPONSE_TYPE.fail
                 }
             } catch (e: Exception) {

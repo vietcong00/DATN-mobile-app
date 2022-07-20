@@ -17,7 +17,9 @@ fun bindFoodWaiterList(listView: RecyclerView, items: List<FoodItem>?) {
 
 @BindingAdapter("food_waiter_img")
 fun bindFoodWaiterImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
+    if (imgUrl.isNullOrEmpty() || imgUrl.isNullOrBlank()) {
+        imgView.setImageResource(R.drawable.ic_broken_image)
+    } else {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         imgView.load(imgUri) {
             placeholder(R.drawable.loading_animation)

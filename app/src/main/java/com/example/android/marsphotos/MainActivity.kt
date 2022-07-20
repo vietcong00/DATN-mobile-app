@@ -3,6 +3,7 @@ package com.example.android.marsphotos
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -12,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.android.marsphotos.data.constant.POSITION_TYPE
 import com.example.android.marsphotos.data.constant.TIME_DISPLAY_NOTIFY
 import com.example.android.marsphotos.data.db.remote.FirebaseDataSource
 import com.example.android.marsphotos.databinding.ActivityMainBinding
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_menu,
                 R.id.navigation_processing,
                 R.id.navigation_billing,
-                R.id.startFragment
+                R.id.startFragment,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -77,6 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         FirebaseDataSource.dbInstance.goOnline()
+        checkPosition()
+
         setupViewModelObservers()
         super.onResume()
     }
@@ -101,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         }, TIME_DISPLAY_NOTIFY)
     }
 
-    fun showErrorNotify( response: String) {
+    fun showErrorNotify(response: String) {
         notifyErrorResponse.text = response
         notifyErrorResponse.visibility = View.VISIBLE
         Handler(Looper.getMainLooper()).postDelayed({
@@ -109,18 +113,30 @@ class MainActivity : AppCompatActivity() {
         }, TIME_DISPLAY_NOTIFY)
     }
 
-    fun changeNavCustomer(){
-        navView.menu.clear();
-        navView.inflateMenu(R.menu.bottom_nav_menu_customer);
+    fun changeNavCustomer() {
+        navView.menu.clear()
+        navView.inflateMenu(R.menu.bottom_nav_menu_customer)
     }
 
-    fun changeNavChef(){
-        navView.menu.clear();
-        navView.inflateMenu(R.menu.bottom_nav_menu_chef);
+    fun changeNavChef() {
+        navView.menu.clear()
+        navView.inflateMenu(R.menu.bottom_nav_menu_chef)
     }
 
-    fun changeNavWaiter(){
-        navView.menu.clear();
-        navView.inflateMenu(R.menu.bottom_nav_menu_waiter);
+    fun changeNavWaiter() {
+        navView.menu.clear()
+        navView.inflateMenu(R.menu.bottom_nav_menu_waiter)
+    }
+
+    private fun checkPosition() {
+        val position = SharedPreferencesUtil.getUser(applicationContext)?.info?.position ?: ""
+
+        if (position !== "") {
+            when (position) {
+                POSITION_TYPE.chef -> changeNavChef()
+                POSITION_TYPE.waiter -> changeNavWaiter()
+                POSITION_TYPE.table -> changeNavCustomer()
+            }
+        }
     }
 }

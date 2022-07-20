@@ -93,6 +93,8 @@ class DetailFragment : Fragment() {
                         error(R.drawable.ic_broken_image)
                     }
                 }
+            }else{
+                foodImage.setImageResource(R.drawable.ic_broken_image)
             }
             foodName.setText(food.foodName, TextView.BufferType.EDITABLE)
             foodPrice.text = convertMoney(food.price)

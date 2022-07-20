@@ -22,8 +22,8 @@ class DatabaseRepository {
             .addOnSuccessListener {
                 b.invoke(Result.Success("Success"))
             }.addOnFailureListener {
-            b.invoke(Result.Error(it.message))
-        }
+                b.invoke(Result.Error(it.message))
+            }
     }
 
     fun updateFoodOfBilling(
@@ -37,8 +37,8 @@ class DatabaseRepository {
             .addOnSuccessListener {
                 b.invoke(Result.Success("Success"))
             }.addOnFailureListener {
-            b.invoke(Result.Error(it.message))
-        }
+                b.invoke(Result.Error(it.message))
+            }
     }
 
     //endregion
@@ -79,6 +79,18 @@ class DatabaseRepository {
         b.invoke(Result.Loading)
         firebaseDatabaseService.loadFoodOfBillingsTask(billingID).addOnSuccessListener {
             val foodList = wrapSnapshotToClass(BillingInfo::class.java, it)
+            b.invoke(Result.Success(foodList))
+        }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
+    }
+
+    fun loadFoodOfBillingsByType(
+        billingID: Int,
+        typeFoodList: TYPE_DISH_LIST,
+        b: ((Result<MutableList<FoodInfo>>) -> Unit)
+    ) {
+        b.invoke(Result.Loading)
+        firebaseDatabaseService.loadFoodOfBillingsByTypeTask(billingID,typeFoodList).addOnSuccessListener {
+            val foodList = wrapSnapshotToArrayList(FoodInfo::class.java, it)
             b.invoke(Result.Success(foodList))
         }.addOnFailureListener { b.invoke(Result.Error(it.message)) }
     }

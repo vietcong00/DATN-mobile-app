@@ -65,10 +65,9 @@ class FoodWaiterViewModel(private val myUserID: String) : DefaultViewModel() {
     fun changeStatusFood(food: FoodItem) {
         viewModelScope.launch {
             try {
-                dbRepository.loadAndObserveFoodsOfBillings(
+                dbRepository.loadFoodOfBillingsByType(
                     food.billingId,
                     foodListType,
-                    fbRefFoodProcessingObserver
                 ) { resultGetData: Result<MutableList<FoodInfo>> ->
                     onResult(_foodList, resultGetData)
                     if (resultGetData is Result.Success) {

@@ -3,9 +3,9 @@
     <item
         android:id="@+id/navigation_food_chef"
         android:icon="@drawable/ic_chef"
-        android:title="Chef Processing" />
+        android:title="@string/navigate_chef_processing" />
     <item
-        android:id="@+id/navigation_billing"
-        android:icon="@drawable/ic_bill"
-        android:title="Billing" />
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ic_administrator_developer"
+        android:title="@string/navigate_chef_setting" />
 </menu>

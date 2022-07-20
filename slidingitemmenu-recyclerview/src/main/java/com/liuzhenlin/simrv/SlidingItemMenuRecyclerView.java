@@ -14,6 +14,7 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -317,6 +318,7 @@ public class SlidingItemMenuRecyclerView extends RecyclerView {
                 break;
 
             case MotionEvent.ACTION_UP:
+                break;
             case MotionEvent.ACTION_CANCEL:
                 // If the user initially placed his/her finger on the fully opened itemView's menu
                 // and has clicked it or has not scrolled that itemView, hide it as his/her last

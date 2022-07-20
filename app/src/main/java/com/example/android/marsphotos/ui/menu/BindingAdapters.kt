@@ -48,7 +48,9 @@ fun bindText(textView: TextView, price: Int?) {
 
 @BindingAdapter("imgFood")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
+    if (imgUrl.isNullOrEmpty()) {
+        imgView.setImageResource(R.drawable.ic_broken_image)
+    } else {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         imgView.load(imgUri) {
             placeholder(R.drawable.loading_animation)

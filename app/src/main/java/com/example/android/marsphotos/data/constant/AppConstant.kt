@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.data.constant
 
+const val BASE_URL_NGROK = "https://d4c1-144-48-23-72.ap.ngrok.io"
 enum class TYPE_DISH_LIST {
     foodDones,
     foodProcessings,

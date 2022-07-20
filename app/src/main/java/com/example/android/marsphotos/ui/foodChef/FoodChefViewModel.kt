@@ -57,7 +57,7 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
                 _foods.value = mutableListOf()
                 _foodMap.value = mutableMapOf()
                 Log.e("error", e.toString())
-                _message.value=e.toString()
+                _message.value = e.toString()
                 _response.value = RESPONSE_TYPE.fail
             }
         }
@@ -67,12 +67,21 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
         viewModelScope.launch {
             try {
                 val bodyFoodListRemove = _foodList.value?.filter {
-                    it.billingId === food.billingId && it.foodId !== food.food.id && it.updatedAt !== food.updatedAt
+                    it.billingId === food.billingId && (it.foodId !== food.food.id || it.updatedAt !== food.updatedAt)
                 }
-                dbRepository.loadAndObserveFoodsOfBillings(
+
+                var foodTypeRemove = foodListType
+                var foodTypeAdd = TYPE_DISH_LIST.foodProcessings
+                when (foodListType) {
+                    TYPE_DISH_LIST.foodRequests -> foodTypeAdd =
+                        TYPE_DISH_LIST.foodProcessings
+                    TYPE_DISH_LIST.foodProcessings -> foodTypeAdd =
+                        TYPE_DISH_LIST.foodDones
+                }
+
+                dbRepository.loadFoodOfBillingsByType(
                     food.billingId,
-                    foodListType,
-                    fbRefFoodProcessingObserver
+                    foodTypeAdd,
                 ) { resultGetData: Result<MutableList<FoodInfo>> ->
                     onResult(_foodList, resultGetData)
                     if (resultGetData is Result.Success) {
@@ -89,13 +98,6 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
                                 updatedAt = Date().time
                             )
                         )
-                        var foodTypeAdd = TYPE_DISH_LIST.foodRequests
-                        when (foodListType) {
-                            TYPE_DISH_LIST.foodRequests -> foodTypeAdd =
-                                TYPE_DISH_LIST.foodProcessings
-                            TYPE_DISH_LIST.foodProcessings -> foodTypeAdd =
-                                TYPE_DISH_LIST.foodDones
-                        }
                         dbRepository.updateFoodOfBilling(
                             foodTypeAdd,
                             food.billingId,
@@ -103,7 +105,7 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
                         ) { resultAdd: Result<String> ->
                             if (resultAdd is Result.Success) {
                                 dbRepository.updateFoodOfBilling(
-                                    foodListType,
+                                    foodTypeRemove,
                                     food.billingId,
                                     bodyFoodListRemove as MutableList<FoodInfo>
                                 ) { resultRemove: Result<String> ->
@@ -167,7 +169,7 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
                             }
                         }
                         _foodList.value = foodResult
-                    } else if(result is Result.Error){
+                    } else if (result is Result.Error) {
                         _message.value = "Error when get data!"
                         _response.value = RESPONSE_TYPE.fail
                     }

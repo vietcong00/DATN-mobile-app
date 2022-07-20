@@ -9,12 +9,12 @@
     <fragment
         android:id="@+id/navigation_menu"
         android:name="com.example.android.marsphotos.ui.menu.MenuFragment"
-        android:label="MainFragment"
+        android:label="Menu"
         tools:layout="@layout/fragment_menu"/>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.android.marsphotos.ui.start.login.LoginFragment"
-        android:label="LoginFragment"
+        android:label=""
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_navigation_processing"
@@ -31,11 +31,14 @@
         <action
             android:id="@+id/action_loginFragment_to_navigation_food_waiter"
             app:destination="@id/navigation_food_waiter" />
+        <action
+            android:id="@+id/action_loginFragment_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"
         android:name="com.example.android.marsphotos.ui.start.StartFragment"
-        android:label="StartFragment"
+        android:label=""
         tools:layout="@layout/fragment_start">
         <action
             android:id="@+id/action_startFragment_to_loginFragment"
@@ -55,17 +58,20 @@
         <action
             android:id="@+id/action_startFragment_to_navigation_food_waiter"
             app:destination="@id/navigation_food_waiter" />
+        <action
+            android:id="@+id/action_startFragment_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
     </fragment>
     <fragment
         android:id="@+id/navigation_processing"
         android:name="com.example.android.marsphotos.ui.foodCustomer.FoodCustomerFragment"
-        android:label="ProcessingFragment"
+        android:label=""
         tools:layout="@layout/fragment_food_customer"
         />
     <fragment
         android:id="@+id/navigation_billing"
         android:name="com.example.android.marsphotos.ui.billing.BillingFragment"
-        android:label="BillingFragment"
+        android:label="Hóa đơn"
         tools:layout="@layout/fragment_billing">
         <action
             android:id="@+id/action_navigation_billing_to_startSelectFoodFragment"
@@ -74,12 +80,12 @@
     <fragment
         android:id="@+id/navigation_food_chef"
         android:name="com.example.android.marsphotos.ui.foodChef.FoodChefFragment"
-        android:label="FoodChefFragment"
+        android:label=""
         tools:layout="@layout/list_item_food_chef"/>
     <fragment
         android:id="@+id/startSelectFoodFragment"
         android:name="com.example.android.marsphotos.ui.startSelectFood.StartSelectFoodFragment"
-        android:label="StartSelectFoodFragment"
+        android:label=""
         tools:layout="@layout/fragment_start_select_food">
         <action
             android:id="@+id/action_startSelectFoodFragment_to_navigation_menu"
@@ -88,7 +94,16 @@
     <fragment
         android:id="@+id/navigation_food_waiter"
         android:name="com.example.android.marsphotos.ui.foodWaiter.FoodWaiterFragment"
-        android:label="FoodWaiterFragment"
+        android:label=""
         tools:layout="@layout/fragment_food_waiter"/>
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.example.android.marsphotos.ui.setting.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_navigation_setting_to_startFragment"
+            app:destination="@id/startFragment" />
+    </fragment>
 
 </navigation>

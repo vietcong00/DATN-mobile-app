@@ -145,4 +145,8 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
     fun setFoodItems(list: MutableList<FoodItem>) {
         _foodItemList.value = list
     }
+
+    fun getTableName():String{
+        return SharedPreferencesUtil.getTable(App.application.applicationContext)?.name ?: ""
+    }
 }

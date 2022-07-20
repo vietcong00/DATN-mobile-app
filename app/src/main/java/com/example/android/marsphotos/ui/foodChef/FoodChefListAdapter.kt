@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.ui.foodChef
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.example.android.marsphotos.databinding.ListItemFoodChefBinding
 class FoodChefListAdapter internal constructor(
     private val viewModel: FoodChefViewModel,
     private val itemFoodActionListener: ItemFoodActionListener,
-    ) :
+) :
     ListAdapter<FoodItem, FoodChefListAdapter.ViewHolder>(UserInfoDiffCallback()) {
 
     class ViewHolder(private val binding: ListItemFoodChefBinding) :
@@ -28,9 +29,9 @@ class FoodChefListAdapter internal constructor(
             binding.foodItem = item
             binding.index = position
             binding.itemFoodActionListener = itemActionListener
-            if(viewModel.foodListType !== TYPE_DISH_LIST.foodDones) {
+            if (viewModel.foodListType !== TYPE_DISH_LIST.foodDones) {
                 binding.rightSwipe.visibility = View.VISIBLE
-            } else{
+            } else {
                 binding.rightSwipe.visibility = View.GONE
             }
             binding.executePendingBindings()
@@ -53,17 +54,18 @@ class UserInfoDiffCallback : DiffUtil.ItemCallback<FoodItem>() {
         oldItem: FoodItem,
         newItem: FoodItem
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.food.id === newItem.food.id && oldItem.billingId === newItem.billingId && oldItem.updatedAt === oldItem.updatedAt
     }
 
+    @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(
         oldItem: FoodItem,
         newItem: FoodItem
     ): Boolean {
-        return oldItem.food == newItem.food && oldItem.quantity == newItem.quantity
+        return oldItem.note === newItem.note
     }
 }
 
-class ItemFoodActionListener(val clickListener: (food : FoodItem) -> Unit) {
-    fun clickAction(food : FoodItem) = clickListener(food)
+class ItemFoodActionListener(val clickListener: (food: FoodItem) -> Unit) {
+    fun clickAction(food: FoodItem) = clickListener(food)
 }

@@ -12,6 +12,15 @@ fun bindBillingList(listView: RecyclerView, items: List<FoodItem>?) {
     items?.let { (listView.adapter as BillingListAdapter).submitList(items) }
 }
 
+@BindingAdapter("bind_billing_total_price")
+fun bindBillingTotalPrice(textView: TextView, items: List<FoodItem>?) {
+    var sum = 0
+    items?.forEach {
+        sum += it.quantity * it.food.price
+    }
+    textView.text = convertMoney(sum)
+}
+
 @BindingAdapter("food_billing_name")
 fun bindFoodBillingName(textView: TextView, name: String?) {
     textView.text = name
@@ -31,8 +40,8 @@ fun bindFoodQuantity(textView: TextView, quantity: Int?) {
 @SuppressLint("SetTextI18n")
 @BindingAdapter("food_total_price")
 fun bindFoodTotalPrice(textView: TextView, foodItem: FoodItem) {
-    var totalPrice = 0;
-    if (foodItem.quantity != null && foodItem.food.price !=null) {
+    var totalPrice = 0
+    if (foodItem.quantity != null && foodItem.food.price != null) {
         totalPrice = foodItem.quantity * foodItem.food.price
     }
     textView.text = convertMoney(totalPrice)

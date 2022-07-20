@@ -63,7 +63,7 @@
             app:layout_constraintTop_toBottomOf="@+id/radioGroupFood">
 
             <com.liuzhenlin.simrv.SlidingItemMenuRecyclerView
-                android:id="@+id/recycler_view_qr_code_studio"
+                android:id="@+id/recycler_view_food_chef"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="10dp"

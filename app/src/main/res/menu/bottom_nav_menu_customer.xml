@@ -3,13 +3,13 @@
     <item
         android:id="@+id/navigation_menu"
         android:icon="@drawable/ic_food_spoon_knife"
-        android:title="Menu" />
+        android:title="@string/navigate_customer_menu" />
     <item
         android:id="@+id/navigation_processing"
         android:icon="@drawable/ic_chef"
-        android:title="Processing" />
+        android:title="@string/navigate_customer_processing" />
     <item
         android:id="@+id/navigation_billing"
         android:icon="@drawable/ic_bill"
-        android:title="Billing" />
+        android:title="@string/navigate_customer_billing" />
 </menu>

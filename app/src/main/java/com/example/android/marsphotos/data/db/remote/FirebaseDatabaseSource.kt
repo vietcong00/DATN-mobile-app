@@ -297,6 +297,16 @@ class FirebaseDataSource {
         return src.task
     }
 
+    fun loadFoodOfBillingsByTypeTask(
+        billingID: Int, typeFoodList: TYPE_DISH_LIST,
+    ): Task<DataSnapshot> {
+        val src = TaskCompletionSource<DataSnapshot>()
+        val listener = attachValueListenerToTaskCompletion(src)
+        refToPath("billings/$billingID/foodBilling/$typeFoodList")
+            .addListenerForSingleValueEvent(listener)
+        return src.task
+    }
+
     fun loadFoodProcessingOfBillingsTask(billingID: Int): Task<DataSnapshot> {
         val src = TaskCompletionSource<DataSnapshot>()
         val listener = attachValueListenerToTaskCompletion(src)
@@ -379,7 +389,7 @@ class FirebaseDataSource {
         resultClassName: Class<T>,
         firebaseReferenceValueObserver: FirebaseReferenceValueObserver,
         b: (Result<MutableList<T>>) -> Unit
-    ){
+    ) {
         val listener = attachValueListenerToBlockWithList(resultClassName, b)
         firebaseReferenceValueObserver.start(
             listener,

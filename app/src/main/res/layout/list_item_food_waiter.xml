@@ -119,7 +119,7 @@
                 android:background="@color/white">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="60dp"
+                    android:layout_width="75dp"
                     android:layout_height="match_parent">
 
                     <ImageView
@@ -128,7 +128,9 @@
                         android:layout_height="45dp"
                         android:onClick="@{() -> itemFoodBringListener.clickBring(foodItem)}"
                         android:padding="7dp"
-                        android:src="@drawable/ic_remove_item"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/round_circle_serve"
+                        android:src="@drawable/ic_food_trolley"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -136,27 +138,6 @@
 
             </FrameLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/delete_btn"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_archive_item"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </FrameLayout>
         </FrameLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

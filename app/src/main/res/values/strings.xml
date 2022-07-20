@@ -21,8 +21,18 @@
     <string name="ordered_list_ordered">Đã chọn</string>
     <string name="ordered_list_processing">Đang chế biến</string>
     <string name="ordered_list_done">Đã chế biến</string>
+    <string name="billing_total_price">Tổng: </string>
+    <string name="billing_table">Bàn: </string>
+    <string name="setting_logout">Đăng xuất</string>
     <string name="item_food_chef_priority">Độ ưu tiên: </string>
     <string name="item_food_chef_note">Ghi chú: </string>
     <string name="item_food_waiter_table">Bàn: </string>
+    <string name="navigate_customer_menu">Menu</string>
+    <string name="navigate_customer_processing">Processing</string>
+    <string name="navigate_customer_billing">Billing</string>
+    <string name="navigate_chef_processing">Chef Processing</string>
+    <string name="navigate_chef_setting">Setting</string>
+    <string name="navigate_waiter_serve">Waiter serve</string>
+    <string name="navigate_waiter_setting">Setting</string>
 
 </resources>

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
+import com.example.android.marsphotos.data.EventObserver
 import com.example.android.marsphotos.data.constant.RESPONSE_TYPE
 import com.example.android.marsphotos.databinding.FragmentStartSelectFoodBinding
 import com.example.android.marsphotos.util.SharedPreferencesUtil
@@ -41,6 +42,8 @@ class StartSelectFoodFragment : Fragment() {
     }
 
     private fun setupViewModelObservers() {
+        viewModel.dataLoading.observe(viewLifecycleOwner,
+            EventObserver { (activity as MainActivity).showGlobalProgressBar(it) })
         viewModel.response.observe(requireActivity()) {
             if (viewModel.response.value === RESPONSE_TYPE.success) {
                 navigateDirectlyToMenu()

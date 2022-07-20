@@ -94,19 +94,16 @@
                     android:singleLine="true"
                     android:text="@string/item_food_chef_note"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imgIcon"
                     app:layout_constraintTop_toBottomOf="@+id/foodPriority" />
 
                 <TextView
                     android:id="@+id/foodNote"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:singleLine="true"
                     android:textSize="18sp"
                     app:food_chef_note="@{foodItem.note}"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/foodNoteLabel"
                     app:layout_constraintTop_toBottomOf="@+id/foodPriority"
                     tools:text="Note" />
@@ -119,7 +116,6 @@
                     android:singleLine="true"
                     android:textSize="18sp"
                     app:food_chef_quantity="@{foodItem.quantity}"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Quantity" />
@@ -141,43 +137,21 @@
                 android:background="@color/white">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="60dp"
+                    android:layout_width="75dp"
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/favorite_btn"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
+                        android:padding="7dp"
+                        android:background="@drawable/round_circle_processing"
+                        android:src="@drawable/ic_arrow"
+                        android:layout_marginRight="15dp"
                         android:onClick="@{() -> itemFoodActionListener.clickAction(foodItem)}"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_remove_item"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/delete_btn"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_archive_item"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
             </FrameLayout>
         </FrameLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>

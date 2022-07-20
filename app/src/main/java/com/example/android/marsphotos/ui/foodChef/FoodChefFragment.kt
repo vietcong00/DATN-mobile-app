@@ -52,7 +52,7 @@ class FoodChefFragment : Fragment() {
                 ItemFoodActionListener { item ->
                     viewModel.changeStatusFood(item)
                 })
-            viewDataBinding.recyclerViewQrCodeStudio.adapter = listAdapter
+            viewDataBinding.recyclerViewFoodChef.adapter = listAdapter
         } else {
             throw Exception("The viewmodel is not initialized")
         }
@@ -69,10 +69,10 @@ class FoodChefFragment : Fragment() {
                         FoodItem(
                             it1,
                             it.billingId,
-                            it.note.toString(),
-                            (SharedPreferencesUtil.getTable(requireContext())?.name ?: ""),
-                            it.quantity,
-                            it.updatedAt
+                            note = it.note,
+                            tableName = it.tableName,
+                            quantity = it.quantity,
+                            updatedAt = it.updatedAt
                         )
                     }
                 item?.let { it1 -> tempList.add(it1) }

@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.network
 
+import com.example.android.marsphotos.data.constant.BASE_URL_NGROK
 import com.example.android.marsphotos.data.db.entity.Billing
 import com.example.android.marsphotos.data.db.entity.Food
 import com.google.gson.Gson
@@ -11,7 +12,7 @@ private val gson = Gson()
 
 //Add the following constant for the base URL for the web service.
 private const val BASE_URL =
-    "https://91aa-144-48-23-72.ap.ngrok.io/api/v1/common/"
+    "${BASE_URL_NGROK}/api/v1/common/"
 
 val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create(gson))

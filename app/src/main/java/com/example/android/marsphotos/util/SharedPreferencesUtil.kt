@@ -31,7 +31,7 @@ object SharedPreferencesUtil {
         getPrefs(context).edit().putString(KEY_USER_ID, userID).apply()
     }
 
-    fun removeUserID(context: Context) {
+    private fun removeUserID(context: Context) {
         getPrefs(context).edit().remove(KEY_USER_ID).apply()
     }
 
@@ -103,6 +103,10 @@ object SharedPreferencesUtil {
         getPrefs(context).edit().putString(KEY_TABLE, tableString).apply()
     }
 
+    fun removeTable(context: Context) {
+        getPrefs(context).edit().remove(KEY_TABLE).apply()
+    }
+
     fun getUser(context: Context): User? {
         var gson = Gson()
         val userString = getPrefs(context).getString(KEY_USER, null)
@@ -114,5 +118,17 @@ object SharedPreferencesUtil {
         var gson = Gson()
         val userString = gson.toJson(user)
         getPrefs(context).edit().putString(KEY_USER, userString).apply()
+    }
+
+    fun removeUser(context: Context) {
+        getPrefs(context).edit().remove(KEY_USER).apply()
+    }
+
+    fun logout(context: Context){
+        removeUserID(context);
+        removeUser(context);
+        removeBilling(context);
+        removeTableID(context);
+        removeTable(context);
     }
 }

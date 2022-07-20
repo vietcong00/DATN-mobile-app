@@ -1,5 +1,6 @@
 package com.example.android.marsphotos.ui.foodCustomer
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,14 +54,15 @@ class UserInfoDiffCallback : DiffUtil.ItemCallback<FoodItem>() {
         oldItem: FoodItem,
         newItem: FoodItem
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.food.id === newItem.food.id && oldItem.billingId === newItem.billingId && oldItem.updatedAt === oldItem.updatedAt
     }
 
+    @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(
         oldItem: FoodItem,
         newItem: FoodItem
     ): Boolean {
-        return oldItem.food == newItem.food && oldItem.quantity == newItem.quantity
+        return oldItem.note === newItem.note
     }
 }
 
