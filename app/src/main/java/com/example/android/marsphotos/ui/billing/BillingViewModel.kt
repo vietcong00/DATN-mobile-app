@@ -64,14 +64,14 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
 
     fun confirmPrepareToPay(context: Context) {
         AlertDialog.Builder(context, R.style.AlertDialogTheme)
-            .setTitle("Notification")
-            .setMessage("Do you want instant payment?")
+            .setTitle("Thông báo")
+            .setMessage("Quý khách chắc chắn muốn thanh toán?")
             .setPositiveButton(
-                "Confirm"
+                "Xác nhận"
             ) { dialog, which ->
                 prepareToPay()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton("Hủy", null)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .show()
     }
