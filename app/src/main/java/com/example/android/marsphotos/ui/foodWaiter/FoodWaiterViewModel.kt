@@ -24,7 +24,7 @@ class FoodWaiterViewModelFactory(private val myUserID: String) :
 }
 
 class FoodWaiterViewModel(private val myUserID: String) : DefaultViewModel() {
-    var foodListType = TYPE_DISH_LIST.foodRequests
+    var foodListType = TYPE_DISH_LIST.foodDones
     private val dbRepository: DatabaseRepository = DatabaseRepository()
 
     private val _foodItemList = MutableLiveData<MutableList<FoodItem>>()
@@ -42,7 +42,7 @@ class FoodWaiterViewModel(private val myUserID: String) : DefaultViewModel() {
 
     init {
         getProductList()
-        foodListType = TYPE_DISH_LIST.foodRequests
+        foodListType = TYPE_DISH_LIST.foodDones
         loadFoods()
     }
 
@@ -72,16 +72,16 @@ class FoodWaiterViewModel(private val myUserID: String) : DefaultViewModel() {
                     onResult(_foodList, resultGetData)
                     if (resultGetData is Result.Success) {
                         var foodInfo = resultGetData.data?.find {
-                            it.foodId === food.food.id && it.updatedAt === food.updatedAt
+                            it.billingId === food.billingId && it.foodId === food.food.id && it.updatedAt === food.updatedAt
                         }
                         var bodyFoodList = resultGetData.data
                         if (foodInfo != null) {
                             bodyFoodList?.remove(foodInfo)
-                            foodInfo.isBring=true
-                            foodInfo.updatedAt= Date().time
+                            foodInfo.isBring = true
+                            foodInfo.updatedAt = Date().time
                             bodyFoodList?.add(foodInfo)
+                        }
 
-                        };
                         dbRepository.updateFoodOfBilling(
                             TYPE_DISH_LIST.foodDones,
                             food.billingId,

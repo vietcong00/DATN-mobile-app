@@ -53,10 +53,7 @@ class OverviewViewModel : DefaultViewModel() {
         viewModelScope.launch {
             try {
                 val billing = SharedPreferencesUtil.getBilling(App.application.applicationContext)
-                Log.i(
-                    "tesss",
-                    "table name : " + SharedPreferencesUtil.getTable(App.application.applicationContext)?.name
-                )
+                Log.i("tesss","billing: "+ billing)
                 if (billing != null) {
                     dbRepository.loadFoodRequestsOfBillings(billingID = billing.id) { result: Result<MutableList<FoodInfo>> ->
                         onResult(null, result)

@@ -73,6 +73,12 @@ class DatabaseRepository {
     }
     //endregion
 
+    //region Remove
+    fun removeBilling(billingId: Int) {
+        firebaseDatabaseService.removeBilling(billingId)
+    }
+    //endregion
+
     //region Load List
 
     fun loadFoodOfBillings(billingID: Int, b: ((Result<BillingInfo>) -> Unit)) {

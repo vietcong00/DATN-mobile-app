@@ -1,6 +1,7 @@
 package com.example.android.marsphotos.ui.foodChef
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,7 +73,9 @@ class FoodChefFragment : Fragment() {
                             note = it.note,
                             tableName = it.tableName,
                             quantity = it.quantity,
-                            updatedAt = it.updatedAt
+                            singlePrice = it.singlePrice,
+                            updatedAt = it.updatedAt,
+                            isBring = it.isBring
                         )
                     }
                 item?.let { it1 -> tempList.add(it1) }

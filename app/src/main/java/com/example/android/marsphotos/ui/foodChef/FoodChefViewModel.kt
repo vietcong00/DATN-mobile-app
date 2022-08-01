@@ -64,6 +64,7 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
     }
 
     fun changeStatusFood(food: FoodItem) {
+        Log.i("tesss","foodItem: "+ food)
         viewModelScope.launch {
             try {
                 val bodyFoodListRemove = _foodList.value?.filter {
@@ -94,6 +95,8 @@ class FoodChefViewModel(private val myUserID: String) : DefaultViewModel() {
                                 foodId = food.food.id,
                                 food.billingId,
                                 quantity = food.quantity,
+                                tableName = food.tableName,
+                                singlePrice = food.singlePrice,
                                 note = food.note,
                                 updatedAt = Date().time
                             )

@@ -85,6 +85,9 @@ class BillingViewModel(private val myUserID: String) : DefaultViewModel() {
                     ProductApi.retrofitService.prepareToPay(billing?.id ?: 0, prepareToPayRequest)
                 if (response.isSuccess()) {
                     _response.value = RESPONSE_TYPE.success
+                    if (billing != null) {
+                        dbRepository.removeBilling(billing.id)
+                    }
                 } else {
                     _message.value = "Error!"
                     _response.value = RESPONSE_TYPE.fail

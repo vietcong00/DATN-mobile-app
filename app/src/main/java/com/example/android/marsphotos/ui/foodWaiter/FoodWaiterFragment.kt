@@ -1,6 +1,7 @@
 package com.example.android.marsphotos.ui.foodWaiter
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,11 +66,13 @@ class FoodWaiterFragment : Fragment() {
                     ?.let { it1 ->
                         FoodItem(
                             it1,
-                            it.billingId,
-                            it.note.toString(),
-                            (SharedPreferencesUtil.getTable(requireContext())?.name ?: ""),
-                            it.quantity,
-                            it.updatedAt
+                            billingId = it.billingId,
+                            note = it.note.toString(),
+                            tableName = it.tableName,
+                            quantity = it.quantity,
+                            singlePrice = it.singlePrice,
+                            updatedAt = it.updatedAt,
+                            isBring = it.isBring
                         )
                     }
                 item?.let { it1 -> tempList.add(it1) }

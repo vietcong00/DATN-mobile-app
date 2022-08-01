@@ -81,11 +81,13 @@ class FoodCustomerFragment : Fragment() {
                     ?.let { it1 ->
                         FoodItem(
                             it1,
-                            it.billingId,
-                            it.note.toString(),
-                            it.tableName,
-                            it.quantity,
-                            it.updatedAt
+                            billingId = it.billingId,
+                            note = it.note.toString(),
+                            tableName = it.tableName,
+                            quantity = it.quantity,
+                            singlePrice = it.singlePrice,
+                            updatedAt = it.updatedAt,
+                            isBring = it.isBring
                         )
                     }
                 item?.let { it1 -> tempList.add(it1) }

@@ -68,11 +68,13 @@ class BillingFragment : Fragment() {
                     ?.let { it1 ->
                         FoodItem(
                             it1,
-                            it.billingId ,
-                            it.note.toString(),
-                            (SharedPreferencesUtil.getTable(requireContext())?.name ?: ""),
-                            it.quantity,
-                            it.updatedAt
+                            billingId = it.billingId ,
+                            note = it.note.toString(),
+                            tableName = (SharedPreferencesUtil.getTable(requireContext())?.name ?: ""),
+                            quantity = it.quantity,
+                            singlePrice = it.singlePrice,
+                            updatedAt = it.updatedAt,
+                            isBring = it.isBring
                         )
                     }
                 item?.let { it1 -> tempList.add(it1) }

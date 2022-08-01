@@ -15,22 +15,27 @@ class StartSelectFoodViewModel : DefaultViewModel() {
 
     fun getBillingRelativeTable() {
         viewModelScope.launch {
-            try { 
-                val response = SharedPreferencesUtil.getTableID(App.application.applicationContext)
-                    ?.let { ProductApi.retrofitService.getBillingRelativeTable(it) }
-                if (response != null && response.isSuccess()) {
-                    SharedPreferencesUtil.saveBilling(
-                        App.application.applicationContext,
-                        response.data
-                    )
-                    SharedPreferencesUtil.saveTable(
-                        App.application.applicationContext,
-                        response.data.table
-                    )
-                    _response.value = RESPONSE_TYPE.success
-                } else {
-                    _message.value = "Error when get Billing!"
+            try {
+                val tableId = SharedPreferencesUtil.getTableID(App.application.applicationContext)
+                if (tableId === null) {
+                    _message.value = "TableID is null!"
                     _response.value = RESPONSE_TYPE.fail
+                } else {
+                    val response = ProductApi.retrofitService.getBillingRelativeTable(tableId)
+                    if (response != null && response.isSuccess()) {
+                        SharedPreferencesUtil.saveBilling(
+                            App.application.applicationContext,
+                            response.data
+                        )
+                        SharedPreferencesUtil.saveTable(
+                            App.application.applicationContext,
+                            response.data.table
+                        )
+                        _response.value = RESPONSE_TYPE.success
+                    } else {
+                        _message.value = "Error when get Billing!"
+                        _response.value = RESPONSE_TYPE.fail
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("error", e.toString())

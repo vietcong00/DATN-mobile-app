@@ -29,11 +29,6 @@ class FoodWaiterListAdapter internal constructor(
             binding.foodItem = item
             binding.index = position
             binding.itemFoodBringListener = itemBringListener
-            if(viewModel.foodListType !== TYPE_DISH_LIST.foodDones) {
-                binding.rightSwipe.visibility = View.VISIBLE
-            } else{
-                binding.rightSwipe.visibility = View.GONE
-            }
             binding.executePendingBindings()
         }
     }
@@ -62,7 +57,7 @@ class UserInfoDiffCallback : DiffUtil.ItemCallback<FoodItem>() {
         oldItem: FoodItem,
         newItem: FoodItem
     ): Boolean {
-        return oldItem.note === newItem.note
+        return oldItem.isBring === newItem.isBring
     }
 }
 

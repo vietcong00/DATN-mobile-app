@@ -243,6 +243,10 @@ class FirebaseDataSource {
         refToPath("messages/$messagesID").setValue(null)
     }
 
+    fun removeBilling(billingId: Int) {
+        refToPath("billings/${billingId}").setValue(null)
+    }
+
     //endregion
 
     //region Load

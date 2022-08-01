@@ -2,6 +2,7 @@ package com.example.android.marsphotos.ui.menu
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,14 +59,14 @@ class DetailFragment : Fragment() {
                 if (valid === VALID) {
                     outlinedSelected.error = null
                     var note = inputNote.text.toString()
-
                     viewModel?.createFoodRequestsOfBilling(
                         FoodInfo(
                             foodId = selectedFood.id,
-                            billingId = 1,
+                            billingId = SharedPreferencesUtil.getBilling(requireContext())?.id ?: 0,
                             tableName = SharedPreferencesUtil.getTable(requireContext())?.name
                                 ?: "",
                             quantity = selected.toInt(),
+                            singlePrice = selectedFood.price,
                             note = note,
                             updatedAt = Date().time
                         )
