@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_loginFragment_to_navigation_setting"
             app:destination="@id/navigation_setting" />
+        <action
+            android:id="@+id/action_loginFragment_to_startFragment"
+            app:destination="@id/startFragment" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"

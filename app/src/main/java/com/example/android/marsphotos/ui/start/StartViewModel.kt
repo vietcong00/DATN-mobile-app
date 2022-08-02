@@ -41,6 +41,7 @@ class StartViewModel : DefaultViewModel() {
                                 App.application.applicationContext,
                                 it
                             )
+                            Log.i("tesss","info: "+it.info)
                             SharedPreferencesUtil.saveTableID(
                                 App.application.applicationContext,
                                 it.info.tableId
